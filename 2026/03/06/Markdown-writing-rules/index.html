@@ -1,400 +1,282 @@
 <!DOCTYPE html>
-<html lang=en>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-transform" />
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="format-detection" content="telephone=no,email=no,adress=no">
-  <!-- Color theme for statusbar -->
-  <meta name="theme-color" content="#000000" />
-  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
-  <meta http-equiv="window-target" content="_top" />
-  
-  
-  <title>Markdown-writing-rules | Hexo</title>
-  <meta name="description" content="这份 Markdown 速查手册专为你在 Hexo + GitHub Pages 环境下的学习笔记与技术博客创作而设计。  📑 目录索引 文字排版 列表 代码 图片与链接 表格 Mermaid 流程图 Hexo 特有语法 排版技巧 🚀 速查索引卡   1. 文字排版标题层级12345# 一级标题 (建议每篇文章仅一个，Hexo 默认作为文章名)## 二级标题 (主要章节)### 三级标题 (小">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Markdown-writing-rules">
-<meta property="og:url" content="http://example.com/2026/03/06/Markdown-writing-rules/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="这份 Markdown 速查手册专为你在 Hexo + GitHub Pages 环境下的学习笔记与技术博客创作而设计。  📑 目录索引 文字排版 列表 代码 图片与链接 表格 Mermaid 流程图 Hexo 特有语法 排版技巧 🚀 速查索引卡   1. 文字排版标题层级12345# 一级标题 (建议每篇文章仅一个，Hexo 默认作为文章名)## 二级标题 (主要章节)### 三级标题 (小">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-03-06T10:00:14.000Z">
-<meta property="article:modified_time" content="2026-03-05T23:35:45.750Z">
-<meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Markdown">
-<meta name="twitter:card" content="summary">
-  <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2026/03/06/Markdown-writing-rules/index.html">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png" type="image/x-icon">
-  
-  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="John Doe">
+    
+    <title>
+        
+            Markdown-writing-rules |
+        
+        我的笔记
+    </title>
+    
 <link rel="stylesheet" href="/css/style.css">
 
-  
-  
-  
-  
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"我的笔记","author":"","avatar":"","logo":"","favicon":""},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":false,"background_img":"","background_img_dark":"","description":"","hitokoto":false},"social_contact":{"enable":false,"links":{"github":null,"weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":true,"percent":false,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":true,"custom_badge":["One","Two","Three","笔记"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":"","text":"","icon":""}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"giscus","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2024,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":""},"record":{"enable":false,"list":[{"code":"","link":""}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
 <meta name="generator" content="Hexo 8.1.1"></head>
 
 
-<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
-  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-  <div class="slimContent">
-    <div class="navbar-header">
-      
-      
-      <div class="profile-block text-center">
-        <a id="avatar" href="https://github.com/cofess" target="_blank">
-          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
-        </a>
-        <h2 id="name" class="hidden-xs hidden-sm">昵称</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Web Developer &amp; Designer</h3>
-        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shenzhen, China</small>
-      </div>
-      
-      <div class="search" id="search-form-wrap">
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
 
-    <form class="search-form sidebar-form">
-        <div class="input-group">
-            <input type="text" class="search-form-input form-control" placeholder="Search" />
-            <span class="input-group-btn">
-                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
-            </span>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+            <a class="site-name border-box" href="/">
+               我的笔记
+            </a>
         </div>
-    </form>
-    <div class="ins-search">
-  <div class="ins-search-mask"></div>
-  <div class="ins-search-container">
-    <div class="ins-input-wrapper">
-      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
-      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-    </div>
-    <div class="ins-section-wrapper">
-      <div class="ins-section-container"></div>
-    </div>
-  </div>
-</div>
 
-
-</div>
-      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
-      <ul class="nav navbar-nav main-nav ">
-        
-        
-        <li class="menu-item menu-item-home">
-          <a href="/.">
-            
-            <i class="icon icon-home-fill"></i>
-            
-            <span class="menu-title">Home</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives">
-            
-            <i class="icon icon-archives-fill"></i>
-            
-            <span class="menu-title">Archives</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories">
-            
-            <i class="icon icon-folder"></i>
-            
-            <span class="menu-title">Categories</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags">
-            
-            <i class="icon icon-tags"></i>
-            
-            <span class="menu-title">Tags</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-repository">
-          <a href="/repository">
-            
-            <i class="icon icon-project"></i>
-            
-            <span class="menu-title">Repository</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-books">
-          <a href="/books">
-            
-            <i class="icon icon-book-fill"></i>
-            
-            <span class="menu-title">Books</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-links">
-          <a href="/links">
-            
-            <i class="icon icon-friendship"></i>
-            
-            <span class="menu-title">Links</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about">
-            
-            <i class="icon icon-cup-fill"></i>
-            
-            <span class="menu-title">About</span>
-          </a>
-        </li>
-        
-      </ul>
-      
-	
-    <ul class="social-links">
-    	
-        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
-        
-        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
-        
-        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
-        
-        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
-        
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
-        
-    </ul>
 
-    </nav>
-  </div>
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
 </header>
 
-  
-    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
-  <div class="slimContent">
-    
-      <div class="widget">
-    <h3 class="widget-title">Board</h3>
-    <div class="widget-body">
-        <div id="board">
-            <div class="content">
-                <p>欢迎交流与分享经验!</p>
-            </div>
+
         </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        Markdown-writing-rules
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">John Doe</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-03-06</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Thu Mar 05 2026 23:52:36 GMT+0000">2026-03-05</span>
+                </span>
+            
+        
+
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Markdown/">Markdown</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
     </div>
+
+    
 </div>
 
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/COMP9417/">COMP9417</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Leetcode/">Leetcode</a><span class="category-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Markdown/" rel="tag">Markdown</a><span class="tag-list-count">1</span></li></ul>
-    </div>
-  </div>
-
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget-body tagcloud">
-      <a href="/tags/Markdown/" style="font-size: 13px;">Markdown</a>
-    </div>
-  </div>
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Archive</h3>
-    <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/03/">March 2026</a><span class="archive-list-count">5</span></li></ul>
-    </div>
-  </div>
-
-
-    
-      
-  <div class="widget">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget-body">
-      <ul class="recent-post-list list-unstyled no-thumbnail">
-        
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
+                            </div>
+                        </div>
+                    </div>
                 
-              </p>
-              <p class="item-title">
-                <a href="/2026/03/06/02-LeetCode/0306/" class="title">306</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2026-03-06T10:15:16.000Z" itemprop="datePublished">2026-03-06</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/2026/03/06/Markdown-writing-rules/" class="title">Markdown-writing-rules</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2026-03-06T10:00:14.000Z" itemprop="datePublished">2026-03-06</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                
-              </p>
-              <p class="item-title">
-                <a href="/2026/03/05/hello-world/" class="title">Hello World</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2026-03-05T23:35:45.750Z" itemprop="datePublished">2026-03-05</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/COMP9417/">COMP9417</a>
-              </p>
-              <p class="item-title">
-                <a href="/2026/03/05/COMP9417/" class="title">COMP9417-TEST-IMAGE</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2026-03-05T22:13:49.000Z" itemprop="datePublished">2026-03-05</time>
-              </p>
-            </div>
-          </li>
-          
-          <li>
-            
-            <div class="item-inner">
-              <p class="item-category">
-                <a class="category-link" href="/categories/Leetcode/">Leetcode</a>
-              </p>
-              <p class="item-title">
-                <a href="/2026/03/05/leetcode/" class="title">leetcode</a>
-              </p>
-              <p class="item-date">
-                <time datetime="2026-03-05T16:12:59.000Z" itemprop="datePublished">2026-03-05</time>
-              </p>
-            </div>
-          </li>
-          
-      </ul>
-    </div>
-  </div>
-  
 
-    
-  </div>
-</aside>
+                <div class="post-content keep-markdown-body ">
+                    
 
-  
-  
-<main class="main" role="main">
-  <div class="content">
-  <article id="post-Markdown-writing-rules" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-    
-    <div class="article-header">
-      
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Markdown-writing-rules
-    </h1>
-  
-
-      
-      <div class="article-meta">
-        <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2026/03/06/Markdown-writing-rules/" class="article-date">
-	  <time datetime="2026-03-06T10:00:14.000Z" itemprop="datePublished">2026-03-06</time>
-	</a>
-</span>
-        
-        
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/Markdown/" rel="tag">Markdown</a>
-  </span>
-
-
-        
-
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2026/03/06/Markdown-writing-rules/#comments" class="article-comment-link">Comments</a></span>
-        
-      </div>
-    </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
-      
-        <p>这份 Markdown 速查手册专为你在 <strong>Hexo + GitHub Pages</strong> 环境下的学习笔记与技术博客创作而设计。</p>
+                    
+                         <p>这份 Markdown 速查手册专为你在 <strong>Hexo + GitHub Pages</strong> 环境下的学习笔记与技术博客创作而设计。</p>
 <hr>
 <h2 id="📑-目录索引"><a href="#📑-目录索引" class="headerlink" title="📑 目录索引"></a>📑 目录索引</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.google.com/search?q=%231-%E6%96%87%E5%AD%97%E6%8E%92%E7%89%88">文字排版</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.google.com/search?q=%232-%E5%88%97%E8%A1%A8">列表</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.google.com/search?q=%233-%E4%BB%A3%E7%A0%81">代码</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.google.com/search?q=%234-%E5%9B%BE%E7%89%87%E4%B8%8E%E9%93%BE%E6%8E%A5">图片与链接</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.google.com/search?q=%235-%E8%A1%A8%E6%A0%BC">表格</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.google.com/search?q=%236-mermaid-%E6%B5%81%E7%A8%8B%E5%9B%BE">Mermaid 流程图</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.google.com/search?q=%237-hexo-%E7%89%B9%E6%9C%89%E8%AF%AD%E6%B3%95">Hexo 特有语法</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.google.com/search?q=%238-%E6%8E%92%E7%89%88%E6%8A%80%E5%B7%A7">排版技巧</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.google.com/search?q=%239-%E9%80%9F%E6%9F%A5%E7%B4%A2%E5%BC%95%E5%8D%A1">🚀 速查索引卡</a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.google.com/search?q=%231-%E6%96%87%E5%AD%97%E6%8E%92%E7%89%88" >文字排版<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.google.com/search?q=%232-%E5%88%97%E8%A1%A8" >列表<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.google.com/search?q=%233-%E4%BB%A3%E7%A0%81" >代码<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.google.com/search?q=%234-%E5%9B%BE%E7%89%87%E4%B8%8E%E9%93%BE%E6%8E%A5" >图片与链接<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.google.com/search?q=%235-%E8%A1%A8%E6%A0%BC" >表格<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.google.com/search?q=%236-mermaid-%E6%B5%81%E7%A8%8B%E5%9B%BE" >Mermaid 流程图<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.google.com/search?q=%237-hexo-%E7%89%B9%E6%9C%89%E8%AF%AD%E6%B3%95" >Hexo 特有语法<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.google.com/search?q=%238-%E6%8E%92%E7%89%88%E6%8A%80%E5%B7%A7" >排版技巧<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.google.com/search?q=%239-%E9%80%9F%E6%9F%A5%E7%B4%A2%E5%BC%95%E5%8D%A1" >🚀 速查索引卡<i class="fas fa-external-link-alt"></i></a></li>
 </ol>
 <hr>
 <h2 id="1-文字排版"><a href="#1-文字排版" class="headerlink" title="1. 文字排版"></a>1. 文字排版</h2><h3 id="标题层级"><a href="#标题层级" class="headerlink" title="标题层级"></a>标题层级</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 一级标题 (建议每篇文章仅一个，Hexo 默认作为文章名)</span></span><br><span class="line"><span class="section">## 二级标题 (主要章节)</span></span><br><span class="line"><span class="section">### 三级标题 (小节)</span></span><br><span class="line"><span class="section">#### 四级标题 (更深层级)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -456,7 +338,7 @@
 <h3 id="图片插入"><a href="#图片插入" class="headerlink" title="图片插入"></a>图片插入</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">图片描述</span>](<span class="link">图片路径或URL</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="Hexo-居中图片-HTML-兼容"><a href="#Hexo-居中图片-HTML-兼容" class="headerlink" title="Hexo 居中图片 (HTML 兼容)"></a>Hexo 居中图片 (HTML 兼容)</h3><p>Markdown 原生不支持居中，Hexo 环境建议使用 HTML：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;https://example.com/image.png&quot;</span> <span class="attr">width</span>=<span class="string">&quot;80%&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>图 1: 图片说明文字<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span>   <span class="attr">src</span>=<span class="string">&quot;https://example.com/image.png&quot;</span>  <span class="attr">width</span>=<span class="string">&quot;80%&quot;</span> &gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>图 1: 图片说明文字<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <hr>
 <h2 id="5-表格"><a href="#5-表格" class="headerlink" title="5. 表格"></a>5. 表格</h2><h3 id="基础语法与对齐"><a href="#基础语法与对齐" class="headerlink" title="基础语法与对齐"></a>基础语法与对齐</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">| 姓名   |    语言     |   熟练度 |</span><br><span class="line">| :----- | :---------: | -------: |</span><br><span class="line">| Weijun |   Python    |     🚀 高 |</span><br><span class="line">| AI     | [<span class="string">SQL</span>](<span class="link">链接</span>) | <span class="code">`Native`</span> |</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -553,227 +435,298 @@
 </blockquote>
 <p>您是否需要我为您针对 <strong>Hexo 的特定主题（如 Next 或 Butterfly）</strong> 补充一些高级的“标签插件（Tag Plugins）”语法？</p>
 
-      
-    </div>
-    <div class="article-footer">
-      <blockquote class="mt-2x">
-  <ul class="post-copyright list-unstyled">
-    
-    <li class="post-copyright-link hidden-xs">
-      <strong>本文链接：</strong>
-      <a href="http://example.com/2026/03/06/Markdown-writing-rules/" title="Markdown-writing-rules" target="_blank" rel="external">http://example.com/2026/03/06/Markdown-writing-rules/</a>
-    </li>
-    
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
-</blockquote>
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Markdown/">Markdown</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2026/03/06/02-LeetCode/0306/"
+                                   title="306"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">306</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/03/05/hello-world/"
+                                   title="Hello World"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Hello World</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
 
 
-<div class="panel panel-default panel-badger">
-  <div class="panel-body">
-    <figure class="media">
-      <div class="media-left">
-        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
-        </a>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">昵称</span><small class="ml-1x">Web Developer &amp; Designer</small></a></h3>
-        <div>个人简介。</div>
-      </div>
-    </figure>
-  </div>
-</div>
 
 
-    </div>
-  </article>
-  
-    
-  <section id="comments">
-  	
-      <div id="vcomments"></div>
-    
-  </section>
 
 
-  
-</div>
-
-  <nav class="bar bar-footer clearfix" data-stick-bottom>
-  <div class="bar-inner">
-  
-  <ul class="pager pull-left">
-    
-    <li class="prev">
-      <a href="/2026/03/06/02-LeetCode/0306/" title="306"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
-    
-    
-    <li class="next">
-      <a href="/2026/03/05/hello-world/" title="Hello World"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
-    </li>
-    
-    
-  </ul>
-  
-  
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
-  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
-    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
-  </div> -->
-  
-  
-  <div class="bar-right">
-    
-    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
-    
-  </div>
-  </div>
-</nav>
-  
-<!-- Modal -->
-<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content donate">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-body">
-        <div class="donate-box">
-          <div class="donate-head">
-            <p>Maybe you could buy me a cup of coffee.</p>
-          </div>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
-              <div class="donate-payimg">
-                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
-              </div>
-              <p class="text-muted mv">Scan this qrcode</p>
-              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+                
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
-              <div class="donate-payimg">
-                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
-              </div>
-              <p class="text-muted mv">Scan this qrcode</p>
-              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
-            </div>
-          </div>
-          <div class="donate-footer">
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-              <li role="presentation" class="active">
-                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
-              </li>
-              <li role="presentation" class="">
-                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
-              </li>
-            </ul>
-          </div>
         </div>
-      </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%91-%E7%9B%AE%E5%BD%95%E7%B4%A2%E5%BC%95"><span class="nav-number">1.</span> <span class="nav-text">📑 目录索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%96%87%E5%AD%97%E6%8E%92%E7%89%88"><span class="nav-number">2.</span> <span class="nav-text">1. 文字排版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E9%A2%98%E5%B1%82%E7%BA%A7"><span class="nav-number">2.1.</span> <span class="nav-text">标题层级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">文本格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E5%9D%97"><span class="nav-number">2.3.</span> <span class="nav-text">引用块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%89%B2%E7%BA%BF"><span class="nav-number">2.4.</span> <span class="nav-text">分割线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%88%97%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">2. 列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%88%97%E8%A1%A8"><span class="nav-number">3.1.</span> <span class="nav-text">基础列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%B8%85%E5%8D%95-Todo"><span class="nav-number">3.2.</span> <span class="nav-text">任务清单 (Todo)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E5%88%97%E8%A1%A8"><span class="nav-number">3.3.</span> <span class="nav-text">嵌套列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">3. 代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E5%86%85%E4%BB%A3%E7%A0%81"><span class="nav-number">4.1.</span> <span class="nav-text">行内代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%9D%97-%E5%B8%A6%E8%AF%AD%E8%A8%80%E6%A0%87%E6%B3%A8"><span class="nav-number">4.2.</span> <span class="nav-text">多行代码块 (带语言标注)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9B%BE%E7%89%87%E4%B8%8E%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">4. 图片与链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">5.1.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5"><span class="nav-number">5.2.</span> <span class="nav-text">图片插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-%E5%B1%85%E4%B8%AD%E5%9B%BE%E7%89%87-HTML-%E5%85%BC%E5%AE%B9"><span class="nav-number">5.3.</span> <span class="nav-text">Hexo 居中图片 (HTML 兼容)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E8%A1%A8%E6%A0%BC"><span class="nav-number">6.</span> <span class="nav-text">5. 表格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E4%B8%8E%E5%AF%B9%E9%BD%90"><span class="nav-number">6.1.</span> <span class="nav-text">基础语法与对齐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Mermaid-%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">7.</span> <span class="nav-text">6. Mermaid 流程图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE-Flowchart"><span class="nav-number">7.1.</span> <span class="nav-text">流程图 (Flowchart)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%9B%BE-Sequence"><span class="nav-number">7.2.</span> <span class="nav-text">时序图 (Sequence)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE-Mindmap"><span class="nav-number">7.3.</span> <span class="nav-text">思维导图 (Mindmap)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Hexo-%E7%89%B9%E6%9C%89%E8%AF%AD%E6%B3%95"><span class="nav-number">8.</span> <span class="nav-text">7. Hexo 特有语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Front-Matter-%E6%A8%A1%E6%9D%BF"><span class="nav-number">8.1.</span> <span class="nav-text">Front Matter 模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%91%98%E8%A6%81%E6%88%AA%E6%96%AD"><span class="nav-number">8.2.</span> <span class="nav-text">文章摘要截断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E6%8E%92%E7%89%88%E6%8A%80%E5%B7%A7"><span class="nav-number">9.</span> <span class="nav-text">8. 排版技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%F0%9F%9A%80-%E9%80%9F%E6%9F%A5%E7%B4%A2%E5%BC%95%E5%8D%A1"><span class="nav-number">10.</span> <span class="nav-text">9. 🚀 速查索引卡</span></a></li></ol>
     </div>
-  </div>
+</div>
+
+            </div>
+        
+    </div>
 </div>
 
 
+                
+            </div>
+        </div>
 
-</main>
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2024</span>&nbsp;-&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">John Doe</a>
+        
+    </div>
 
-  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
-	
-	
-    <ul class="social-links">
-    	
-        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
         
-        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+
+        <!-- PC TOC show toggle -->
         
-        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
         
-        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+
+        <!-- PC go comment -->
         
-        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
         
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
     </ul>
 
-    <div class="copyright">
-    	
-        <div class="publishby">
-        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
-        </div>
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
     </div>
-</footer>
-  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-<script>
-window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
-</script>
 
-<script src="/js/plugin.min.js"></script>
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
 
 
-<script src="/js/application.js"></script>
-
-
-    <script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: 'Posts',
-            PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
-            UNTITLED: '(Untitled)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-
-<script src="/js/insight.js"></script>
-
-
-
-
-
-
-   
-
-
-
-
-   
+    <!-- local search -->
     
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/valine"></script>
-  <script type="text/javascript">
-  var GUEST = ['nick', 'mail', 'link'];
-  var meta = 'nick,mail,link';
-  meta = meta.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
-  });
-  new Valine({
-    el: '#vcomments',
-    verify: false,
-    notify: false,
-    appId: '',
-    appKey: '',
-    placeholder: 'Just go go',
-    avatar: 'mm',
-    meta: meta,
-    pageSize: '10' || 10,
-    visitor: false
-  });
-  </script>
 
-     
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%91-%E7%9B%AE%E5%BD%95%E7%B4%A2%E5%BC%95"><span class="nav-number">1.</span> <span class="nav-text">📑 目录索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%96%87%E5%AD%97%E6%8E%92%E7%89%88"><span class="nav-number">2.</span> <span class="nav-text">1. 文字排版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E9%A2%98%E5%B1%82%E7%BA%A7"><span class="nav-number">2.1.</span> <span class="nav-text">标题层级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">文本格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E5%9D%97"><span class="nav-number">2.3.</span> <span class="nav-text">引用块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%89%B2%E7%BA%BF"><span class="nav-number">2.4.</span> <span class="nav-text">分割线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%88%97%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">2. 列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%88%97%E8%A1%A8"><span class="nav-number">3.1.</span> <span class="nav-text">基础列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%B8%85%E5%8D%95-Todo"><span class="nav-number">3.2.</span> <span class="nav-text">任务清单 (Todo)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E5%88%97%E8%A1%A8"><span class="nav-number">3.3.</span> <span class="nav-text">嵌套列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">3. 代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E5%86%85%E4%BB%A3%E7%A0%81"><span class="nav-number">4.1.</span> <span class="nav-text">行内代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E8%A1%8C%E4%BB%A3%E7%A0%81%E5%9D%97-%E5%B8%A6%E8%AF%AD%E8%A8%80%E6%A0%87%E6%B3%A8"><span class="nav-number">4.2.</span> <span class="nav-text">多行代码块 (带语言标注)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9B%BE%E7%89%87%E4%B8%8E%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">4. 图片与链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-number">5.1.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E6%8F%92%E5%85%A5"><span class="nav-number">5.2.</span> <span class="nav-text">图片插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo-%E5%B1%85%E4%B8%AD%E5%9B%BE%E7%89%87-HTML-%E5%85%BC%E5%AE%B9"><span class="nav-number">5.3.</span> <span class="nav-text">Hexo 居中图片 (HTML 兼容)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E8%A1%A8%E6%A0%BC"><span class="nav-number">6.</span> <span class="nav-text">5. 表格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E4%B8%8E%E5%AF%B9%E9%BD%90"><span class="nav-number">6.1.</span> <span class="nav-text">基础语法与对齐</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Mermaid-%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="nav-number">7.</span> <span class="nav-text">6. Mermaid 流程图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE-Flowchart"><span class="nav-number">7.1.</span> <span class="nav-text">流程图 (Flowchart)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%9B%BE-Sequence"><span class="nav-number">7.2.</span> <span class="nav-text">时序图 (Sequence)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE-Mindmap"><span class="nav-number">7.3.</span> <span class="nav-text">思维导图 (Mindmap)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Hexo-%E7%89%B9%E6%9C%89%E8%AF%AD%E6%B3%95"><span class="nav-number">8.</span> <span class="nav-text">7. Hexo 特有语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Front-Matter-%E6%A8%A1%E6%9D%BF"><span class="nav-number">8.1.</span> <span class="nav-text">Front Matter 模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%91%98%E8%A6%81%E6%88%AA%E6%96%AD"><span class="nav-number">8.2.</span> <span class="nav-text">文章摘要截断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E6%8E%92%E7%89%88%E6%8A%80%E5%B7%A7"><span class="nav-number">9.</span> <span class="nav-text">8. 排版技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%F0%9F%9A%80-%E9%80%9F%E6%9F%A5%E7%B4%A2%E5%BC%95%E5%8D%A1"><span class="nav-number">10.</span> <span class="nav-text">9. 🚀 速查索引卡</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
 
 
 
 
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
 
 
 
