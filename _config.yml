@@ -102,3 +102,8 @@ theme: hexo-theme-pure
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
+# Markdown rendering
+marked:
+  prependRoot: true
+  postAsset: true
