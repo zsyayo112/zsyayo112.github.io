@@ -1,0 +1,35 @@
+name: 自动部署 Hexo 博客
+
+on:
+  push:
+    branches:
+      - main  # 监听 main 分支的提交，如果是 master 请修改
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出源码
+        uses: actions/checkout@v3
+
+      - name: 设置 Node.js 环境
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # 使用长期支持版
+          cache: 'npm'      # 开启缓存，加快后续部署速度
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 编译静态页面
+        run: |
+          npx hexo clean
+          npx hexo generate
+
+      - name: 部署到 GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: public       # Hexo 生成的静态文件目录
+          branch: gh-pages     # 部署到的目标分支
+          token: ${{ secrets.HEXO_DEPLOY_KEY }} # 使用我们刚才配置的秘钥
