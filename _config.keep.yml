@@ -10,10 +10,10 @@
 # ---------------------------------------------------------------------------------------
 base_info:
   primary_color: "#0066cc"   # 主题主色调
-  title: 我的笔记             # 博客标题
+  title: Syz's Blog            # 博客标题
   author: ""                 # 作者名
-  avatar: ""                 # 头像，可用本地路径或图片链接
-  logo: ""                   # 网站 Logo
+  avatar: "https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg"                 # 头像，可用本地路径或图片链接
+  logo: "https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg"                   # 网站 Logo
   favicon: ""                # 网站 favicon
 
 
@@ -35,10 +35,10 @@ menu:
 # 首屏（封面）
 # ---------------------------------------------------------------------------------------
 first_screen:
-  enable: false
-  background_img: ""       # 浅色模式背景图
-  background_img_dark: ""  # 深色模式背景图
-  description: ""          # 首屏描述文字，用 || 换行（最多两行）
+  enable: true
+  background_img: /images/bg.svg        # 浅色模式背景图（主题自带）
+  background_img_dark: /images/bg2.svg  # 深色模式背景图（主题自带）
+  description: "生命如红蜡，火焰向上，泪流向下"          # 首屏描述文字，用 || 换行（最多两行）
   hitokoto: false          # 启用后每次进入首页显示随机一言
 
 
@@ -46,11 +46,11 @@ first_screen:
 # 社交链接
 # ---------------------------------------------------------------------------------------
 social_contact:
-  enable: false
+  enable: true
   links:
-    github:   # GitHub 主页链接
-    email:    # 邮箱
-    # weixin: # 微信，填图片链接可展示二维码：img | ./images/qrcode.png
+    github: https://github.com/zsyayo112   # GitHub 主页链接
+    email:  1162671732@qq.com   # 邮箱
+    weixin: img | /images/qrcode.png # 微信，填图片链接可展示二维码：img | ./images/qrcode.png
     # zhihu:  # 知乎
 
 
