@@ -237,7 +237,7 @@
             
                 <span class="meta-info-item post-update-date">
                     <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                    <span class="datetime" data-updated="Tue Mar 10 2026 04:56:17 GMT+0000">2026-03-10</span>
+                    <span class="datetime" data-updated="Tue Mar 10 2026 05:05:26 GMT+0000">2026-03-10</span>
                 </span>
             
         
@@ -394,8 +394,7 @@
 <li><code>()</code> : 分组，用于限定 <code>|</code> 的范围或重复一段模式。</li>
 </ul>
 <hr>
-<p>练习1： 创建了一个test.c 文件</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX 100</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">10</span>; <span class="comment">// some comment</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="练习1：-创建了一个test-c-文件"><a href="#练习1：-创建了一个test-c-文件" class="headerlink" title="练习1： 创建了一个test.c 文件"></a>练习1： 创建了一个test.c 文件</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX 100</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">10</span>; <span class="comment">// some comment</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;hello world\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>问题1:  匹配所有 # 开头的行:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep -E &quot;#&quot; test.c</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -404,32 +403,88 @@
 <p>又或者是</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep -E &#x27;^\s*$&#x27; test.c</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <hr>
-<p>练习2: 匹配IP地址</p>
-<p>任务：在 Tutorial 中，匹配 129.94.172.1 到 129.94.172.25</p>
+<h3 id="练习2-匹配IP地址"><a href="#练习2-匹配IP地址" class="headerlink" title="练习2: 匹配IP地址"></a>练习2: 匹配IP地址</h3><p>任务：在 Tutorial 中，匹配 129.94.172.1 到 129.94.172.25</p>
 <p>理解逻辑：<br>    前三段固定: 129.94.172.<br>    最后一段： 可以是1-9， 或者是10-19， 或者是20-25<br>    组合: ([1-9]|1[0-9]|2[0-5])</p>
-<p>最终指令 <code>grep -E &#39;129\.92\.172\.([0-9]|1[0-9]|2[0-5])&#39;</code></p>
+<p>最终指令 </p>
+<p><code>grep -E &#39;129\.92\.172\.([0-9]|1[0-9]|2[0-5])&#39;</code></p>
 <h3 id="深度理解（避坑指南）"><a href="#深度理解（避坑指南）" class="headerlink" title="深度理解（避坑指南）"></a>深度理解（避坑指南）</h3><ol>
 <li>贪婪匹配 vs. 非贪婪匹配</li>
 </ol>
 <p>笔记： <code> .*</code> 会匹配尽可能多的字符<br>例子： 匹配HTML 标签 <a> test </a></p>
 <p>如果使用 &lt;.*&gt; 他会匹配第一个 &lt; 到 &gt; 之间的所有字符</p>
 <p>解决方案: 如果使用[^&gt;]*。 意思是匹配除了 &gt; 以外的所有字符， 知道遇到第一个 &gt; w 为止</p>
-<p>正确练习 ： <code> &lt;[^&gt;]*&gt;</code></p>
+<p>正确练习 ：</p>
+<p> <code> &lt;[^&gt;]*&gt;</code></p>
 <ol>
 <li>shell的特殊字符</li>
 </ol>
 <p>为什么 grep <p> test.html 会报错：</p>
 <p> &lt; &gt; 是shell里面的重定向符号<br> 准则： 永远用单引号扩起你的正则表达式</p>
-<p> 错误：<code>grep &lt;p&gt;|&lt;br&gt; file</code></p>
-<p> 正确：<code>grep -E &#39;&lt;p&gt;|&lt;br&gt;&#39; file</code></p>
-<p>练习：<br>    1. 匹配所有的十六进制颜色代码：<br>    <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -E &#x27;#[0-9a-fA-F]&#123;6&#125;&#x27; </span><br></pre></td></tr></table></figure></p>
-<pre><code>2. 匹配 UNSW 的课程代码（4个大写字母 + 4个数字，如 COMP9044）
+<p> 错误：<br> <code>grep &lt;p&gt;|&lt;br&gt; file</code></p>
+<p> 正确：<br> <code>grep -E &#39;&lt;p&gt;|&lt;br&gt;&#39; file</code></p>
+<h3 id="练习："><a href="#练习：" class="headerlink" title="练习："></a>练习：</h3><pre><code>1. 匹配所有的十六进制颜色代码：
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -E &#x27;#[0-9a-fA-F]&#123;6&#125;&#x27; </span><br></pre></td></tr></table></figure>
+
+
+2. 匹配 UNSW 的课程代码（4个大写字母 + 4个数字，如 COMP9044）
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">grep -E &#x27;\b[a-zA-Z]&#123;4&#125;[- ]?[0-9]&#123;4&#125;\b&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </code></pre>
 <hr>
 <h2 id="综合练习：-UNSW-校园数据处理实战"><a href="#综合练习：-UNSW-校园数据处理实战" class="headerlink" title="综合练习： UNSW 校园数据处理实战"></a>综合练习： UNSW 校园数据处理实战</h2><p>场景设定： 你拿到了一个名为 raw_data.txt 的原始文件，内容如下（包含脏数据）：</p>
-<p>|z5523839 | COMP9044 | 85 | 2026-03-01|<br>|z1234567 | MATH1131 | 45 | 2026-02-15|<br>|z9876543 | comp9044 | 92 | 2026-03-05|<br>|z5523839 | COMP9417 | 78 | 2026-03-02|<br>|  z1111111 | ENGG1000 | 06 | 2026-01-20|<br>|BAD_DATA | WRONG123 | XX | 2026-00-00|<br>|z2222222 | COMP9044 | 59 | 2026-03-10|</p>
+<table>
+<thead>
+<tr>
+<th>学号</th>
+<th>课程</th>
+<th>分数</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>z5523839</td>
+<td>COMP9044</td>
+<td>85</td>
+<td>2026-03-01</td>
+</tr>
+<tr>
+<td>z1234567</td>
+<td>MATH1131</td>
+<td>45</td>
+<td>2026-02-15</td>
+</tr>
+<tr>
+<td>z9876543</td>
+<td>comp9044</td>
+<td>92</td>
+<td>2026-03-05</td>
+</tr>
+<tr>
+<td>z5523839</td>
+<td>COMP9417</td>
+<td>78</td>
+<td>2026-03-02</td>
+</tr>
+<tr>
+<td>z1111111</td>
+<td>ENGG1000</td>
+<td>06</td>
+<td>2026-01-20</td>
+</tr>
+<tr>
+<td>BAD_DATA</td>
+<td>WRONG123</td>
+<td>XX</td>
+<td>2026-00-00</td>
+</tr>
+<tr>
+<td>z2222222</td>
+<td>COMP9044</td>
+<td>59</td>
+<td>2026-03-10</td>
+</tr>
+</tbody></table>
 <h3 id="第一部分：正则表达式-Week-01"><a href="#第一部分：正则表达式-Week-01" class="headerlink" title="第一部分：正则表达式 (Week 01)"></a>第一部分：正则表达式 (Week 01)</h3><ol>
 <li><p>数据清洗：写一个 grep -E 命令，只保留符合格式的行（zID 是 z 后面 7 位数字，课程代码是 4 位大写字母 + 4 位数字）。</p>
 </li>
@@ -467,10 +522,11 @@
 
 <p><strong>这个为啥不对:</strong></p>
 <p>你把第一条 grep 的搜索结果传给了第二条 grep，但这两条命令在逻辑上是“打架”的。我们来拆解一下发生了什么：</p>
-<p>❌ 错误原因分析<br>第一阶段：grep -E -i -w ‘[a-z]{4}[0-9]{4}’</p>
+<p><strong>❌ 错误原因分析</strong></p>
+<p>第一阶段：&#96;&#96;&#96;grep -E -i -w ‘[a-z]{4}[0-9]{4}’:&#96;&#96;</p>
 <p>它在 raw_data.txt 中找到了包含课程代码（如 COMP9044）的整行数据。</p>
 <p>输出的内容长这样：z5523839 | COMP9044 | 85 | 2026-03-01。</p>
-<p>第二阶段：| grep -E ‘^z[0-9]{7}$’</p>
+<p>第二阶段：<code>| grep -E &#39;^z[0-9]{7}$&#39;</code></p>
 <p>这一步是在上一步的结果中搜索。</p>
 <p>关键点：^ 表示行首，$ 表示行尾。</p>
 <p>你的正则要求整行只能有 z 加 7 位数字（比如 z5523839），不能有任何其他东西。</p>
@@ -478,23 +534,21 @@
 <p><strong>第二个疑问：但是grep的正则不是贪心匹配吗 难道不会匹配含有该表达式的所有行？</strong></p>
 <p>这是一个非常经典的学习误区，咱们得赶紧把这个概念理顺！你提到的“贪婪匹配”和“匹配含有该表达式的所有行”其实是两码事。</p>
 <p>这里的核心矛盾在于：正则表达式的“贪婪性”控制的是“匹配多长”，而 ^ 和 $ 控制的是“匹配位置”。</p>
-<ol>
-<li>为什么 ^ 和 $ 锁死了你的结果？<br>当你写 grep -E ‘^z[0-9]{7}$’ 时，你是在对 grep 下达一个极度严格的指令：</li>
-</ol>
+<p><strong>1. 为什么 ^ 和 $ 锁死了你的结果？:</strong></p>
+<p>当你写 grep -E ‘^z[0-9]{7}$’ 时，你是在对 grep 下达一个极度严格的指令：</p>
 <p>“给我找这样的一行：它必须以 z 开头，后面跟着 7 个数字，然后立刻结束。”</p>
 <p>你的数据行：z5523839 | COMP9044 | 85 | 2026-03-01</p>
 <p>正则的要求：z5523839 (到此为止，后面必须是行尾)</p>
 <p>冲突点：实际行在 z5523839 后面还有一个空格、一个竖线、课程代码等等。</p>
 <p>结论：因为这一行**不符合“在数字后立刻结束”**这个条件，所以 grep 判定这一行不匹配。</p>
 <p>正则的匹配是“全有或全无”的逻辑：如果加上了 ^ 和 $，它就从“包含检查”变成了“格式校验”。</p>
-<ol start="2">
-<li>什么是真正的“贪婪匹配” (Greedy Matching)？<br>“贪婪”通常指的是量词（如 * 或 +）的表现。它指的是：如果一个模式有多种匹配方式，它会抓取最长的那一个。</li>
-</ol>
+<p><strong>2. 什么是真正的“贪婪匹配” (Greedy Matching)？</strong></p>
+<p>“贪婪”通常指的是量词（如 * 或 +）的表现。它指的是：如果一个模式有多种匹配方式，它会抓取最长的那一个。</p>
 <p>例子：假设有一行文本 <a>内容</a></p>
 <p>正则：&lt;.*&gt;</p>
 <p>贪婪表现：它不会只匹配 <a>，它会一直匹配到最后一个 &gt;，结果是 <a>内容</a>。这就是贪婪——它想“吃”得尽可能多。</p>
 <p>但贪婪不能突破你设置的边界（Anchors）。如果你规定了 $（行尾），而数据还没结束，它就只能宣告匹配失败。</p>
-<ol start="3">
+<ol>
 <li>修正你的理解：grep 的默认行为<br>如果你想表达“匹配含有该表达式的所有行”，你不应该加 ^ 和 $。</li>
 </ol>
 <p>✅ grep -E ‘z[0-9]{7}’：<br>只要行里任何位置出现了 zID，这一行就会被抓出来。（这就是你想要的“匹配含有该表达式的行”）。</p>
@@ -583,7 +637,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEEK1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">WEEK1 基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grep%E7%9A%84%E4%BD%BF%E7%94%A8-Grep-%E6%98%AF-Unix-Linux-%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%90%8D%E5%AD%97%E6%9D%A5%E8%87%AA-Global-Regular-Expression-Print%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">Grep的使用 Grep 是 Unix&#x2F;Linux 系统中最常用的文本搜索工具，名字来自 Global Regular Expression Print。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Grep%E7%9A%84%E5%AE%B6%E6%97%8F%E6%88%90%E5%91%98"><span class="nav-number">1.1.1.</span> <span class="nav-text">Grep的家族成员</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%9A%80-UNSW-COMP9044-2041-Week-01-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%80%9F%E6%9F%A5%E8%A1%A8-Cheat-Sheet"><span class="nav-number">2.</span> <span class="nav-text">🚀 UNSW COMP9044&#x2F;2041 Week 01 正则表达式速查表 (Cheat Sheet)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E6%8C%87%E4%BB%A4-Grep-Family"><span class="nav-number">2.1.</span> <span class="nav-text">1. 核心工具指令 (Grep Family)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BB%8F%E5%85%B8%E5%AE%9E%E6%88%98%E5%8C%B9%E9%85%8D-Tutorial-%E6%A1%88%E4%BE%8B%E7%B2%BE%E9%80%89"><span class="nav-number">2.2.</span> <span class="nav-text">2. 经典实战匹配 (Tutorial 案例精选)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%89%E4%B8%AA%E2%80%9C%E4%BF%9D%E5%91%BD%E2%80%9D%E9%81%BF%E5%9D%91%E5%87%86%E5%88%99-Best-Practices"><span class="nav-number">2.3.</span> <span class="nav-text">3. 三个“保命”避坑准则 (Best Practices)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%B8%B8%E7%94%A8%E5%85%83%E5%AD%97%E7%AC%A6%E5%BF%AB%E9%80%9F%E5%9B%9E%E9%A1%BE"><span class="nav-number">2.4.</span> <span class="nav-text">4. 常用元字符快速回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%90%86%E8%A7%A3%EF%BC%88%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">深度理解（避坑指南）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0%EF%BC%9A-UNSW-%E6%A0%A1%E5%9B%AD%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%AE%9E%E6%88%98"><span class="nav-number">2.6.</span> <span class="nav-text">综合练习： UNSW 校园数据处理实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-Week-01"><span class="nav-number">2.6.1.</span> <span class="nav-text">第一部分：正则表达式 (Week 01)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E7%AE%A1%E9%81%93%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8-Week-02"><span class="nav-number">2.6.2.</span> <span class="nav-text">第二部分：管道与过滤器 (Week 02)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E8%BF%9B%E9%98%B6%E6%8C%91%E6%88%98%EF%BC%88%E8%A1%A5%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%89"><span class="nav-number">2.6.3.</span> <span class="nav-text">第三部分：进阶挑战（补全知识点）###</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEEK1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">WEEK1 基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grep%E7%9A%84%E4%BD%BF%E7%94%A8-Grep-%E6%98%AF-Unix-Linux-%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%90%8D%E5%AD%97%E6%9D%A5%E8%87%AA-Global-Regular-Expression-Print%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">Grep的使用 Grep 是 Unix&#x2F;Linux 系统中最常用的文本搜索工具，名字来自 Global Regular Expression Print。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Grep%E7%9A%84%E5%AE%B6%E6%97%8F%E6%88%90%E5%91%98"><span class="nav-number">1.1.1.</span> <span class="nav-text">Grep的家族成员</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%9A%80-UNSW-COMP9044-2041-Week-01-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%80%9F%E6%9F%A5%E8%A1%A8-Cheat-Sheet"><span class="nav-number">2.</span> <span class="nav-text">🚀 UNSW COMP9044&#x2F;2041 Week 01 正则表达式速查表 (Cheat Sheet)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E6%8C%87%E4%BB%A4-Grep-Family"><span class="nav-number">2.1.</span> <span class="nav-text">1. 核心工具指令 (Grep Family)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BB%8F%E5%85%B8%E5%AE%9E%E6%88%98%E5%8C%B9%E9%85%8D-Tutorial-%E6%A1%88%E4%BE%8B%E7%B2%BE%E9%80%89"><span class="nav-number">2.2.</span> <span class="nav-text">2. 经典实战匹配 (Tutorial 案例精选)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%89%E4%B8%AA%E2%80%9C%E4%BF%9D%E5%91%BD%E2%80%9D%E9%81%BF%E5%9D%91%E5%87%86%E5%88%99-Best-Practices"><span class="nav-number">2.3.</span> <span class="nav-text">3. 三个“保命”避坑准则 (Best Practices)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%B8%B8%E7%94%A8%E5%85%83%E5%AD%97%E7%AC%A6%E5%BF%AB%E9%80%9F%E5%9B%9E%E9%A1%BE"><span class="nav-number">2.4.</span> <span class="nav-text">4. 常用元字符快速回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A01%EF%BC%9A-%E5%88%9B%E5%BB%BA%E4%BA%86%E4%B8%80%E4%B8%AAtest-c-%E6%96%87%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">练习1： 创建了一个test.c 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A02-%E5%8C%B9%E9%85%8DIP%E5%9C%B0%E5%9D%80"><span class="nav-number">2.6.</span> <span class="nav-text">练习2: 匹配IP地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%90%86%E8%A7%A3%EF%BC%88%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%EF%BC%89"><span class="nav-number">2.7.</span> <span class="nav-text">深度理解（避坑指南）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9A"><span class="nav-number">2.8.</span> <span class="nav-text">练习：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0%EF%BC%9A-UNSW-%E6%A0%A1%E5%9B%AD%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%AE%9E%E6%88%98"><span class="nav-number">2.9.</span> <span class="nav-text">综合练习： UNSW 校园数据处理实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-Week-01"><span class="nav-number">2.9.1.</span> <span class="nav-text">第一部分：正则表达式 (Week 01)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E7%AE%A1%E9%81%93%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8-Week-02"><span class="nav-number">2.9.2.</span> <span class="nav-text">第二部分：管道与过滤器 (Week 02)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E8%BF%9B%E9%98%B6%E6%8C%91%E6%88%98%EF%BC%88%E8%A1%A5%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%89"><span class="nav-number">2.9.3.</span> <span class="nav-text">第三部分：进阶挑战（补全知识点）###</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
@@ -714,7 +768,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEEK1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">WEEK1 基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grep%E7%9A%84%E4%BD%BF%E7%94%A8-Grep-%E6%98%AF-Unix-Linux-%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%90%8D%E5%AD%97%E6%9D%A5%E8%87%AA-Global-Regular-Expression-Print%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">Grep的使用 Grep 是 Unix&#x2F;Linux 系统中最常用的文本搜索工具，名字来自 Global Regular Expression Print。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Grep%E7%9A%84%E5%AE%B6%E6%97%8F%E6%88%90%E5%91%98"><span class="nav-number">1.1.1.</span> <span class="nav-text">Grep的家族成员</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%9A%80-UNSW-COMP9044-2041-Week-01-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%80%9F%E6%9F%A5%E8%A1%A8-Cheat-Sheet"><span class="nav-number">2.</span> <span class="nav-text">🚀 UNSW COMP9044&#x2F;2041 Week 01 正则表达式速查表 (Cheat Sheet)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E6%8C%87%E4%BB%A4-Grep-Family"><span class="nav-number">2.1.</span> <span class="nav-text">1. 核心工具指令 (Grep Family)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BB%8F%E5%85%B8%E5%AE%9E%E6%88%98%E5%8C%B9%E9%85%8D-Tutorial-%E6%A1%88%E4%BE%8B%E7%B2%BE%E9%80%89"><span class="nav-number">2.2.</span> <span class="nav-text">2. 经典实战匹配 (Tutorial 案例精选)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%89%E4%B8%AA%E2%80%9C%E4%BF%9D%E5%91%BD%E2%80%9D%E9%81%BF%E5%9D%91%E5%87%86%E5%88%99-Best-Practices"><span class="nav-number">2.3.</span> <span class="nav-text">3. 三个“保命”避坑准则 (Best Practices)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%B8%B8%E7%94%A8%E5%85%83%E5%AD%97%E7%AC%A6%E5%BF%AB%E9%80%9F%E5%9B%9E%E9%A1%BE"><span class="nav-number">2.4.</span> <span class="nav-text">4. 常用元字符快速回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%90%86%E8%A7%A3%EF%BC%88%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%EF%BC%89"><span class="nav-number">2.5.</span> <span class="nav-text">深度理解（避坑指南）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0%EF%BC%9A-UNSW-%E6%A0%A1%E5%9B%AD%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%AE%9E%E6%88%98"><span class="nav-number">2.6.</span> <span class="nav-text">综合练习： UNSW 校园数据处理实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-Week-01"><span class="nav-number">2.6.1.</span> <span class="nav-text">第一部分：正则表达式 (Week 01)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E7%AE%A1%E9%81%93%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8-Week-02"><span class="nav-number">2.6.2.</span> <span class="nav-text">第二部分：管道与过滤器 (Week 02)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E8%BF%9B%E9%98%B6%E6%8C%91%E6%88%98%EF%BC%88%E8%A1%A5%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%89"><span class="nav-number">2.6.3.</span> <span class="nav-text">第三部分：进阶挑战（补全知识点）###</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEEK1-%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">WEEK1 基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Grep%E7%9A%84%E4%BD%BF%E7%94%A8-Grep-%E6%98%AF-Unix-Linux-%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7%EF%BC%8C%E5%90%8D%E5%AD%97%E6%9D%A5%E8%87%AA-Global-Regular-Expression-Print%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">Grep的使用 Grep 是 Unix&#x2F;Linux 系统中最常用的文本搜索工具，名字来自 Global Regular Expression Print。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Grep%E7%9A%84%E5%AE%B6%E6%97%8F%E6%88%90%E5%91%98"><span class="nav-number">1.1.1.</span> <span class="nav-text">Grep的家族成员</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%9A%80-UNSW-COMP9044-2041-Week-01-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%80%9F%E6%9F%A5%E8%A1%A8-Cheat-Sheet"><span class="nav-number">2.</span> <span class="nav-text">🚀 UNSW COMP9044&#x2F;2041 Week 01 正则表达式速查表 (Cheat Sheet)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E6%8C%87%E4%BB%A4-Grep-Family"><span class="nav-number">2.1.</span> <span class="nav-text">1. 核心工具指令 (Grep Family)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%BB%8F%E5%85%B8%E5%AE%9E%E6%88%98%E5%8C%B9%E9%85%8D-Tutorial-%E6%A1%88%E4%BE%8B%E7%B2%BE%E9%80%89"><span class="nav-number">2.2.</span> <span class="nav-text">2. 经典实战匹配 (Tutorial 案例精选)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%89%E4%B8%AA%E2%80%9C%E4%BF%9D%E5%91%BD%E2%80%9D%E9%81%BF%E5%9D%91%E5%87%86%E5%88%99-Best-Practices"><span class="nav-number">2.3.</span> <span class="nav-text">3. 三个“保命”避坑准则 (Best Practices)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%B8%B8%E7%94%A8%E5%85%83%E5%AD%97%E7%AC%A6%E5%BF%AB%E9%80%9F%E5%9B%9E%E9%A1%BE"><span class="nav-number">2.4.</span> <span class="nav-text">4. 常用元字符快速回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A01%EF%BC%9A-%E5%88%9B%E5%BB%BA%E4%BA%86%E4%B8%80%E4%B8%AAtest-c-%E6%96%87%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">练习1： 创建了一个test.c 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A02-%E5%8C%B9%E9%85%8DIP%E5%9C%B0%E5%9D%80"><span class="nav-number">2.6.</span> <span class="nav-text">练习2: 匹配IP地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E7%90%86%E8%A7%A3%EF%BC%88%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%EF%BC%89"><span class="nav-number">2.7.</span> <span class="nav-text">深度理解（避坑指南）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9A"><span class="nav-number">2.8.</span> <span class="nav-text">练习：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0%EF%BC%9A-UNSW-%E6%A0%A1%E5%9B%AD%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%AE%9E%E6%88%98"><span class="nav-number">2.9.</span> <span class="nav-text">综合练习： UNSW 校园数据处理实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-Week-01"><span class="nav-number">2.9.1.</span> <span class="nav-text">第一部分：正则表达式 (Week 01)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E7%AE%A1%E9%81%93%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8-Week-02"><span class="nav-number">2.9.2.</span> <span class="nav-text">第二部分：管道与过滤器 (Week 02)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E8%BF%9B%E9%98%B6%E6%8C%91%E6%88%98%EF%BC%88%E8%A1%A5%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%89"><span class="nav-number">2.9.3.</span> <span class="nav-text">第三部分：进阶挑战（补全知识点）###</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 

@@ -237,7 +237,7 @@
             
                 <span class="meta-info-item post-update-date">
                     <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                    <span class="datetime" data-updated="Tue Mar 10 2026 04:56:17 GMT+0000">2026-03-10</span>
+                    <span class="datetime" data-updated="Tue Mar 10 2026 05:05:26 GMT+0000">2026-03-10</span>
                 </span>
             
         
@@ -281,7 +281,58 @@
 <p><code>sed</code> :</p>
 <hr>
 <h2 id="综合练习：-UNSW-校园数据处理实战"><a href="#综合练习：-UNSW-校园数据处理实战" class="headerlink" title="综合练习： UNSW 校园数据处理实战"></a>综合练习： UNSW 校园数据处理实战</h2><p>场景设定： 你拿到了一个名为 raw_data.txt 的原始文件，内容如下（包含脏数据）：</p>
-<p>|z5523839 | COMP9044 | 85 | 2026-03-01|<br>|z1234567 | MATH1131 | 45 | 2026-02-15|<br>|z9876543 | comp9044 | 92 | 2026-03-05|<br>|z5523839 | COMP9417 | 78 | 2026-03-02|<br>|  z1111111 | ENGG1000 | 06 | 2026-01-20|<br>|BAD_DATA | WRONG123 | XX | 2026-00-00|<br>|z2222222 | COMP9044 | 59 | 2026-03-10|</p>
+<table>
+<thead>
+<tr>
+<th>学号</th>
+<th>课程</th>
+<th>分数</th>
+<th>日期</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>z5523839</td>
+<td>COMP9044</td>
+<td>85</td>
+<td>2026-03-01</td>
+</tr>
+<tr>
+<td>z1234567</td>
+<td>MATH1131</td>
+<td>45</td>
+<td>2026-02-15</td>
+</tr>
+<tr>
+<td>z9876543</td>
+<td>comp9044</td>
+<td>92</td>
+<td>2026-03-05</td>
+</tr>
+<tr>
+<td>z5523839</td>
+<td>COMP9417</td>
+<td>78</td>
+<td>2026-03-02</td>
+</tr>
+<tr>
+<td>z1111111</td>
+<td>ENGG1000</td>
+<td>06</td>
+<td>2026-01-20</td>
+</tr>
+<tr>
+<td>BAD_DATA</td>
+<td>WRONG123</td>
+<td>XX</td>
+<td>2026-00-00</td>
+</tr>
+<tr>
+<td>z2222222</td>
+<td>COMP9044</td>
+<td>59</td>
+<td>2026-03-10</td>
+</tr>
+</tbody></table>
 <hr>
 <h3 id="第二部分：管道与过滤器-Week-02"><a href="#第二部分：管道与过滤器-Week-02" class="headerlink" title="第二部分：管道与过滤器 (Week 02)"></a>第二部分：管道与过滤器 (Week 02)</h3><ol start="4">
 <li><p>字段提取：使用 cut 提取所有的 zID 和分数（第一列和第三列）。注意：分隔符是 |（包含空格）。</p>
