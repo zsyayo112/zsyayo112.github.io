@@ -237,7 +237,7 @@
             
                 <span class="meta-info-item post-update-date">
                     <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                    <span class="datetime" data-updated="Tue Mar 10 2026 05:09:28 GMT+0000">2026-03-10</span>
+                    <span class="datetime" data-updated="Tue Mar 10 2026 05:10:27 GMT+0000">2026-03-10</span>
                 </span>
             
         
@@ -423,15 +423,17 @@
 <p> 错误：<br> <code>grep &lt;p&gt;|&lt;br&gt; file</code></p>
 <p> 正确：<br> <code>grep -E &#39;&lt;p&gt;|&lt;br&gt;&#39; file</code></p>
 <hr>
-<h3 id="练习3："><a href="#练习3：" class="headerlink" title="练习3："></a>练习3：</h3><pre><code>1. 匹配所有的十六进制颜色代码：
-
+<h3 id="练习3："><a href="#练习3：" class="headerlink" title="练习3："></a>练习3：</h3><ol>
+<li>匹配所有的十六进制颜色代码：</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -E &#x27;#[0-9a-fA-F]&#123;6&#125;&#x27; </span><br></pre></td></tr></table></figure>
 
 
-2. 匹配 UNSW 的课程代码（4个大写字母 + 4个数字，如 COMP9044）
-
+<ol start="2">
+<li>匹配 UNSW 的课程代码（4个大写字母 + 4个数字，如 COMP9044）</li>
+</ol>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">grep -E &#x27;\b[a-zA-Z]&#123;4&#125;[- ]?[0-9]&#123;4&#125;\b&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</code></pre>
+
 <hr>
 <h2 id="综合练习：-UNSW-校园数据处理实战"><a href="#综合练习：-UNSW-校园数据处理实战" class="headerlink" title="综合练习： UNSW 校园数据处理实战"></a>综合练习： UNSW 校园数据处理实战</h2><p>场景设定： 你拿到了一个名为 raw_data.txt 的原始文件，内容如下（包含脏数据）：</p>
 <table>
