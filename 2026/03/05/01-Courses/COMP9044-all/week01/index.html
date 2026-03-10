@@ -237,7 +237,7 @@
             
                 <span class="meta-info-item post-update-date">
                     <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                    <span class="datetime" data-updated="Tue Mar 10 2026 03:38:17 GMT+0000">2026-03-10</span>
+                    <span class="datetime" data-updated="Tue Mar 10 2026 03:39:48 GMT+0000">2026-03-10</span>
                 </span>
             
         
@@ -408,21 +408,21 @@
 <p>练习2: 匹配IP地址</p>
 <p>任务：在 Tutorial 中，匹配 129.94.172.1 到 129.94.172.25</p>
 <p>理解逻辑：<br>    前三段固定: 129.94.172.<br>    最后一段： 可以是1-9， 或者是10-19， 或者是20-25<br>    组合: ([1-9]|1[0-9]|2[0-5])</p>
-<p>最终指令 <code>shell grep -E &#39;129\.92\.172\.([0-9]|1[0-9]|2[0-5])&#39; </code></p>
+<p>最终指令 <code>grep -E &#39;129\.92\.172\.([0-9]|1[0-9]|2[0-5])&#39;</code></p>
 <h3 id="深度理解（避坑指南）"><a href="#深度理解（避坑指南）" class="headerlink" title="深度理解（避坑指南）"></a>深度理解（避坑指南）</h3><ol>
 <li>贪婪匹配 vs. 非贪婪匹配</li>
 </ol>
-<p>笔记： <code>shell .*</code> 会匹配尽可能多的字符<br>例子： 匹配HTML 标签 <a> test </a></p>
+<p>笔记： <code> .*</code> 会匹配尽可能多的字符<br>例子： 匹配HTML 标签 <a> test </a></p>
 <p>如果使用 &lt;.*&gt; 他会匹配第一个 &lt; 到 &gt; 之间的所有字符</p>
 <p>解决方案: 如果使用[^&gt;]*。 意思是匹配除了 &gt; 以外的所有字符， 知道遇到第一个 &gt; w 为止</p>
-<p>正确练习 ： <code>shell &lt;[^&gt;]*&gt;</code></p>
-<ol start="2">
+<p>正确练习 ： <code> &lt;[^&gt;]*&gt;</code></p>
+<ol>
 <li>shell的特殊字符</li>
 </ol>
 <p>为什么 grep <p> test.html 会报错：</p>
 <p> &lt; &gt; 是shell里面的重定向符号<br> 准则： 永远用单引号扩起你的正则表达式</p>
-<p> 错误：<code>shell grep &lt;p&gt;|&lt;br&gt; file </code></p>
-<p> 正确：<code>shell grep -E &#39;&lt;p&gt;|&lt;br&gt;&#39; file </code></p>
+<p> 错误：<code>grep &lt;p&gt;|&lt;br&gt; file</code></p>
+<p> 正确：<code>grep -E &#39;&lt;p&gt;|&lt;br&gt;&#39; file</code></p>
 <p>练习：<br>    1. 匹配所有的十六进制颜色代码：<br>    <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -E &#x27;#[0-9a-fA-F]&#123;6&#125;&#x27; </span><br></pre></td></tr></table></figure></p>
 <pre><code>2. 匹配 UNSW 的课程代码（4个大写字母 + 4个数字，如 COMP9044）
 
