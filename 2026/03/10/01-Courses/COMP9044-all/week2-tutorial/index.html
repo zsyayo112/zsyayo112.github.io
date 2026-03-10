@@ -237,7 +237,7 @@
             
                 <span class="meta-info-item post-update-date">
                     <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                    <span class="datetime" data-updated="Tue Mar 10 2026 06:42:46 GMT+0000">2026-03-10</span>
+                    <span class="datetime" data-updated="Tue Mar 10 2026 06:46:55 GMT+0000">2026-03-10</span>
                 </span>
             
         
@@ -273,8 +273,75 @@
                     
 
                     
-                         <h1 id="第二阶段：-核心工具笔记"><a href="#第二阶段：-核心工具笔记" class="headerlink" title="第二阶段： 核心工具笔记"></a>第二阶段： 核心工具笔记</h1><h2 id="1-sort-排序"><a href="#1-sort-排序" class="headerlink" title="1. sort  -排序"></a>1. sort  -排序</h2><hr>
-<figure class="highlight plaintext"><figcaption><span>: 不仅仅是排序， 关键在于 ```-k(key)``` 定位字段和 ```-n(numeric)``` 按排序排</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">| 选项 | 含义 | 示例 |</span><br><span class="line">|------|------|------|</span><br><span class="line">| -k F,F(F表示 Field， 字段) | 按第 F 个字段排序 | sort -k2,2 |</span><br><span class="line">| -t &#x27;SEP&#x27; | 按照指定分隔符排序 | sort -t &#x27;||&#x27; |</span><br><span class="line">| -n | 数值排序(非字典序) | sort -k3,3n |</span><br><span class="line">|-r | 逆序排序 | sort -k2,2r |</span><br><span class="line">| -k F.c | 从第F个字段的第c个字符开始 |-k1.8,1n |</span><br><span class="line"></span><br><span class="line">### 多键排序</span><br><span class="line"></span><br><span class="line">```sort -k3,3 -k2,2 benchmarks```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">⚠️ -k2,2 和 -k2 的区别：-k2 表示&quot;从第2字段到行尾&quot;，-k2,2 才表示&quot;仅第2字段&quot;。做精确排序时要加结束列号!</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">**练习1-A**</span><br><span class="line">下面的文件是 benchmarks（Tab 分隔），第2列是&quot;第一基准&quot;，第3列是&quot;第二基准&quot;，第4列是&quot;第三基准&quot;。</span><br><span class="line">写命令：先按第三基准排序，再按程序编号（字段1中数字部分）排序。</span><br><span class="line"></span><br><span class="line">|   基准1   |   基准2   |   基准3   |   基准4   |</span><br><span class="line">|-----------|-----------|-----------|-----------|</span><br><span class="line">|   program1    |   08  |   03  |   05  |</span><br><span class="line">|   program10   |   09    |   04  |   16  |</span><br><span class="line">|   program2    |   14    |   03  |   05  |</span><br><span class="line"></span><br><span class="line">**参考答案**</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line"></span><br><span class="line">sort -k4,4 -k1.8,1n benchmarks.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+                         <h1 id="第二阶段：-核心工具笔记"><a href="#第二阶段：-核心工具笔记" class="headerlink" title="第二阶段： 核心工具笔记"></a>第二阶段： 核心工具笔记</h1><h2 id="1-sort-排序"><a href="#1-sort-排序" class="headerlink" title="1. sort  -排序"></a>1. sort  -排序</h2><p>sort : 不仅仅是排序， 关键在于 <code>-k(key)</code> 定位字段和 <code>-n(numeric)</code>按排序排</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-k F,F(F表示 Field， 字段)</td>
+<td>按第 F 个字段排序</td>
+<td>sort -k2,2</td>
+</tr>
+<tr>
+<td>-t ‘SEP’</td>
+<td>按照指定分隔符排序</td>
+<td>sort -t ‘</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>数值排序(非字典序)</td>
+<td>sort -k3,3n</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>逆序排序</td>
+<td>sort -k2,2r</td>
+</tr>
+<tr>
+<td>-k F.c</td>
+<td>从第F个字段的第c个字符开始</td>
+<td>-k1.8,1n</td>
+</tr>
+</tbody></table>
+<h3 id="多键排序"><a href="#多键排序" class="headerlink" title="多键排序"></a>多键排序</h3><p><code>sort -k3,3 -k2,2 benchmarks</code></p>
+<p>⚠️ -k2,2 和 -k2 的区别：-k2 表示”从第2字段到行尾”，-k2,2 才表示”仅第2字段”。做精确排序时要加结束列号!</p>
+<hr>
+<p><strong>练习1-A</strong><br>下面的文件是 benchmarks（Tab 分隔），第2列是”第一基准”，第3列是”第二基准”，第4列是”第三基准”。<br>写命令：先按第三基准排序，再按程序编号（字段1中数字部分）排序。</p>
+<table>
+<thead>
+<tr>
+<th>基准1</th>
+<th>基准2</th>
+<th>基准3</th>
+<th>基准4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>program1</td>
+<td>08</td>
+<td>03</td>
+<td>05</td>
+</tr>
+<tr>
+<td>program10</td>
+<td>09</td>
+<td>04</td>
+<td>16</td>
+</tr>
+<tr>
+<td>program2</td>
+<td>14</td>
+<td>03</td>
+<td>05</td>
+</tr>
+</tbody></table>
+<p><strong>参考答案</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sort -k4,4 -k1.8,1n benchmarks.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 <p>-k1.8,1n 表示从第1个字段的第8个字符(“Program”后面的数字开始)， 按照数值排序。 这样Program2就排在Program10的前面了</p>
@@ -452,7 +519,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A-%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">第二阶段： 核心工具笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sort-%E6%8E%92%E5%BA%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1. sort  -排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-cut-%E6%8F%90%E5%8F%96%E5%AD%97%E6%AE%B5-%E5%AD%97%E7%AC%A6"><span class="nav-number">1.2.</span> <span class="nav-text">2. cut -提取字段&#x2F;字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0%EF%BC%9A-UNSW-%E6%A0%A1%E5%9B%AD%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%AE%9E%E6%88%98"><span class="nav-number">1.3.</span> <span class="nav-text">综合练习： UNSW 校园数据处理实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E7%AE%A1%E9%81%93%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8-Week-02"><span class="nav-number">1.3.1.</span> <span class="nav-text">第二部分：管道与过滤器 (Week 02)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E8%BF%9B%E9%98%B6%E6%8C%91%E6%88%98%EF%BC%88%E8%A1%A5%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">第三部分：进阶挑战（补全知识点）###</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A-%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">第二阶段： 核心工具笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sort-%E6%8E%92%E5%BA%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1. sort  -排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%94%AE%E6%8E%92%E5%BA%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">多键排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-cut-%E6%8F%90%E5%8F%96%E5%AD%97%E6%AE%B5-%E5%AD%97%E7%AC%A6"><span class="nav-number">1.2.</span> <span class="nav-text">2. cut -提取字段&#x2F;字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0%EF%BC%9A-UNSW-%E6%A0%A1%E5%9B%AD%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%AE%9E%E6%88%98"><span class="nav-number">1.3.</span> <span class="nav-text">综合练习： UNSW 校园数据处理实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E7%AE%A1%E9%81%93%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8-Week-02"><span class="nav-number">1.3.1.</span> <span class="nav-text">第二部分：管道与过滤器 (Week 02)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E8%BF%9B%E9%98%B6%E6%8C%91%E6%88%98%EF%BC%88%E8%A1%A5%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">第三部分：进阶挑战（补全知识点）###</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
@@ -583,7 +650,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A-%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">第二阶段： 核心工具笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sort-%E6%8E%92%E5%BA%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1. sort  -排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-cut-%E6%8F%90%E5%8F%96%E5%AD%97%E6%AE%B5-%E5%AD%97%E7%AC%A6"><span class="nav-number">1.2.</span> <span class="nav-text">2. cut -提取字段&#x2F;字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0%EF%BC%9A-UNSW-%E6%A0%A1%E5%9B%AD%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%AE%9E%E6%88%98"><span class="nav-number">1.3.</span> <span class="nav-text">综合练习： UNSW 校园数据处理实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E7%AE%A1%E9%81%93%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8-Week-02"><span class="nav-number">1.3.1.</span> <span class="nav-text">第二部分：管道与过滤器 (Week 02)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E8%BF%9B%E9%98%B6%E6%8C%91%E6%88%98%EF%BC%88%E8%A1%A5%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">第三部分：进阶挑战（补全知识点）###</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A-%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">第二阶段： 核心工具笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sort-%E6%8E%92%E5%BA%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1. sort  -排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%94%AE%E6%8E%92%E5%BA%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">多键排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-cut-%E6%8F%90%E5%8F%96%E5%AD%97%E6%AE%B5-%E5%AD%97%E7%AC%A6"><span class="nav-number">1.2.</span> <span class="nav-text">2. cut -提取字段&#x2F;字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E7%BB%83%E4%B9%A0%EF%BC%9A-UNSW-%E6%A0%A1%E5%9B%AD%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%AE%9E%E6%88%98"><span class="nav-number">1.3.</span> <span class="nav-text">综合练习： UNSW 校园数据处理实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9A%E7%AE%A1%E9%81%93%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8-Week-02"><span class="nav-number">1.3.1.</span> <span class="nav-text">第二部分：管道与过滤器 (Week 02)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9A%E8%BF%9B%E9%98%B6%E6%8C%91%E6%88%98%EF%BC%88%E8%A1%A5%E5%85%A8%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">第三部分：进阶挑战（补全知识点）###</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
