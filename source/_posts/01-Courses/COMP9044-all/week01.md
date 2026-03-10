@@ -146,7 +146,7 @@ grep -E '^\s*$' test.c
 
 1. shell的特殊字符
 
-为什么 grep <p> test.html 会报错：
+为什么 ```grep <p> test.html``` 会报错：
 
  < > 是shell里面的重定向符号
  准则： 永远用单引号扩起你的正则表达式
