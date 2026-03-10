@@ -26,6 +26,7 @@ categories: COMP9044
 
 ```sort -k3,3 -k2,2 benchmarks```
 
+
 ⚠️ -k2,2 和 -k2 的区别：-k2 表示"从第2字段到行尾"，-k2,2 才表示"仅第2字段"。做精确排序时要加结束列号!
 
 ---
@@ -48,6 +49,7 @@ sort -k4,4 -k1.8,1n benchmarks.txt
 
 ```
 
+
 -k1.8,1n 表示从第1个字段的第8个字符("Program"后面的数字开始)， 按照数值排序。 这样Program2就排在Program10的前面了
 
 ---
@@ -60,7 +62,7 @@ sort -k4,4 -k1.8,1n benchmarks.txt
 ```shell
 sort -t '|' -k1,1 marks.psv > marks-sorted.psv
 ```
-
+![alt text](image.png)
 ---
 
 ## 2. cut -提取字段/字符
