@@ -62,7 +62,7 @@ sort -k4,4 -k1.8,1n benchmarks.txt
 ```shell
 sort -t '|' -k1,1 marks.psv > marks-sorted.psv
 ```
-![alt text](image.png)
+{% asset_img image.png alt text %}
 ---
 
 ## 2. cut -提取字段/字符
