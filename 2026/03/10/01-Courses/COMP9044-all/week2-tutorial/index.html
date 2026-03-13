@@ -237,7 +237,7 @@
             
                 <span class="meta-info-item post-update-date">
                     <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                    <span class="datetime" data-updated="Thu Mar 12 2026 04:36:10 GMT+0000">2026-03-12</span>
+                    <span class="datetime" data-updated="Fri Mar 13 2026 05:38:27 GMT+0000">2026-03-13</span>
                 </span>
             
         
@@ -539,6 +539,31 @@
    <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">去掉 Tab 后的前导0: \t0 -&gt; \t(全局替换)</span></span><br><span class="line">sed -Ee &#x27;s/\t0/\t/g&#x27; benchmarks</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">删除 progarm2 到 program13 之间的行</span></span><br><span class="line">sed -Ee &#x27;/^program\b/,/^program13\b/d&#x27; benchmarks</span><br></pre></td></tr></table></figure>
 <p>⚠️ \b 是单词边界，确保 program2 不会误匹配 program20。</p>
 <hr>
+<p>   sed -n</p>
+<p>这是个非常关键的参数。简单来说，-n 的作用是**“关掉 sed 的大喇叭”**。</p>
+<ol>
+<li><p>默认情况：Sed 是个“复读机”默认情况下，sed 每读入一行，处理完之后无论有没有修改，都会把这一行自动打印出来。Bash# 即使你什么都不做，它也会把整个文件原样打出来<br>sed ‘’ data.txt</p>
+</li>
+<li><p>加入 -n：Sed 变成“沉默者”当你加上 -n（全称 –quiet 或 –silent）时，sed 进入静默模式。它依然会读取每一行，但除非你明确命令它打印，否则它什么都不会输出。Bash# 什么都不会显示，因为没有打印指令<br>sed -n ‘’ data.txt </p>
+</li>
+<li><p>-n 必须配合 p 指令使用在静默模式下，我们通常使用 p (print) 指令来告诉 sed：“只有符合这个条件的行，才给我印出来！”    这就是为什么打印第 3 到 7 行要写成：Bashsed -n ‘3,7p’ data.txt.    -n：先闭嘴，不要默认打印所有行。   3,7：找到第 3 到第 7 行。p：把这几行印出来。</p>
+</li>
+<li><p>如果不加 -n 会发生什么？如果你只写 sed ‘3,7p’ data.txt（没加 -n），结果会让你大吃一惊：第 1 行：不是 3-7，默认打印一次。第 2 行：不是 3-7，默认打印一次。第 3 行：属于 3-7，执行 p 指令打印一次，然后 sed 默认又打印一次（这行会出现两次！）。…以此类推。</p>
+</li>
+</ol>
+<p>结果如下：Plaintextline1<br>line2<br>line3  &lt;– p 指令印的<br>line3  &lt;– 默认印的<br>line4<br>line4<br>…<br>💡 形象的比喻普通 sed：像个复读机，不管改没改，每行都得喊一遍。sed -n：像个狙击手，潜伏在那不动，只有看到目标（匹配到模式）并接到指令（p）时才开火（打印）。常见用法总结命令含义sed -n ‘5p’只打印第 5 行sed -n ‘$p’只打印最后一行sed -n ‘&#x2F;error&#x2F;p’只打印包含 “error” 关键字的行（类似 grep）</p>
+<hr>
+<p>我们要把它们分成两大阵营：一个是运行 sed 的外部开关，另外两个是写在引号里的内部指令。</p>
+<ol>
+<li><p>外部开关：-i (In-place)它是 sed 命令的一个选项，写在引号外面。<br>它的作用只有一个：直接修改原文件。<br>默认（不加 -i）：sed 只是把处理后的结果印在屏幕上给你看，原文件没有任何变化。<br>加了 -i：sed 会悄悄地把修改保存回原文件。[!WARNING]小心： 在 macOS 上，必须写成 sed -i ‘’ ‘…’（多一个空引号）。</p>
+</li>
+<li><p>内部指令：a 和 i这两个是写在引号里的动作指令，用来在文件的特定位置增加新行。<br>   a (Append) —— 在“后”加逻辑：在匹配到的行之后插入新内容。口诀：After（在……之后）。<br>   i (Insert) —— 在“前”加逻辑：在匹配到的行之前插入新内容。口诀：In front of（在……前面）。</p>
+</li>
+<li><p>三者对比表符号身份作用位置例子-i选项 (Option)保存到文件引号外面sed -i ‘…’ filea指令 (Command)在行后追加引号内面sed ‘2a\Hello’ filei指令 (Command)在行前插入引号内面sed ‘2i\Hello’ file</p>
+</li>
+</ol>
+<p>符号,身份,作用,位置,例子<br>-i,选项 (Option),保存到文件,引号外面,sed -i ‘…’ file<br>a,指令 (Command),在行后追加,引号内面,sed ‘2a\Hello’ file<br>i,指令 (Command),在行前插入,引号内面,sed ‘2i\Hello’ file</p>
+<hr>
 <p><strong>练习 5-A</strong><br>写sed命令: 把文件中所有http:&#x2F;&#x2F; 替换成 https:&#x2F;&#x2F;</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sed -Ee &#x27;s|http://|/https://|g&#x27; file</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这里用 | 作为分隔符，避免在模式中转义 /。</span></span><br></pre></td></tr></table></figure>
 <hr>
@@ -622,6 +647,18 @@
 <td>清洗数据最常用的“吸尘器”</td>
 </tr>
 </tbody></table>
+<hr>
+<p><strong>练习5-C</strong></p>
+<p>删除行尾的空格</p>
+<p>答案</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed &#x27;s/[[:space:]]*$//&#x27; notes.txt</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>练习5-D</strong></p>
+<p>中等<br>sed-4  只保留特定行范围<br>文件 data.txt 有10行，只打印第3行到第7行（其余行不显示）。<br>line1<br>line2<br>line3<br>line4<br>line5<br>line6<br>line7<br>line8<br>line9<br>line10<br>提示 查看答案<br>用行号范围 N,M 配合取反删除：删除1到2行，再删除8到10行。或者用 -n + p。<br>答案<br>sed -n ‘3,7p’ data.txt<br>-n 禁止默认输出，3,7p 只打印第3到第7行。<br>另一种写法：sed ‘1,2d; 8,$d’ data.txt</p>
+<hr>
+<p><strong>练习5-11</strong></p>
+<p>sed-5  在匹配行后插入内容<br>文件 hosts.txt 中，在每行含 localhost 的行后面插入一行 # local only。<br>127.0.0.1 localhost<br>192.168.1.1 gateway<br>::1 localhost<br>提示 查看答案<br>sed 的 a 命令（append）在匹配行之后插入文本。<br>答案<br>sed ‘&#x2F;localhost&#x2F;a # local only’ hosts.txt<br>&#x2F;localhost&#x2F;a TEXT：找到含 localhost 的行，在其后追加 TEXT。<br>对应的 i 命令是在行前插入。</p>
 <hr>
 <h2 id="6-join-合并两个有序文件"><a href="#6-join-合并两个有序文件" class="headerlink" title="6. join - 合并两个有序文件"></a>6. join - 合并两个有序文件</h2><hr>
 <p>核心要求 &amp; 用法<br>⚠️ join 要求两个输入文件都按连接键排好序！</p>
@@ -731,7 +768,7 @@
                             <div class="prev-post">
                                 <a class="prev"
                                    rel="prev"
-                                   href="/2026/03/12/hello-world/"
+                                   href="/2026/03/13/hello-world/"
                                    title="Hello World"
                                 >
                                     <span class="left arrow-icon flex-center">
