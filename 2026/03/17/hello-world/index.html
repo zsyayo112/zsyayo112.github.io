@@ -9,7 +9,7 @@
     
     <title>
         
-            week3-shell |
+            Hello World |
         
         Syz&#39;s Blog
     </title>
@@ -205,7 +205,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        week3-shell
+                        Hello World
                     </div>
                 
 
@@ -231,37 +231,19 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2026-03-13</span>
+                <span class="datetime">2026-03-17</span>
             </span>
 
             
                 <span class="meta-info-item post-update-date">
                     <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                    <span class="datetime" data-updated="Mon Mar 16 2026 23:59:53 GMT+0000">2026-03-16</span>
+                    <span class="datetime" data-updated="Tue Mar 17 2026 13:19:01 GMT+0000">2026-03-17</span>
                 </span>
             
         
 
         
-            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
-                <ul class="post-category-ul">
-                    
-                            <li class="category-item"><a href="/categories/COPM9044/">COPM9044</a></li>
-                        
-                    
-                </ul>
-            </span>
-        
 
-        
-            <span class="post-tag meta-info-item border-box">
-                <ul class="post-tag-ul">
-                    
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/shell/">shell</a></li>
-                        
-                    
-                </ul>
-            </span>
         
 
         
@@ -282,178 +264,19 @@
                     
 
                     
-                         <p><strong>shell</strong></p>
-<p>第一个点 变量的赋值</p>
-<p>第二个点 要注意加入引号之后的含义</p>
-<p>name&#x3D;90</p>
-<p>echo “my name is $name”</p>
-<hr>
-<p>w&#x3D; xx yyy zzz</p>
-<p>echo $w</p>
-<p>和</p>
-<p>echo “$w”</p>
-<p>是不一样的</p>
-<hr>
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/2026/03/13/01-Courses/COMP9044-all/week3-shell/quote.png"
-                        alt="三种引号的区别"
-                 ></p>
-<hr>
-<p>.&#x2F;test.sh 运行：shell 开一个子进程来执行脚本，子进程里的 cd 和变量赋值只影响子进程，子进程结束后父 shell 完全不知道发生了什么。source .&#x2F;test.sh 运行：不开新进程，直接在当前 shell 里执行脚本里的每一行，所以 cd 和变量赋值都影响当前 shell。</p>
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/2026/03/13/01-Courses/COMP9044-all/week3-shell/source.png"
-                        alt="source运行和直接运行的区别"
-                 ></p>
-<hr>
-<p>atest 命令和 if 语句。这是写控制逻辑的基础。把 test.sh 改成：</p>
-<p>#!&#x2F;bin&#x2F;dash</p>
-<h1 id="检查参数个数"><a href="#检查参数个数" class="headerlink" title="检查参数个数"></a>检查参数个数</h1><p>if test “$#” -eq 0<br>then<br>    echo “用法: $0 &lt;名字&gt;”<br>    exit 1<br>fi</p>
-<p>echo “你好, $1”</p>
-<p>保存后</p>
-<p>.&#x2F;test.sh           # 不给参数，看报错<br>.&#x2F;test.sh Alice     # 给参数，看输出<br>echo $?             # 看退出状态</p>
-<p>$? 要配合 echo 用，不能直接敲 $?——因为 shell 会把它展开成数字，然后把那个数字当命令来执行，所以报 1: command not found。</p>
-<hr>
-<p>看到 0 和 1 之后，再试试 &amp;&amp; 和 || 的用法——这是 $? 最实用的场景：</p>
-<p>.&#x2F;test.sh Alice &amp;&amp; echo “脚本成功了”<br>.&#x2F;test.sh          &amp;&amp; echo “这行不会出现”<br>.&#x2F;test.sh          || echo “脚本失败了，走这里”</p>
-<p>&amp;&amp; 的意思是”前面成功才执行后面”，|| 是”前面失败才执行后面”。</p>
-<hr>
-<h2 id="While-循环-和-For-循环"><a href="#While-循环-和-For-循环" class="headerlink" title="While 循环 和 For 循环"></a>While 循环 和 For 循环</h2><p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/2026/03/13/01-Courses/COMP9044-all/week3-shell/whileandfor.png"
-                        alt="while循环和for循环"
-                 ></p>
-<hr>
-<h2 id="case-语句。"><a href="#case-语句。" class="headerlink" title="case 语句。"></a>case 语句。</h2><p>case 是 if&#x2F;elif&#x2F;elif&#x2F;… 的简洁替代，特别适合一个变量对应多种情况的时候。语法是这样：</p>
-<pre><code>case &quot;$变量&quot; in
-模式1)
-    命令
-    ;;
-模式2)
-    命令
-    ;;
-*)
-    默认命令
-    ;;
-esac
-</code></pre>
-<p>注意三个细节：</p>
-<p>每个分支用 ;; 结束</p>
-<ul>
-<li>是默认分支，相当于 else<br>模式用的是 glob，不是正则</li>
-</ul>
-<hr>
-<p>case 的 *.c 和正则的 *.c 有什么区别？</p>
-<p>Glob（case 用的）：</p>
-<ul>
-<li>&#x3D; 匹配任意个任意字符<br>*.c &#x3D; 以 .c 结尾的任何字符串<br>只有 * ? [] 三种特殊符号</li>
-</ul>
-<p>正则表达式（grep&#x2F;sed 用的）：</p>
-<ul>
-<li>&#x3D; 前面那个字符重复0次或多次<br><em>.c &#x3D; 任意个任意字符后面跟一个 c（. 在正则里是”任意单个字符”）<br>.</em>.c$ 才是正则里”以 .c 结尾”的写法</li>
-</ul>
-<hr>
-<h2 id="函数和-local-变量。"><a href="#函数和-local-变量。" class="headerlink" title="函数和 local 变量。"></a>函数和 local 变量。</h2><pre><code>#!/bin/dash
+                         <p>Welcome to <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/" >Hexo<i class="fas fa-external-link-alt"></i></a>! This is your very first post. Check <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/" >documentation<i class="fas fa-external-link-alt"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html" >troubleshooting<i class="fas fa-external-link-alt"></i></a> or you can ask me on <a class="link"   target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues" >GitHub<i class="fas fa-external-link-alt"></i></a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
+<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html" >Writing<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-is_prime() {
-    local n=$1
-    local i=2
-    while test &quot;$i&quot; -lt &quot;$n&quot;
-    do
-        if test $((n%i)) -eq 0
-        then
-            return 1
-        fi
-        i=$((i+1))
-    done
-    return 0
-}
+<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/server.html" >Server<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 
-i=2
-while test &quot;$i&quot; -lt 10
-do
-    if is_prime &quot;$i&quot;
-    then
-        echo &quot;$i is prime&quot;
-    fi
-    i=$((i+1))
-done
-</code></pre>
-<hr>
-<h2 id="I-O-重定向和管道陷阱。"><a href="#I-O-重定向和管道陷阱。" class="headerlink" title="I&#x2F;O 重定向和管道陷阱。"></a>I&#x2F;O 重定向和管道陷阱。</h2><pre><code>#!/bin/dash
+<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html" >Generating<i class="fas fa-external-link-alt"></i></a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-total=0
-echo &quot;3
-5
-7&quot; | while read n
-do
-    echo &quot;现在读到 $n&quot;
-    total=$((total+n))
-done
-echo &quot;总和$total&quot;
-
-
-
-echo &quot;3
-5
-7&quot; &gt; /tmp/nums.txt
-
-
-total=0
-while read n 
-do
-    total=$((total+n))
-done &lt; /tmp/nums.txt
-
-echo &quot;total num : $total&quot;
-</code></pre>
-<hr>
-<h2 id="trap-和-mktemp"><a href="#trap-和-mktemp" class="headerlink" title="trap 和 mktemp"></a>trap 和 mktemp</h2><p>这两个配合使用，解决一个实际问题：脚本用了临时文件，但如果中途被 Ctrl+C 打断，临时文件就留在磁盘上了。<br>先感受问题，把 test.sh 改成：</p>
-<pre><code>#!/bin/dash
-
-echo &quot;开始工作...&quot;
-sleep 10
-echo &quot;工作完成&quot;
-</code></pre>
-<p>跑起来然后立刻 Ctrl+C 打断：</p>
-<pre><code>./test.sh
-</code></pre>
-<p>然后进入正确写法，把 test.sh 改成：</p>
-<pre><code>#!/bin/dash
-
-TMP=$(mktemp)
-echo &quot;创建了临时文件: $TMP&quot;
-trap &#39;rm -f &quot;$TMP&quot;; exit&#39; INT TERM EXIT
-
-echo &quot;开始工作...&quot;
-echo &quot;一些数据&quot; &gt; &quot;$TMP&quot;
-cat &quot;$TMP&quot;
-sleep 5
-echo &quot;工作完成&quot;
-</code></pre>
-<p>跑起来，Ctrl+C 打断，然后检查临时文件还在不在：</p>
-<pre><code>./test.sh
-ls /tmp/tmp*
-</code></pre>
-<p>完美！trap 起作用了——Ctrl+C 打断之后，&#x2F;tmp&#x2F;tmp.O6u2N211Yb 这个临时文件已经被自动删掉了，在列表里找不到它了（其他的都是别人的文件，你没权限）。<br>现在解释三个信号：</p>
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/2026/03/13/01-Courses/COMP9044-all/week3-shell/trap.png"
-                        alt="trap and mktmp"
-                 ></p>
-<p>记住这个模板，以后写用到临时文件的脚本都这样开头：</p>
-<pre><code>TMP=$(mktemp)
-trap &#39;rm -f &quot;$TMP&quot;; exit&#39; INT TERM EXIT
-</code></pre>
-<p>所以 trap 的作用就是——无论脚本怎么结束，都保证临时文件被清理掉，不留垃圾在 &#x2F;tmp 里。</p>
-<hr>
-<p>第十关：{} vs () 子Shell</p>
+<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html" >Deployment<i class="fas fa-external-link-alt"></i></a></p>
 
                     
                 </div>
@@ -462,14 +285,6 @@ trap &#39;rm -f &quot;$TMP&quot;; exit&#39; INT TERM EXIT
 
                 <div class="post-bottom-tags-and-share border-box">
                     <div>
-                        
-                            <ul class="post-tags-box border-box">
-                                
-                                    <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/shell/">shell</a>
-                                    </li>
-                                
-                            </ul>
                         
                     </div>
                     <div>
@@ -485,14 +300,14 @@ trap &#39;rm -f &quot;$TMP&quot;; exit&#39; INT TERM EXIT
                             <div class="prev-post">
                                 <a class="prev"
                                    rel="prev"
-                                   href="/2026/03/16/hello-world/"
-                                   title="Hello World"
+                                   href="/2026/03/18/01-Courses/COMP9044-all/week3-shell/"
+                                   title="COMP2041 Week 04 — Shell Scripting 完整笔记"
                                 >
                                     <span class="left arrow-icon flex-center">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Hello World</span>
+                                        <span class="post-nav-title-item text-ellipsis">COMP2041 Week 04 — Shell Scripting 完整笔记</span>
                                         <span class="post-nav-item">Prev posts</span>
                                     </span>
                                 </a>
@@ -534,7 +349,7 @@ trap &#39;rm -f &quot;$TMP&quot;; exit&#39; INT TERM EXIT
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%8F%82%E6%95%B0%E4%B8%AA%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">检查参数个数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#While-%E5%BE%AA%E7%8E%AF-%E5%92%8C-For-%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.1.</span> <span class="nav-text">While 循环 和 For 循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case-%E8%AF%AD%E5%8F%A5%E3%80%82"><span class="nav-number">1.2.</span> <span class="nav-text">case 语句。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C-local-%E5%8F%98%E9%87%8F%E3%80%82"><span class="nav-number">1.3.</span> <span class="nav-text">函数和 local 变量。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E7%AE%A1%E9%81%93%E9%99%B7%E9%98%B1%E3%80%82"><span class="nav-number">1.4.</span> <span class="nav-text">I&#x2F;O 重定向和管道陷阱。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trap-%E5%92%8C-mktemp"><span class="nav-number">1.5.</span> <span class="nav-text">trap 和 mktemp</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
     </div>
 </div>
 
@@ -665,7 +480,7 @@ trap &#39;rm -f &quot;$TMP&quot;; exit&#39; INT TERM EXIT
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%8F%82%E6%95%B0%E4%B8%AA%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">检查参数个数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#While-%E5%BE%AA%E7%8E%AF-%E5%92%8C-For-%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.1.</span> <span class="nav-text">While 循环 和 For 循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case-%E8%AF%AD%E5%8F%A5%E3%80%82"><span class="nav-number">1.2.</span> <span class="nav-text">case 语句。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C-local-%E5%8F%98%E9%87%8F%E3%80%82"><span class="nav-number">1.3.</span> <span class="nav-text">函数和 local 变量。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-%E9%87%8D%E5%AE%9A%E5%90%91%E5%92%8C%E7%AE%A1%E9%81%93%E9%99%B7%E9%98%B1%E3%80%82"><span class="nav-number">1.4.</span> <span class="nav-text">I&#x2F;O 重定向和管道陷阱。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trap-%E5%92%8C-mktemp"><span class="nav-number">1.5.</span> <span class="nav-text">trap 和 mktemp</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
     </div>
 </div>
 
