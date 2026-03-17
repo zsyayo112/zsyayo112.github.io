@@ -1,8 +1,8 @@
 ---
-title: COMP2041 Week 04 — Shell Scripting 完整笔记
+title: COMP2041 Week 03,4 — Shell Scripting 完整笔记
 date: 2026-03-18
 tags:
-  - COMP9044
+  - COMP2041
   - Shell
   - Linux
   - UNSW
@@ -1641,7 +1641,42 @@ echo "Total: $total"
 
 ### Part 6：trap + mktemp
 
+**Exercise 6.1 — cleanup.sh**
+
+题目：创建临时文件，往里写数据，用 `trap` 确保脚本结束时（包括 Ctrl+C）临时文件被删除。
+
+```sh
+#!/bin/dash
+TMP=$(mktemp)
+echo "临时文件: $TMP"
+trap 'rm -f "$TMP"; exit' INT TERM EXIT
+
+echo "处理中..."
+echo "hello world" > "$TMP"
+echo "完成！结果: $(cat $TMP)"
+
+# 验证删除：脚本结束后 ls /tmp/tmp.* 找不到 $TMP
+```
+
+**测试方法**：
+```sh
+chmod +x cleanup.sh
+./cleanup.sh           # 正常结束，检查临时文件是否消失
+./cleanup.sh           # 运行后立刻 Ctrl+C，检查临时文件是否消失
+ls /tmp/tmp.XXXXXXXX   # 应该报 No such file or directory
+```
+
+**知识点回顾**：
+- `mktemp` 生成随机唯一的临时文件名，避免文件名冲突
+- `trap '命令' INT TERM EXIT` 设置信号处理器
+- `EXIT` 信号在脚本任何方式退出时都触发（最重要）
+- `INT` 对应 Ctrl+C，`TERM` 对应 `kill PID`
+
+---
+
 **Exercise 6.2 — safe_sort.sh**
+
+题目：把若干文件内容合并、排序、去重后输出，用临时文件存中间结果，任何退出都清理。
 
 ```sh
 #!/bin/dash
@@ -1656,6 +1691,301 @@ trap 'rm -f "$TMP"; exit' INT TERM EXIT
 
 cat "$@" | sort -u > "$TMP"
 cat "$TMP"
+```
+
+**测试方法**：
+```sh
+echo "banana
+apple
+cherry" > /tmp/fruits1.txt
+echo "apple
+date
+banana" > /tmp/fruits2.txt
+
+chmod +x safe_sort.sh
+./safe_sort.sh /tmp/fruits1.txt /tmp/fruits2.txt
+# 期望输出：
+# apple
+# banana
+# cherry
+# date
+
+./safe_sort.sh              # 测试无参数报错
+./safe_sort.sh 不存在.txt   # 测试文件不存在
+```
+
+**常见错误**：
+```sh
+# ❌ 管道子Shell陷阱：sort 结果在子Shell里，写入 $TMP 没问题
+# 但如果想在管道后面用变量就会出问题
+# 这里直接写文件所以没问题
+
+# ✅ 正确：cat "$@" 把所有文件内容合并输出，| sort -u 排序去重
+```
+
+---
+
+### Part 7：综合题
+
+**Exercise 7.1 — word_freq.sh**
+
+题目：统计文件中每个单词出现次数，按频率从高到低输出前10个。
+
+```sh
+#!/bin/dash
+if [ "$#" -eq 0 ]
+then
+    echo "Usage: $0 <file1> [file2 ...]" 1>&2
+    exit 1
+fi
+
+# 验证所有文件存在
+for f in "$@"
+do
+    if [ ! -r "$f" ]
+    then
+        echo "$0: cannot read '$f'" 1>&2
+        exit 1
+    fi
+done
+
+cat "$@" |
+    tr 'A-Z' 'a-z' |           # 转小写
+    tr -cs 'a-z' '\n' |        # 非字母字符替换成换行（-c 取补集，-s 压缩连续）
+    grep -v '^$' |             # 去掉空行
+    sort |                     # 排序，让相同词相邻
+    uniq -c |                  # 统计每个词出现次数
+    sort -rn |                 # 按数字倒序（频率高的在前）
+    head -10                   # 只取前10
+```
+
+**测试方法**：
+```sh
+chmod +x word_freq.sh
+./word_freq.sh notes.txt
+./word_freq.sh notes.txt hosts.txt    # 多文件合并统计
+./word_freq.sh                        # 无参数报错
+```
+
+**管道逐步解析**：
+```sh
+# 假设文件内容：Hello world hello SHELL
+echo "Hello world hello SHELL" | tr 'A-Z' 'a-z'
+# → hello world hello shell
+
+echo "Hello world hello SHELL" | tr 'A-Z' 'a-z' | tr -cs 'a-z' '\n'
+# → hello
+#   world
+#   hello
+#   shell
+
+echo "Hello world hello SHELL" | tr 'A-Z' 'a-z' | tr -cs 'a-z' '\n' | sort | uniq -c
+#    2 hello
+#    1 shell
+#    1 world
+
+# 再 sort -rn | head -10 就得到最终结果
+```
+
+**知识点**：
+- `tr -cs 'a-z' '\n'`：`-c` 取补集（非a-z的字符），`-s` 压缩连续，全部换成换行
+- `uniq -c`：统计连续相同行的次数，必须先 `sort` 才能正确统计
+- `sort -rn`：`-r` 倒序，`-n` 数字排序（不加 `-n` 会按字符串排序，10 < 9）
+
+---
+
+**Exercise 7.2 — backup.sh**
+
+题目：把目录里所有 `.txt` 文件备份到 `/tmp/backup_<日期>/`，文件名加日期后缀。
+
+```sh
+#!/bin/dash
+if [ "$#" -ne 1 ]
+then
+    echo "Usage: $0 <directory>" 1>&2
+    exit 1
+fi
+
+if [ ! -d "$1" ]
+then
+    echo "$0: '$1' is not a directory" 1>&2
+    exit 1
+fi
+
+dir=$1
+date_str=$(date +%Y%m%d)
+backup_dir="/tmp/backup_${date_str}"
+
+mkdir -p "$backup_dir"
+
+count=0
+for f in "$dir"/*.txt
+do
+    # glob 没有匹配时 f 是字面字符串 "$dir/*.txt"，用 -f 过滤
+    [ -f "$f" ] || continue
+
+    base=$(basename "$f" .txt)
+    dest="${backup_dir}/${base}_${date_str}.txt"
+    cp "$f" "$dest"
+    echo "  $(basename $dest)"
+    count=$((count + 1))
+done
+
+if [ "$count" -eq 0 ]
+then
+    echo "没有找到 .txt 文件" 1>&2
+    rmdir "$backup_dir"    # 删掉空的备份目录
+    exit 1
+fi
+
+echo "备份到: $backup_dir/"
+echo "备份完成，共 $count 个文件"
+```
+
+**测试方法**：
+```sh
+mkdir /tmp/test_backup
+echo "内容1" > /tmp/test_backup/notes.txt
+echo "内容2" > /tmp/test_backup/hosts.txt
+
+chmod +x backup.sh
+./backup.sh /tmp/test_backup
+ls /tmp/backup_$(date +%Y%m%d)/
+
+./backup.sh              # 无参数报错
+./backup.sh /不存在      # 目录不存在报错
+mkdir /tmp/empty_dir
+./backup.sh /tmp/empty_dir  # 没有 .txt 文件报错
+```
+
+**知识点**：
+- `date +%Y%m%d`：格式化日期，`%Y` 四位年，`%m` 月，`%d` 日
+- `basename "$f" .txt`：取文件名去掉路径，第二个参数去掉后缀
+- `[ -f "$f" ] || continue`：当 glob 没有匹配时跳过字面字符串
+
+---
+
+**Exercise 7.3 — BOSS 题：monitor.sh**
+
+题目：监控目录，每隔5秒检查一次，新文件出现打印名字和行数，文件被删除打印警告，退出时清理临时文件。
+
+```sh
+#!/bin/dash
+if [ "$#" -ne 1 ]
+then
+    echo "Usage: $0 <directory>" 1>&2
+    exit 1
+fi
+
+if [ ! -d "$1" ]
+then
+    echo "$0: '$1' is not a directory" 1>&2
+    exit 1
+fi
+
+dir=$1
+TMP_OLD=$(mktemp)
+TMP_NEW=$(mktemp)
+
+# trap 处理退出：清理临时文件，打印结束信息
+trap 'rm -f "$TMP_OLD" "$TMP_NEW"; echo "监控结束"; exit' INT TERM EXIT
+
+echo "监控目录: $dir"
+
+# 初始化：记录当前文件列表
+find "$dir" -maxdepth 1 -type f | sort > "$TMP_OLD"
+
+while true
+do
+    sleep 5
+
+    # 获取最新文件列表
+    find "$dir" -maxdepth 1 -type f | sort > "$TMP_NEW"
+
+    timestamp=$(date +%H:%M:%S)
+
+    # 找新增文件（在新列表里但不在旧列表里）
+    # diff 输出：< 是只在旧文件，> 是只在新文件
+    diff "$TMP_OLD" "$TMP_NEW" | grep '^>' | cut -c3- |
+    while read -r f
+    do
+        lines=$(wc -l < "$f")
+        echo "[$timestamp] 新文件: $(basename "$f") ($lines 行)"
+    done
+
+    # 找删除的文件（在旧列表里但不在新列表里）
+    diff "$TMP_OLD" "$TMP_NEW" | grep '^<' | cut -c3- |
+    while read -r f
+    do
+        echo "[$timestamp] 文件删除: $(basename "$f")"
+    done
+
+    # 更新旧列表
+    cp "$TMP_NEW" "$TMP_OLD"
+done
+```
+
+**测试方法**：
+```sh
+mkdir /tmp/test_monitor
+chmod +x monitor.sh
+
+# 终端1：启动监控
+./monitor.sh /tmp/test_monitor
+
+# 终端2：操作文件，观察终端1的输出
+echo "hello" > /tmp/test_monitor/a.txt
+echo -e "line1\nline2\nline3" > /tmp/test_monitor/b.txt
+rm /tmp/test_monitor/a.txt
+
+# 终端1 Ctrl+C，观察"监控结束"是否打印，临时文件是否清理
+```
+
+**关键设计决策**：
+
+```sh
+# 1. 为什么用 find 而不是 ls？
+find "$dir" -maxdepth 1 -type f    # 只找普通文件，不包括目录
+ls "$dir"                           # 会包括目录，而且不安全
+
+# 2. 为什么用 sort？
+find ... | sort    # 确保文件列表有序，diff 才能正确比较
+
+# 3. diff 输出格式
+diff old.txt new.txt
+# < 只在旧文件里（被删除的）
+# > 只在新文件里（新增的）
+# cut -c3- 去掉前两个字符（"> " 或 "< "）
+
+# 4. 管道子Shell陷阱说明
+# diff ... | while read -r f; do echo ...; done
+# 这里 echo 在子Shell里，没有外部变量要传出，所以没有问题
+# 如果需要统计新增文件数量，就必须用重定向代替管道
+
+# 5. trap 里 echo "监控结束"
+# EXIT 信号触发时执行，Ctrl+C 也会触发（INT → EXIT 链）
+```
+
+**扩展挑战**：如果要统计总共监控到多少次变化，应该怎么修改？（提示：管道子Shell陷阱）
+
+```sh
+# 有问题的版本
+changes=0
+diff "$TMP_OLD" "$TMP_NEW" | grep '^>' | while read -r f
+do
+    changes=$((changes + 1))    # 子Shell里，changes 传不出来
+done
+echo "总变化: $changes"    # 永远是 0
+
+# 正确版本：用临时文件记录计数
+COUNTER=$(mktemp)
+echo 0 > "$COUNTER"
+trap 'rm -f "$TMP_OLD" "$TMP_NEW" "$COUNTER"; echo "监控结束"; exit' INT TERM EXIT
+
+# 更新计数
+count=$(cat "$COUNTER")
+count=$((count + 1))
+echo "$count" > "$COUNTER"
 ```
 
 ---
