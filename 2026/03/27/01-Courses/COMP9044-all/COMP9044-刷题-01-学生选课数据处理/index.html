@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="John Doe">
+    
+    <title>
+        
+            COMP9044 刷题01 - 学生选课数据处理：Shell Pipeline实战 |
+        
+        Syz&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Syz's Blog","author":"","avatar":"https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg","logo":"https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg","favicon":""},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg2.svg","description":"生命如红蜡，火焰向上，泪流向下","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/zsyayo112","weixin":"img | /images/qrcode.png","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"1162671732@qq.com"}},"scroll":{"progress_bar":true,"percent":false,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":true,"custom_badge":["One","Two","Three","笔记"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":"","text":"","icon":""}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"giscus","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2024,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":""},"record":{"enable":false,"list":[{"code":"","link":""}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Syz&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        COMP9044 刷题01 - 学生选课数据处理：Shell Pipeline实战
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">John Doe</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-03-27</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Sat Mar 28 2026 00:27:08 GMT+0000">2026-03-28</span>
+                </span>
+            
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/01-Courses-COMP9044-all/">01-Courses/COMP9044-all</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Shell/">Shell</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Linux/">Linux</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/COMP9044/">COMP9044</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%A1%E9%81%93/">管道</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">数据处理</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h1 id="COMP9044-刷题01-学生选课数据处理：Shell-Pipeline实战"><a href="#COMP9044-刷题01-学生选课数据处理：Shell-Pipeline实战" class="headerlink" title="COMP9044 刷题01 - 学生选课数据处理：Shell Pipeline实战"></a>COMP9044 刷题01 - 学生选课数据处理：Shell Pipeline实战</h1><blockquote>
+<p>本文记录COMP9044 Shell编程的一道经典题目：从学生选课数据中提取所有学生的First Name（名），并按要求排序和去重。通过这道题，深入掌握Shell Pipeline设计、数据清洗和多级处理技巧。</p>
+</blockquote>
+<h2 id="题目背景与目标"><a href="#题目背景与目标" class="headerlink" title="题目背景与目标"></a>题目背景与目标</h2><h3 id="输入数据格式"><a href="#输入数据格式" class="headerlink" title="输入数据格式"></a>输入数据格式</h3><p>未排序的学生选课数据，格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">课程|学号|姓名(姓, 名 中间名)|班级/学期|性别</span><br></pre></td></tr></table></figure>
+
+<p>示例数据 (<code>enrollments.txt</code>)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">COMP1917|3360379|Costner, Kevin Augustus |13978/1|M</span><br><span class="line">COMP1917|3364562|Carey, Mary |13711/1|M</span><br><span class="line">COMP3311|3383025|Thorpe, Ian Augustus |13978/3|M</span><br><span class="line">COMP2920|3860448|Steenburgen, Mary Nell |13978/3|F</span><br><span class="line">COMP1927|3360582|Neeson, Liam |13711/2|M</span><br><span class="line">COMP3411|3863711|Klum, Heidi June Anne |13978/3|F</span><br><span class="line">COMP3141|3383025|Thorpe, Ian Augustus |13978/3|M</span><br><span class="line">COMP3891|3863711|KLum, Heidi June Anne |13978/3|F</span><br><span class="line">COMP3331|3383025|Thorpe, Ian Augustus |13978/3|M</span><br><span class="line">COMP2041|3860448|Steenburgen, Mary Nell |13978/3|F</span><br><span class="line">COMP2041|3360582|Neeson, Liam |13711/2|M</span><br><span class="line">COMP3311|3711611|Klum, Mary |13978/3|F</span><br><span class="line">COMP3311|3371161|Thorpe, Ian Fredrick |13711/3|M</span><br><span class="line">COMP3331|5122456|Wang, Wei |13978/2|M</span><br><span class="line">COMP3331|5456732|Wang, Wei |13648/3|M</span><br><span class="line">COMP4920|5456732|Wang, Wei |13648/3|M</span><br></pre></td></tr></table></figure>
+
+<h3 id="目标要求"><a href="#目标要求" class="headerlink" title="目标要求"></a>目标要求</h3><p>提取所有学生的 <strong>First Name（名）</strong>，按字母顺序排列。</p>
+<h3 id="核心约束"><a href="#核心约束" class="headerlink" title="核心约束"></a>核心约束</h3><ol>
+<li><strong>人头去重</strong>：同一个学生选多门课，其名字只打印一次</li>
+<li><strong>同名保留</strong>：不同学生如果First Name相同，需按人数重复打印</li>
+<li><strong>格式清洗</strong>：处理姓名中多余的空格和中间名</li>
+<li><strong>排序输出</strong>：按字母顺序输出，每行一个名字</li>
+</ol>
+<h3 id="期望输出"><a href="#期望输出" class="headerlink" title="期望输出"></a>期望输出</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ./final_q1.sh &lt;enrollments.txt</span><br><span class="line">Heidi</span><br><span class="line">Ian</span><br><span class="line">Ian</span><br><span class="line">Kevin</span><br><span class="line">Liam</span><br><span class="line">Mary</span><br><span class="line">Mary</span><br><span class="line">Mary</span><br><span class="line">Wei</span><br><span class="line">Wei</span><br></pre></td></tr></table></figure>
+
+<h2 id="解题思路分析"><a href="#解题思路分析" class="headerlink" title="解题思路分析"></a>解题思路分析</h2><h3 id="关键难点"><a href="#关键难点" class="headerlink" title="关键难点"></a>关键难点</h3><ol>
+<li><strong>数据清洗</strong>：姓名格式不一致，有中间名、多余空格</li>
+<li><strong>正确去重</strong>：基于”学生”去重，而不是基于”名字字符串”去重</li>
+<li><strong>同名处理</strong>：不同学生的相同名字需要保留</li>
+</ol>
+<h3 id="解决方案：分步Pipeline设计"><a href="#解决方案：分步Pipeline设计" class="headerlink" title="解决方案：分步Pipeline设计"></a>解决方案：分步Pipeline设计</h3><p>一个健壮的Pipeline应该遵循以下步骤：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">原始数据 → 字段选择 → 人头去重 → 提取名字 → 清洗格式 → 最终排序</span><br></pre></td></tr></table></figure>
+
+<h2 id="完整Pipeline实现"><a href="#完整Pipeline实现" class="headerlink" title="完整Pipeline实现"></a>完整Pipeline实现</h2><h3 id="最终解决方案"><a href="#最终解决方案" class="headerlink" title="最终解决方案"></a>最终解决方案</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># final_q1.sh</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f2,3 | <span class="built_in">sort</span> -u | <span class="built_in">cut</span> -d<span class="string">&#x27;,&#x27;</span> -f2 | sed <span class="string">&#x27;s/^[[:space:]]*//&#x27;</span> | sed <span class="string">&#x27;s/[[:space:]].*//&#x27;</span> | <span class="built_in">sort</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分步解析"><a href="#分步解析" class="headerlink" title="分步解析"></a>分步解析</h3><h4 id="步骤1：字段选择-人头去重"><a href="#步骤1：字段选择-人头去重" class="headerlink" title="步骤1：字段选择 + 人头去重"></a>步骤1：字段选择 + 人头去重</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f2,3 | <span class="built_in">sort</span> -u</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>cut -d&#39;|&#39; -f2,3</code>：提取第2列（学号）和第3列（姓名）</li>
+<li><code>sort -u</code>：基于”学号+姓名”组合去重，确保每个学生只出现一次</li>
+</ul>
+<p><strong>中间结果示例</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">3360379|Costner, Kevin Augustus </span><br><span class="line">3364562|Carey, Mary </span><br><span class="line">3383025|Thorpe, Ian Augustus </span><br><span class="line">3860448|Steenburgen, Mary Nell </span><br><span class="line">3360582|Neeson, Liam </span><br><span class="line">3863711|Klum, Heidi June Anne </span><br><span class="line">3711611|Klum, Mary </span><br><span class="line">3371161|Thorpe, Ian Fredrick </span><br><span class="line">5122456|Wang, Wei </span><br><span class="line">5456732|Wang, Wei </span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤2：提取First-Name部分"><a href="#步骤2：提取First-Name部分" class="headerlink" title="步骤2：提取First Name部分"></a>步骤2：提取First Name部分</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cut</span> -d<span class="string">&#x27;,&#x27;</span> -f2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>以逗号分隔，取第二部分（姓, 名 中间名 → 取”名 中间名”）</li>
+</ul>
+<p><strong>中间结果示例</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Kevin Augustus </span><br><span class="line">Mary </span><br><span class="line">Ian Augustus </span><br><span class="line">Mary Nell </span><br><span class="line">Liam </span><br><span class="line">Heidi June Anne </span><br><span class="line">Mary </span><br><span class="line">Ian Fredrick </span><br><span class="line">Wei </span><br><span class="line">Wei </span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤3：清洗格式（去除多余空格和中间名）"><a href="#步骤3：清洗格式（去除多余空格和中间名）" class="headerlink" title="步骤3：清洗格式（去除多余空格和中间名）"></a>步骤3：清洗格式（去除多余空格和中间名）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/^[[:space:]]*//&#x27;</span> | sed <span class="string">&#x27;s/[[:space:]].*//&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第一个sed</strong>：<code>sed &#39;s/^[[:space:]]*//&#39;</code></p>
+<ul>
+<li>删除行首的所有空白字符（空格、制表符等）</li>
+<li><code>^</code> 表示行首，<code>[[:space:]]*</code> 匹配0个或多个空白字符</li>
+</ul>
+<p><strong>第二个sed</strong>：<code>sed &#39;s/[[:space:]].*//&#39;</code></p>
+<ul>
+<li>找到第一个空格，删除该空格及其后的所有内容</li>
+<li>这样就去掉了中间名和尾部空格</li>
+</ul>
+<p><strong>清洗后结果</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Kevin</span><br><span class="line">Mary</span><br><span class="line">Ian</span><br><span class="line">Mary</span><br><span class="line">Liam</span><br><span class="line">Heidi</span><br><span class="line">Mary</span><br><span class="line">Ian</span><br><span class="line">Wei</span><br><span class="line">Wei</span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤4：最终排序"><a href="#步骤4：最终排序" class="headerlink" title="步骤4：最终排序"></a>步骤4：最终排序</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sort</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>按字母顺序排序</li>
+<li><strong>注意</strong>：不能加 <code>-u</code> 参数，否则会删除同名不同人的情况</li>
+</ul>
+<p><strong>最终输出</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Heidi</span><br><span class="line">Ian</span><br><span class="line">Ian</span><br><span class="line">Kevin</span><br><span class="line">Liam</span><br><span class="line">Mary</span><br><span class="line">Mary</span><br><span class="line">Mary</span><br><span class="line">Wei</span><br><span class="line">Wei</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心知识点详解"><a href="#核心知识点详解" class="headerlink" title="核心知识点详解"></a>核心知识点详解</h2><h3 id="1-cut-命令的嵌套使用"><a href="#1-cut-命令的嵌套使用" class="headerlink" title="1. cut 命令的嵌套使用"></a>1. <code>cut</code> 命令的嵌套使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一次cut：按&#x27;|&#x27;分隔，取字段2,3</span></span><br><span class="line"><span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f2,3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二次cut：按&#x27;,&#x27;分隔，取字段2  </span></span><br><span class="line"><span class="built_in">cut</span> -d<span class="string">&#x27;,&#x27;</span> -f2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当数据中有多种分隔符时，需要多次使用<code>cut</code></li>
+<li>第一次处理主分隔符，第二次处理嵌套分隔符</li>
+</ul>
+<h3 id="2-sort-u-的正确使用时机"><a href="#2-sort-u-的正确使用时机" class="headerlink" title="2. sort -u 的正确使用时机"></a>2. <code>sort -u</code> 的正确使用时机</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正确：在提取学号+姓名后去重</span></span><br><span class="line"><span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f2,3 | <span class="built_in">sort</span> -u</span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误：如果在最后去重，会误删同名不同人</span></span><br><span class="line">... | <span class="built_in">sort</span> -u  <span class="comment"># 错误！会删除&quot;Ian&quot;的重复</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>sort -u</code> 等价于 <code>sort | uniq</code></li>
+<li>在Pipeline前期用于基于”学生”去重</li>
+<li>在Pipeline后期需谨慎使用，避免误删同名情况</li>
+</ul>
+<h3 id="3-正则表达式清洗"><a href="#3-正则表达式清洗" class="headerlink" title="3. 正则表达式清洗"></a>3. 正则表达式清洗</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除行首空白</span></span><br><span class="line">sed <span class="string">&#x27;s/^[[:space:]]*//&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除第一个空格及其后内容</span></span><br><span class="line">sed <span class="string">&#x27;s/[[:space:]].*//&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>[[:space:]]</code> 比 <code>&#39; &#39;</code> 更健壮，能匹配空格和制表符</li>
+<li><code>.*</code> 匹配任意字符任意次数</li>
+<li><code>^</code> 锚定行首，确保只删除行首空白</li>
+</ul>
+<h3 id="4-命令替换的简洁写法"><a href="#4-命令替换的简洁写法" class="headerlink" title="4. 命令替换的简洁写法"></a>4. 命令替换的简洁写法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简洁写法（推荐）</span></span><br><span class="line">command1 | command2 | command3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 冗余写法（不推荐）</span></span><br><span class="line"><span class="built_in">echo</span> $(command1) | command2 | command3</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Shell Pipeline天然支持命令连接</li>
+<li>避免不必要的<code>echo</code>和命令替换</li>
+</ul>
+<h2 id="易错坑点与调试技巧"><a href="#易错坑点与调试技巧" class="headerlink" title="易错坑点与调试技巧"></a>易错坑点与调试技巧</h2><h3 id="坑点1：PowerShell冲突（Windows环境）"><a href="#坑点1：PowerShell冲突（Windows环境）" class="headerlink" title="坑点1：PowerShell冲突（Windows环境）"></a>坑点1：PowerShell冲突（Windows环境）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在Git Bash中运行正常</span></span><br><span class="line">./final_q1.sh &lt; enrollments.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在PowerShell中可能报错</span></span><br><span class="line"><span class="comment"># 解决方案：使用Git Bash或WSL</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="坑点2：过度去重"><a href="#坑点2：过度去重" class="headerlink" title="坑点2：过度去重"></a>坑点2：过度去重</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 错误：最后一步加-u会删除同名不同人</span></span><br><span class="line">... | <span class="built_in">sort</span> -u  <span class="comment"># 错误！</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 正确：只在基于&quot;学生&quot;时去重</span></span><br><span class="line"><span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f2,3 | <span class="built_in">sort</span> -u  <span class="comment"># 正确</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="坑点3：空格处理不彻底"><a href="#坑点3：空格处理不彻底" class="headerlink" title="坑点3：空格处理不彻底"></a>坑点3：空格处理不彻底</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可能的问题数据</span></span><br><span class="line"><span class="string">&quot;Last, First  &quot;</span>    <span class="comment"># 尾部双空格</span></span><br><span class="line"><span class="string">&quot;Last,First&quot;</span>       <span class="comment"># 无空格</span></span><br><span class="line"><span class="string">&quot;Last,  First Mid&quot;</span> <span class="comment"># 多个空格</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 健壮的清洗方案</span></span><br><span class="line">sed <span class="string">&#x27;s/^[[:space:]]*//&#x27;</span> | sed <span class="string">&#x27;s/[[:space:]].*//&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="调试技巧：分步验证"><a href="#调试技巧：分步验证" class="headerlink" title="调试技巧：分步验证"></a>调试技巧：分步验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 查看原始数据</span></span><br><span class="line"><span class="built_in">cat</span> enrollments.txt | <span class="built_in">head</span> -5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 验证字段选择</span></span><br><span class="line"><span class="built_in">cat</span> enrollments.txt | <span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f2,3 | <span class="built_in">head</span> -5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 验证去重效果  </span></span><br><span class="line"><span class="built_in">cat</span> enrollments.txt | <span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f2,3 | <span class="built_in">sort</span> -u | <span class="built_in">wc</span> -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 验证名字提取</span></span><br><span class="line"><span class="built_in">cat</span> enrollments.txt | <span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f2,3 | <span class="built_in">sort</span> -u | <span class="built_in">cut</span> -d<span class="string">&#x27;,&#x27;</span> -f2 | <span class="built_in">head</span> -5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 验证清洗效果</span></span><br><span class="line"><span class="built_in">cat</span> enrollments.txt | <span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f2,3 | <span class="built_in">sort</span> -u | <span class="built_in">cut</span> -d<span class="string">&#x27;,&#x27;</span> -f2 | sed <span class="string">&#x27;s/^[[:space:]]*//&#x27;</span> | <span class="built_in">head</span> -5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. 完整流程验证</span></span><br><span class="line"><span class="built_in">cat</span> enrollments.txt | ./final_q1.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="强化练习题"><a href="#强化练习题" class="headerlink" title="强化练习题"></a>强化练习题</h2><h3 id="题目：统计各课程人数-Course-Enrollment-Count"><a href="#题目：统计各课程人数-Course-Enrollment-Count" class="headerlink" title="题目：统计各课程人数 (Course Enrollment Count)"></a>题目：统计各课程人数 (Course Enrollment Count)</h3><p>利用同样的 <code>enrollments.txt</code> 输入，请写一个Pipeline输出：</p>
+<ul>
+<li>每门课程的课程代码（如COMP2041）</li>
+<li>该课程有多少名学生选修</li>
+<li>按人数从高到低排列；如果人数相同，按课程代码字母序排列</li>
+</ul>
+<h3 id="期望输出格式："><a href="#期望输出格式：" class="headerlink" title="期望输出格式："></a>期望输出格式：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">COMP3311 3</span><br><span class="line">COMP3331 3</span><br><span class="line">COMP2041 2</span><br><span class="line">COMP1917 2</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h3 id="解题提示："><a href="#解题提示：" class="headerlink" title="解题提示："></a>解题提示：</h3><ol>
+<li>先用 <code>cut</code> 提取课程和学号</li>
+<li>使用 <code>sort -u</code> 确保每人每课只算一次</li>
+<li>再 <code>cut</code> 出课程列</li>
+<li>使用 <code>sort | uniq -c</code> 统计每门课出现的次数</li>
+<li>使用 <code>sort -k1,1nr -k2,2</code> 进行多级排序</li>
+</ol>
+<h3 id="参考答案："><a href="#参考答案：" class="headerlink" title="参考答案："></a>参考答案：</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 统计课程人数</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f1,2 | <span class="built_in">sort</span> -u | <span class="built_in">cut</span> -d<span class="string">&#x27;|&#x27;</span> -f1 | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -k1,1nr -k2,2 | awk <span class="string">&#x27;&#123;print $2, $1&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分步解析："><a href="#分步解析：" class="headerlink" title="分步解析："></a>分步解析：</h3><ol>
+<li><code>cut -d&#39;|&#39; -f1,2</code>：提取课程和学号</li>
+<li><code>sort -u</code>：基于”课程+学号”去重</li>
+<li><code>cut -d&#39;|&#39; -f1</code>：只保留课程列</li>
+<li><code>sort | uniq -c</code>：统计每门课出现次数</li>
+<li><code>sort -k1,1nr -k2,2</code>：按计数降序，课程代码升序</li>
+<li><code>awk &#39;{print $2, $1}&#39;</code>：调整输出格式（课程 人数）</li>
+</ol>
+<h2 id="学习总结"><a href="#学习总结" class="headerlink" title="学习总结"></a>学习总结</h2><h3 id="掌握的核心技能："><a href="#掌握的核心技能：" class="headerlink" title="掌握的核心技能："></a>掌握的核心技能：</h3><ol>
+<li><strong>Pipeline设计思维</strong>：分步处理，每步完成一个明确任务</li>
+<li><strong>数据清洗技巧</strong>：使用正则表达式处理不规则数据</li>
+<li><strong>去重策略</strong>：理解基于什么字段去重，避免误删</li>
+<li><strong>排序控制</strong>：单级排序 vs 多级排序，升序 vs 降序</li>
+</ol>
+<h3 id="通用解题框架："><a href="#通用解题框架：" class="headerlink" title="通用解题框架："></a>通用解题框架：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">原始数据 → 字段提取 → 必要去重 → 数据清洗 → 格式转换 → 最终排序 → 输出</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试验证方法："><a href="#测试验证方法：" class="headerlink" title="测试验证方法："></a>测试验证方法：</h3><ol>
+<li>使用小样本数据测试</li>
+<li>分步验证中间结果</li>
+<li>对比期望输出</li>
+<li>处理边界情况</li>
+</ol>
+<h2 id="相关资源"><a href="#相关资源" class="headerlink" title="相关资源"></a>相关资源</h2><h3 id="命令手册："><a href="#命令手册：" class="headerlink" title="命令手册："></a>命令手册：</h3><ul>
+<li><code>man cut</code> - 字段提取</li>
+<li><code>man sort</code> - 排序和去重</li>
+<li><code>man sed</code> - 流编辑器，正则处理</li>
+<li><code>man uniq</code> - 去重和计数</li>
+</ul>
+<h3 id="在线练习："><a href="#在线练习：" class="headerlink" title="在线练习："></a>在线练习：</h3><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.shellcheck.net/" >ShellCheck<i class="fas fa-external-link-alt"></i></a> - Shell脚本语法检查</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://explainshell.com/" >Explain Shell<i class="fas fa-external-link-alt"></i></a> - 命令解释</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://regex101.com/" >Regex101<i class="fas fa-external-link-alt"></i></a> - 正则表达式测试</li>
+</ul>
+<h3 id="进阶学习："><a href="#进阶学习：" class="headerlink" title="进阶学习："></a>进阶学习：</h3><ol>
+<li><strong>AWK编程</strong>：更复杂的数据处理</li>
+<li><strong>Bash脚本</strong>：条件判断、循环、函数</li>
+<li><strong>性能优化</strong>：处理大数据集时的技巧</li>
+<li><strong>错误处理</strong>：健壮的脚本编写</li>
+</ol>
+<hr>
+<p><em>本文记录于2026年3月28日，基于COMP9044实际题目总结。通过这道题，不仅掌握了Shell Pipeline技巧，更重要的是培养了数据处理的系统思维。</em></p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Shell/">Shell</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Linux/">Linux</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/COMP9044/">COMP9044</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%AE%A1%E9%81%93/">管道</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">数据处理</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">正则表达式</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2026/03/28/hello-world/"
+                                   title="Hello World"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Hello World</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/03/27/02-LeetCode/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%AE%97%E6%B3%95%E9%80%9A%E7%94%A8%E6%A1%86%E6%9E%B6%E4%B8%8E%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97/"
+                                   title="滑动窗口算法：通用框架与实战指南"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">滑动窗口算法：通用框架与实战指南</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#COMP9044-%E5%88%B7%E9%A2%9801-%E5%AD%A6%E7%94%9F%E9%80%89%E8%AF%BE%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%EF%BC%9AShell-Pipeline%E5%AE%9E%E6%88%98"><span class="nav-number">1.</span> <span class="nav-text">COMP9044 刷题01 - 学生选课数据处理：Shell Pipeline实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E8%83%8C%E6%99%AF%E4%B8%8E%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">题目背景与目标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">输入数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E8%A6%81%E6%B1%82"><span class="nav-number">1.1.2.</span> <span class="nav-text">目标要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.1.3.</span> <span class="nav-text">核心约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%9F%E6%9C%9B%E8%BE%93%E5%87%BA"><span class="nav-number">1.1.4.</span> <span class="nav-text">期望输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E9%9A%BE%E7%82%B9"><span class="nav-number">1.2.1.</span> <span class="nav-text">关键难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A%E5%88%86%E6%AD%A5Pipeline%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.2.</span> <span class="nav-text">解决方案：分步Pipeline设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4Pipeline%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">完整Pipeline实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.1.</span> <span class="nav-text">最终解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%AD%A5%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.2.</span> <span class="nav-text">分步解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A41%EF%BC%9A%E5%AD%97%E6%AE%B5%E9%80%89%E6%8B%A9-%E4%BA%BA%E5%A4%B4%E5%8E%BB%E9%87%8D"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">步骤1：字段选择 + 人头去重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A42%EF%BC%9A%E6%8F%90%E5%8F%96First-Name%E9%83%A8%E5%88%86"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">步骤2：提取First Name部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A43%EF%BC%9A%E6%B8%85%E6%B4%97%E6%A0%BC%E5%BC%8F%EF%BC%88%E5%8E%BB%E9%99%A4%E5%A4%9A%E4%BD%99%E7%A9%BA%E6%A0%BC%E5%92%8C%E4%B8%AD%E9%97%B4%E5%90%8D%EF%BC%89"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">步骤3：清洗格式（去除多余空格和中间名）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E6%9C%80%E7%BB%88%E6%8E%92%E5%BA%8F"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">步骤4：最终排序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.4.</span> <span class="nav-text">核心知识点详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-cut-%E5%91%BD%E4%BB%A4%E7%9A%84%E5%B5%8C%E5%A5%97%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. cut 命令的嵌套使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-sort-u-%E7%9A%84%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E6%97%B6%E6%9C%BA"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. sort -u 的正确使用时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B8%85%E6%B4%97"><span class="nav-number">1.4.3.</span> <span class="nav-text">3. 正则表达式清洗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%91%BD%E4%BB%A4%E6%9B%BF%E6%8D%A2%E7%9A%84%E7%AE%80%E6%B4%81%E5%86%99%E6%B3%95"><span class="nav-number">1.4.4.</span> <span class="nav-text">4. 命令替换的简洁写法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%93%E9%94%99%E5%9D%91%E7%82%B9%E4%B8%8E%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-number">1.5.</span> <span class="nav-text">易错坑点与调试技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%91%E7%82%B91%EF%BC%9APowerShell%E5%86%B2%E7%AA%81%EF%BC%88Windows%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">坑点1：PowerShell冲突（Windows环境）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%91%E7%82%B92%EF%BC%9A%E8%BF%87%E5%BA%A6%E5%8E%BB%E9%87%8D"><span class="nav-number">1.5.2.</span> <span class="nav-text">坑点2：过度去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%91%E7%82%B93%EF%BC%9A%E7%A9%BA%E6%A0%BC%E5%A4%84%E7%90%86%E4%B8%8D%E5%BD%BB%E5%BA%95"><span class="nav-number">1.5.3.</span> <span class="nav-text">坑点3：空格处理不彻底</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%EF%BC%9A%E5%88%86%E6%AD%A5%E9%AA%8C%E8%AF%81"><span class="nav-number">1.5.4.</span> <span class="nav-text">调试技巧：分步验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">1.6.</span> <span class="nav-text">强化练习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%EF%BC%9A%E7%BB%9F%E8%AE%A1%E5%90%84%E8%AF%BE%E7%A8%8B%E4%BA%BA%E6%95%B0-Course-Enrollment-Count"><span class="nav-number">1.6.1.</span> <span class="nav-text">题目：统计各课程人数 (Course Enrollment Count)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%9F%E6%9C%9B%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.6.2.</span> <span class="nav-text">期望输出格式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%8F%90%E7%A4%BA%EF%BC%9A"><span class="nav-number">1.6.3.</span> <span class="nav-text">解题提示：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%9A"><span class="nav-number">1.6.4.</span> <span class="nav-text">参考答案：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%AD%A5%E8%A7%A3%E6%9E%90%EF%BC%9A"><span class="nav-number">1.6.5.</span> <span class="nav-text">分步解析：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="nav-number">1.7.</span> <span class="nav-text">学习总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%8C%E6%8F%A1%E7%9A%84%E6%A0%B8%E5%BF%83%E6%8A%80%E8%83%BD%EF%BC%9A"><span class="nav-number">1.7.1.</span> <span class="nav-text">掌握的核心技能：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E8%A7%A3%E9%A2%98%E6%A1%86%E6%9E%B6%EF%BC%9A"><span class="nav-number">1.7.2.</span> <span class="nav-text">通用解题框架：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E9%AA%8C%E8%AF%81%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">1.7.3.</span> <span class="nav-text">测试验证方法：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90"><span class="nav-number">1.8.</span> <span class="nav-text">相关资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C%EF%BC%9A"><span class="nav-number">1.8.1.</span> <span class="nav-text">命令手册：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E7%BB%83%E4%B9%A0%EF%BC%9A"><span class="nav-number">1.8.2.</span> <span class="nav-text">在线练习：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%EF%BC%9A"><span class="nav-number">1.8.3.</span> <span class="nav-text">进阶学习：</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2024</span>&nbsp;-&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">John Doe</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#COMP9044-%E5%88%B7%E9%A2%9801-%E5%AD%A6%E7%94%9F%E9%80%89%E8%AF%BE%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%EF%BC%9AShell-Pipeline%E5%AE%9E%E6%88%98"><span class="nav-number">1.</span> <span class="nav-text">COMP9044 刷题01 - 学生选课数据处理：Shell Pipeline实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E8%83%8C%E6%99%AF%E4%B8%8E%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">题目背景与目标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">输入数据格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E8%A6%81%E6%B1%82"><span class="nav-number">1.1.2.</span> <span class="nav-text">目标要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.1.3.</span> <span class="nav-text">核心约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%9F%E6%9C%9B%E8%BE%93%E5%87%BA"><span class="nav-number">1.1.4.</span> <span class="nav-text">期望输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E9%9A%BE%E7%82%B9"><span class="nav-number">1.2.1.</span> <span class="nav-text">关键难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A%E5%88%86%E6%AD%A5Pipeline%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.2.</span> <span class="nav-text">解决方案：分步Pipeline设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4Pipeline%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">完整Pipeline实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.1.</span> <span class="nav-text">最终解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%AD%A5%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.2.</span> <span class="nav-text">分步解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A41%EF%BC%9A%E5%AD%97%E6%AE%B5%E9%80%89%E6%8B%A9-%E4%BA%BA%E5%A4%B4%E5%8E%BB%E9%87%8D"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">步骤1：字段选择 + 人头去重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A42%EF%BC%9A%E6%8F%90%E5%8F%96First-Name%E9%83%A8%E5%88%86"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">步骤2：提取First Name部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A43%EF%BC%9A%E6%B8%85%E6%B4%97%E6%A0%BC%E5%BC%8F%EF%BC%88%E5%8E%BB%E9%99%A4%E5%A4%9A%E4%BD%99%E7%A9%BA%E6%A0%BC%E5%92%8C%E4%B8%AD%E9%97%B4%E5%90%8D%EF%BC%89"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">步骤3：清洗格式（去除多余空格和中间名）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A44%EF%BC%9A%E6%9C%80%E7%BB%88%E6%8E%92%E5%BA%8F"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">步骤4：最终排序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.4.</span> <span class="nav-text">核心知识点详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-cut-%E5%91%BD%E4%BB%A4%E7%9A%84%E5%B5%8C%E5%A5%97%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. cut 命令的嵌套使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-sort-u-%E7%9A%84%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E6%97%B6%E6%9C%BA"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. sort -u 的正确使用时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B8%85%E6%B4%97"><span class="nav-number">1.4.3.</span> <span class="nav-text">3. 正则表达式清洗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%91%BD%E4%BB%A4%E6%9B%BF%E6%8D%A2%E7%9A%84%E7%AE%80%E6%B4%81%E5%86%99%E6%B3%95"><span class="nav-number">1.4.4.</span> <span class="nav-text">4. 命令替换的简洁写法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%93%E9%94%99%E5%9D%91%E7%82%B9%E4%B8%8E%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-number">1.5.</span> <span class="nav-text">易错坑点与调试技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%91%E7%82%B91%EF%BC%9APowerShell%E5%86%B2%E7%AA%81%EF%BC%88Windows%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">坑点1：PowerShell冲突（Windows环境）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%91%E7%82%B92%EF%BC%9A%E8%BF%87%E5%BA%A6%E5%8E%BB%E9%87%8D"><span class="nav-number">1.5.2.</span> <span class="nav-text">坑点2：过度去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%91%E7%82%B93%EF%BC%9A%E7%A9%BA%E6%A0%BC%E5%A4%84%E7%90%86%E4%B8%8D%E5%BD%BB%E5%BA%95"><span class="nav-number">1.5.3.</span> <span class="nav-text">坑点3：空格处理不彻底</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7%EF%BC%9A%E5%88%86%E6%AD%A5%E9%AA%8C%E8%AF%81"><span class="nav-number">1.5.4.</span> <span class="nav-text">调试技巧：分步验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E5%8C%96%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="nav-number">1.6.</span> <span class="nav-text">强化练习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%EF%BC%9A%E7%BB%9F%E8%AE%A1%E5%90%84%E8%AF%BE%E7%A8%8B%E4%BA%BA%E6%95%B0-Course-Enrollment-Count"><span class="nav-number">1.6.1.</span> <span class="nav-text">题目：统计各课程人数 (Course Enrollment Count)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%9F%E6%9C%9B%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.6.2.</span> <span class="nav-text">期望输出格式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%8F%90%E7%A4%BA%EF%BC%9A"><span class="nav-number">1.6.3.</span> <span class="nav-text">解题提示：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%9A"><span class="nav-number">1.6.4.</span> <span class="nav-text">参考答案：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%AD%A5%E8%A7%A3%E6%9E%90%EF%BC%9A"><span class="nav-number">1.6.5.</span> <span class="nav-text">分步解析：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="nav-number">1.7.</span> <span class="nav-text">学习总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%8C%E6%8F%A1%E7%9A%84%E6%A0%B8%E5%BF%83%E6%8A%80%E8%83%BD%EF%BC%9A"><span class="nav-number">1.7.1.</span> <span class="nav-text">掌握的核心技能：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E8%A7%A3%E9%A2%98%E6%A1%86%E6%9E%B6%EF%BC%9A"><span class="nav-number">1.7.2.</span> <span class="nav-text">通用解题框架：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E9%AA%8C%E8%AF%81%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">1.7.3.</span> <span class="nav-text">测试验证方法：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90"><span class="nav-number">1.8.</span> <span class="nav-text">相关资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C%EF%BC%9A"><span class="nav-number">1.8.1.</span> <span class="nav-text">命令手册：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E7%BB%83%E4%B9%A0%EF%BC%9A"><span class="nav-number">1.8.2.</span> <span class="nav-text">在线练习：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%EF%BC%9A"><span class="nav-number">1.8.3.</span> <span class="nav-text">进阶学习：</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
