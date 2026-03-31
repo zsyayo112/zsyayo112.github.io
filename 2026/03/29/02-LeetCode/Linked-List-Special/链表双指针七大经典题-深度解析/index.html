@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="John Doe">
+    
+    <title>
+        
+            链表双指针七大经典题：Python实战深度解析与避坑指南 |
+        
+        Syz&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Syz's Blog","author":"","avatar":"https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg","logo":"https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg","favicon":""},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg2.svg","description":"生命如红蜡，火焰向上，泪流向下","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/zsyayo112","weixin":"img | /images/qrcode.png","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"1162671732@qq.com"}},"scroll":{"progress_bar":true,"percent":false,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":true,"custom_badge":["One","Two","Three","笔记"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":"","text":"","icon":""}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"giscus","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2024,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":""},"record":{"enable":false,"list":[{"code":"","link":""}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Syz&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        链表双指针七大经典题：Python实战深度解析与避坑指南
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">John Doe</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-03-29</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Tue Mar 31 2026 03:16:57 GMT+0000">2026-03-31</span>
+                </span>
+            
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/02-LeetCode-Linked-List-Special/">02-LeetCode/Linked-List-Special</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95/">算法</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Python/">Python</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/LeetCode/">LeetCode</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E9%93%BE%E8%A1%A8/">链表</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E8%99%9A%E6%8B%9F%E5%A4%B4%E7%BB%93%E7%82%B9/">虚拟头结点</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/">快慢指针</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h1 id="链表双指针七大经典题：Python实战深度解析与避坑指南"><a href="#链表双指针七大经典题：Python实战深度解析与避坑指南" class="headerlink" title="链表双指针七大经典题：Python实战深度解析与避坑指南"></a>链表双指针七大经典题：Python实战深度解析与避坑指南</h1><blockquote>
+<p>本文系统总结链表算法中的七大经典题目，通过双指针技巧的三种变体（虚拟头结点、快慢指针、同步指针），深入分析Python实现中的关键陷阱和工业级解决方案。包含完整的错误复盘、性能优化和实战检查清单。</p>
+</blockquote>
+<h2 id="📋-专题概述"><a href="#📋-专题概述" class="headerlink" title="📋 专题概述"></a>📋 专题概述</h2><h3 id="题目清单"><a href="#题目清单" class="headerlink" title="题目清单"></a>题目清单</h3><p>本次专题涵盖7道链表核心题目，按双指针技巧分类：</p>
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>题目名称</th>
+<th>难度</th>
+<th>核心技巧</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>21</td>
+<td>合并两个有序链表</td>
+<td>简单</td>
+<td>虚拟头结点</td>
+<td>合并类</td>
+</tr>
+<tr>
+<td>23</td>
+<td>合并K个升序链表</td>
+<td>困难</td>
+<td>虚拟头结点 + 堆</td>
+<td>合并类</td>
+</tr>
+<tr>
+<td>86</td>
+<td>分隔链表</td>
+<td>中等</td>
+<td>虚拟头结点</td>
+<td>分割类</td>
+</tr>
+<tr>
+<td>19</td>
+<td>删除倒数第N个节点</td>
+<td>中等</td>
+<td>虚拟头结点 + 同步指针</td>
+<td>删除类</td>
+</tr>
+<tr>
+<td>876</td>
+<td>链表的中点</td>
+<td>简单</td>
+<td>快慢指针</td>
+<td>查找类</td>
+</tr>
+<tr>
+<td>141</td>
+<td>环形链表</td>
+<td>简单</td>
+<td>快慢指针</td>
+<td>检测类</td>
+</tr>
+<tr>
+<td>142</td>
+<td>环形链表II</td>
+<td>中等</td>
+<td>快慢指针</td>
+<td>检测类</td>
+</tr>
+<tr>
+<td>160</td>
+<td>相交链表</td>
+<td>简单</td>
+<td>同步指针</td>
+<td>查找类</td>
+</tr>
+<tr>
+<td>LCR 140</td>
+<td>训练计划II</td>
+<td>简单</td>
+<td>同步指针</td>
+<td>查找类</td>
+</tr>
+</tbody></table>
+<h3 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h3><ol>
+<li>掌握Python链表的底层实现原理</li>
+<li>理解双指针的三种核心变体</li>
+<li>避免常见的实现陷阱和错误</li>
+<li>掌握工业级优化技巧</li>
+</ol>
+<hr>
+<h2 id="🧠-核心知识：Python链表的底层真相"><a href="#🧠-核心知识：Python链表的底层真相" class="headerlink" title="🧠 核心知识：Python链表的底层真相"></a>🧠 核心知识：Python链表的底层真相</h2><p>在开始刷题前，必须理解Python处理链表的特殊性，这直接决定了为什么我们会犯某些错误：</p>
+<h3 id="1-非连续内存"><a href="#1-非连续内存" class="headerlink" title="1. 非连续内存"></a>1. 非连续内存</h3><p>不同于Python的<code>list</code>（底层是动态数组，内存连续），链表节点在内存中是离散的。每个节点是一个对象，通过<code>next</code>属性存储另一个对象的引用（内存地址）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 链表节点定义</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ListNode</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, val=<span class="number">0</span>, <span class="built_in">next</span>=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.val = val</span><br><span class="line">        <span class="variable language_">self</span>.<span class="built_in">next</span> = <span class="built_in">next</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-引用即指针"><a href="#2-引用即指针" class="headerlink" title="2. 引用即指针"></a>2. 引用即指针</h3><p>在Python中，执行<code>p = head</code>并不是复制了链表，而是让变量<code>p</code>指向了<code>head</code>所指向的内存地址。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图示：引用关系</span></span><br><span class="line">head → [val=<span class="number">1</span>|<span class="built_in">next</span>] → [val=<span class="number">2</span>|<span class="built_in">next</span>] → [val=<span class="number">3</span>|<span class="built_in">next</span>] → <span class="literal">None</span></span><br><span class="line">p ↗</span><br><span class="line"><span class="comment"># p和head指向同一个内存地址</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-垃圾回收机制-GC"><a href="#3-垃圾回收机制-GC" class="headerlink" title="3. 垃圾回收机制(GC)"></a>3. 垃圾回收机制(GC)</h3><p>Python使用引用计数。当我们执行<code>p.next = None</code>时，如果该节点没有其他引用，它才会被真正释放。这也是为什么”断开原链表指针”是链表题目中最容易忽略的性能与逻辑陷阱。</p>
+<hr>
+<h2 id="🎯-双指针技巧分类"><a href="#🎯-双指针技巧分类" class="headerlink" title="🎯 双指针技巧分类"></a>🎯 双指针技巧分类</h2><h3 id="第一板斧：虚拟头结点-Dummy-Node-——-边界消灭器"><a href="#第一板斧：虚拟头结点-Dummy-Node-——-边界消灭器" class="headerlink" title="第一板斧：虚拟头结点(Dummy Node) —— 边界消灭器"></a>第一板斧：虚拟头结点(Dummy Node) —— 边界消灭器</h3><h4 id="适用题目："><a href="#适用题目：" class="headerlink" title="适用题目："></a>适用题目：</h4><ul>
+<li><ol start="21">
+<li>合并两个有序链表</li>
+</ol>
+</li>
+<li><ol start="23">
+<li>合并K个升序链表</li>
+</ol>
+</li>
+<li><ol start="86">
+<li>分隔链表</li>
+</ol>
+</li>
+<li><ol start="19">
+<li>删除倒数第N个节点</li>
+</ol>
+</li>
+</ul>
+<h4 id="核心逻辑："><a href="#核心逻辑：" class="headerlink" title="核心逻辑："></a>核心逻辑：</h4><p>当需要创建新链表或头结点可能被删除&#x2F;改变时，先创建一个<code>dummy = ListNode(-1)</code>。这样可以统一处理逻辑，避免繁琐的<code>if head is None</code>判断。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dummy_node_template</span>(<span class="params">head</span>):</span><br><span class="line">    dummy = ListNode(-<span class="number">1</span>)  <span class="comment"># 创建虚拟头结点</span></span><br><span class="line">    dummy.<span class="built_in">next</span> = head     <span class="comment"># 连接到原链表</span></span><br><span class="line">    curr = dummy          <span class="comment"># 工作指针</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 统一处理逻辑，无需特殊判断头结点</span></span><br><span class="line">    <span class="keyword">while</span> curr.<span class="built_in">next</span>:</span><br><span class="line">        <span class="comment"># 处理逻辑</span></span><br><span class="line">        curr = curr.<span class="built_in">next</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> dummy.<span class="built_in">next</span>     <span class="comment"># 返回真正的头结点</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="示意图："><a href="#示意图：" class="headerlink" title="示意图："></a>示意图：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">原链表: head → [1] → [2] → [3] → None</span><br><span class="line"></span><br><span class="line">创建dummy: dummy → [X] → head → [1] → [2] → [3] → None</span><br><span class="line">                    ↑</span><br><span class="line">                   curr起点</span><br><span class="line"></span><br><span class="line">处理完成后: dummy → [X] → 新链表 → None</span><br><span class="line">返回: dummy.next</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二板斧：快慢指针-Fast-Slow-——-结构探测器"><a href="#第二板斧：快慢指针-Fast-Slow-——-结构探测器" class="headerlink" title="第二板斧：快慢指针(Fast &amp; Slow) —— 结构探测器"></a>第二板斧：快慢指针(Fast &amp; Slow) —— 结构探测器</h3><h4 id="适用题目：-1"><a href="#适用题目：-1" class="headerlink" title="适用题目："></a>适用题目：</h4><ul>
+<li><ol start="876">
+<li>链表的中点</li>
+</ol>
+</li>
+<li><ol start="141">
+<li>环形链表</li>
+</ol>
+</li>
+<li><ol start="142">
+<li>环形链表II</li>
+</ol>
+</li>
+</ul>
+<h4 id="核心逻辑：-1"><a href="#核心逻辑：-1" class="headerlink" title="核心逻辑："></a>核心逻辑：</h4><p>利用两个指针的速度差，在不计算链表长度的情况下探测链表的内部结构。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">fast_slow_template</span>(<span class="params">head</span>):</span><br><span class="line">    slow = fast = head</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 关键：fast and fast.next 双重检查</span></span><br><span class="line">    <span class="keyword">while</span> fast <span class="keyword">and</span> fast.<span class="built_in">next</span>:</span><br><span class="line">        slow = slow.<span class="built_in">next</span>      <span class="comment"># 慢指针走1步</span></span><br><span class="line">        fast = fast.<span class="built_in">next</span>.<span class="built_in">next</span> <span class="comment"># 快指针走2步</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> slow  <span class="comment"># 慢指针所在位置</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="三种变体："><a href="#三种变体：" class="headerlink" title="三种变体："></a>三种变体：</h4><p><strong>1. 找链表中点（876题）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">链表: [1] → [2] → [3] → [4] → [5] → None</span><br><span class="line"></span><br><span class="line">步骤:</span><br><span class="line">slow, fast都从1开始</span><br><span class="line">1. slow=1, fast=1</span><br><span class="line">2. slow=2, fast=3  (fast走2步)</span><br><span class="line">3. slow=3, fast=5  (fast走2步)</span><br><span class="line">4. fast.next为None，停止</span><br><span class="line">结果: slow=3，即中点</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 检测环（141题）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">有环链表: [1] → [2] → [3] → [4] → [5] → [3] (回到3)</span><br><span class="line"></span><br><span class="line">步骤:</span><br><span class="line">slow, fast都从1开始</span><br><span class="line">1. slow=1, fast=1</span><br><span class="line">2. slow=2, fast=3</span><br><span class="line">3. slow=3, fast=5</span><br><span class="line">4. slow=4, fast=3</span><br><span class="line">5. slow=5, fast=5  ← 相遇！说明有环</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 找环起点（142题）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">有环链表: [1] → [2] → [3] → [4] → [5] → [3] (环起点是3)</span><br><span class="line"></span><br><span class="line">步骤:</span><br><span class="line">1. 快慢指针找到相遇点(5)</span><br><span class="line">2. 一个指针回head(1)，另一个在相遇点(5)</span><br><span class="line">3. 同步走，每次1步</span><br><span class="line">4. 再次相遇点就是环起点(3)</span><br></pre></td></tr></table></figure>
+
+<h3 id="第三板斧：同步-步长差指针-——-长度对齐器"><a href="#第三板斧：同步-步长差指针-——-长度对齐器" class="headerlink" title="第三板斧：同步&#x2F;步长差指针 —— 长度对齐器"></a>第三板斧：同步&#x2F;步长差指针 —— 长度对齐器</h3><h4 id="适用题目：-2"><a href="#适用题目：-2" class="headerlink" title="适用题目："></a>适用题目：</h4><ul>
+<li><ol start="19">
+<li>删除倒数第N个节点</li>
+</ol>
+</li>
+<li><ol start="160">
+<li>相交链表</li>
+</ol>
+</li>
+<li>LCR 140. 训练计划II</li>
+</ul>
+<h4 id="核心逻辑：-2"><a href="#核心逻辑：-2" class="headerlink" title="核心逻辑："></a>核心逻辑：</h4><p>通过调整指针的起始位置或步长，消除长度差异，实现同步操作。</p>
+<p><strong>1. 删除倒数第N个节点（19题）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">remove_nth_from_end</span>(<span class="params">head, n</span>):</span><br><span class="line">    dummy = ListNode(-<span class="number">1</span>, head)  <span class="comment"># 虚拟头结点是关键！</span></span><br><span class="line">    fast = slow = dummy</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># fast先走n+1步</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n + <span class="number">1</span>):</span><br><span class="line">        fast = fast.<span class="built_in">next</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 同步走直到fast为None</span></span><br><span class="line">    <span class="keyword">while</span> fast:</span><br><span class="line">        fast = fast.<span class="built_in">next</span></span><br><span class="line">        slow = slow.<span class="built_in">next</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 删除slow.next</span></span><br><span class="line">    slow.<span class="built_in">next</span> = slow.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> dummy.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示意图：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">链表: [1] → [2] → [3] → [4] → [5], n=2 (删除倒数第2个，即4)</span><br><span class="line"></span><br><span class="line">dummy → [1] → [2] → [3] → [4] → [5]</span><br><span class="line"> ↑slow   ↑fast(先走3步)</span><br><span class="line"></span><br><span class="line">同步走:</span><br><span class="line">fast=4, slow=2</span><br><span class="line">fast=5, slow=3</span><br><span class="line">fast=None, slow=4</span><br><span class="line"></span><br><span class="line">删除slow.next: [3] → [5]</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 相交链表（160题）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_intersection_node</span>(<span class="params">headA, headB</span>):</span><br><span class="line">    p1, p2 = headA, headB</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 关键：p1走完A走B，p2走完B走A</span></span><br><span class="line">    <span class="keyword">while</span> p1 != p2:</span><br><span class="line">        p1 = p1.<span class="built_in">next</span> <span class="keyword">if</span> p1 <span class="keyword">else</span> headB</span><br><span class="line">        p2 = p2.<span class="built_in">next</span> <span class="keyword">if</span> p2 <span class="keyword">else</span> headA</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> p1  <span class="comment"># 相遇点或None</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>示意图：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">链表A: [A1] → [A2] → [C1] → [C2] → None</span><br><span class="line">链表B: [B1] → [B2] → [B3] → [C1] → [C2] → None</span><br><span class="line">交点: C1</span><br><span class="line"></span><br><span class="line">p1路径: A1 → A2 → C1 → C2 → B1 → B2 → B3 → C1</span><br><span class="line">p2路径: B1 → B2 → B3 → C1 → C2 → A1 → A2 → C1</span><br><span class="line">在C1相遇！</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="⚠️-避坑指南：实战错误复盘"><a href="#⚠️-避坑指南：实战错误复盘" class="headerlink" title="⚠️ 避坑指南：实战错误复盘"></a>⚠️ 避坑指南：实战错误复盘</h2><p>在刷题过程中，我总结了三个必须刻在脑子里的错误：</p>
+<h3 id="🚨-错误1：忘记断开原链表的next指针-LeetCode-86"><a href="#🚨-错误1：忘记断开原链表的next指针-LeetCode-86" class="headerlink" title="🚨 错误1：忘记断开原链表的next指针 (LeetCode 86)"></a>🚨 错误1：忘记断开原链表的next指针 (LeetCode 86)</h3><h4 id="错误代码："><a href="#错误代码：" class="headerlink" title="错误代码："></a>错误代码：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 错误：直接连接，未断开原链接</span></span><br><span class="line">p1.<span class="built_in">next</span> = curr</span><br><span class="line">p1 = p1.<span class="built_in">next</span></span><br><span class="line">curr = curr.<span class="built_in">next</span>  <span class="comment"># 继续使用原链表的next</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="问题分析："><a href="#问题分析：" class="headerlink" title="问题分析："></a>问题分析：</h4><p>在分解链表时，直接把原链表的节点接到新链表<code>p1.next = p</code>，但没有把<code>p.next</code>置空。</p>
+<h4 id="后果："><a href="#后果：" class="headerlink" title="后果："></a>后果：</h4><p>结果链表的最后一个节点可能还带着原链表的”尾巴”，导致形成环或指向错误位置，程序死循环。</p>
+<h4 id="正确做法："><a href="#正确做法：" class="headerlink" title="正确做法："></a>正确做法：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正确：先保存next，再断开连接</span></span><br><span class="line">temp = curr.<span class="built_in">next</span>  <span class="comment"># 保存下一个节点</span></span><br><span class="line">curr.<span class="built_in">next</span> = <span class="literal">None</span>  <span class="comment"># 断开当前节点的连接</span></span><br><span class="line">p1.<span class="built_in">next</span> = curr    <span class="comment"># 连接到新链表</span></span><br><span class="line">p1 = p1.<span class="built_in">next</span>      <span class="comment"># 移动指针</span></span><br><span class="line">curr = temp       <span class="comment"># 继续处理下一个节点</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="教训："><a href="#教训：" class="headerlink" title="教训："></a>教训：</h4><p>只要移动原链表节点，养成先用<code>temp</code>保存<code>next</code>并立即置空<code>p.next</code>的习惯。</p>
+<h3 id="🚨-错误2：快指针步进时的AttributeError-LeetCode-876-141"><a href="#🚨-错误2：快指针步进时的AttributeError-LeetCode-876-141" class="headerlink" title="🚨 错误2：快指针步进时的AttributeError (LeetCode 876&#x2F;141)"></a>🚨 错误2：快指针步进时的AttributeError (LeetCode 876&#x2F;141)</h3><h4 id="错误代码：-1"><a href="#错误代码：-1" class="headerlink" title="错误代码："></a>错误代码：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 错误：可能访问None的next属性</span></span><br><span class="line"><span class="keyword">while</span> fast.<span class="built_in">next</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">    slow = slow.<span class="built_in">next</span></span><br><span class="line">    fast = fast.<span class="built_in">next</span>.<span class="built_in">next</span>  <span class="comment"># 如果fast为None，这里报错！</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="问题分析：-1"><a href="#问题分析：-1" class="headerlink" title="问题分析："></a>问题分析：</h4><p>如果链表为空或只有一个节点，<code>fast</code>可能是<code>None</code>，访问<code>.next</code>直接报错<code>AttributeError: &#39;NoneType&#39; object has no attribute &#39;next&#39;</code>。</p>
+<h4 id="正确做法：-1"><a href="#正确做法：-1" class="headerlink" title="正确做法："></a>正确做法：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正确：双重检查</span></span><br><span class="line"><span class="keyword">while</span> fast <span class="keyword">and</span> fast.<span class="built_in">next</span>:</span><br><span class="line">    slow = slow.<span class="built_in">next</span></span><br><span class="line">    fast = fast.<span class="built_in">next</span>.<span class="built_in">next</span>  <span class="comment"># 安全，因为fast和fast.next都不为None</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="教训：-1"><a href="#教训：-1" class="headerlink" title="教训："></a>教训：</h4><p>永远使用<code>while fast and fast.next:</code>，确保两步步进是安全的。</p>
+<h3 id="🚨-错误3：删除倒数第N个时的”越界”-LeetCode-19"><a href="#🚨-错误3：删除倒数第N个时的”越界”-LeetCode-19" class="headerlink" title="🚨 错误3：删除倒数第N个时的”越界” (LeetCode 19)"></a>🚨 错误3：删除倒数第N个时的”越界” (LeetCode 19)</h3><h4 id="错误代码：-2"><a href="#错误代码：-2" class="headerlink" title="错误代码："></a>错误代码：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 错误：试图找倒数第N+1个节点</span></span><br><span class="line">fast = head</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n + <span class="number">1</span>):  <span class="comment"># 如果n=链表长度，这里会越界！</span></span><br><span class="line">    fast = fast.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="问题分析：-2"><a href="#问题分析：-2" class="headerlink" title="问题分析："></a>问题分析：</h4><p>试图找倒数第<code>N+1</code>个节点来执行删除，但如果<code>N</code>正好是链表长度（删头结点），则<code>N+1</code>不存在。</p>
+<h4 id="正确做法：-2"><a href="#正确做法：-2" class="headerlink" title="正确做法："></a>正确做法：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正确：使用dummy节点</span></span><br><span class="line">dummy = ListNode(-<span class="number">1</span>, head)</span><br><span class="line">fast = slow = dummy</span><br><span class="line"></span><br><span class="line"><span class="comment"># fast先走n+1步（从dummy开始，不会越界）</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(n + <span class="number">1</span>):</span><br><span class="line">    fast = fast.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="教训：-2"><a href="#教训：-2" class="headerlink" title="教训："></a>教训：</h4><p>涉及删除操作，必须使用<code>dummy</code>节点。让<code>p2</code>从<code>dummy</code>开始走，确保能找到被删节点的前驱。</p>
+<hr>
+<h2 id="🏭-工业级Python实现示例"><a href="#🏭-工业级Python实现示例" class="headerlink" title="🏭 工业级Python实现示例"></a>🏭 工业级Python实现示例</h2><h3 id="合并K个升序链表-LeetCode-23"><a href="#合并K个升序链表-LeetCode-23" class="headerlink" title="合并K个升序链表 (LeetCode 23)"></a>合并K个升序链表 (LeetCode 23)</h3><p>针对LeetCode 23，利用Python的<code>heapq</code>库可以实现最优的$O(N \log k)$复杂度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span>, <span class="type">Optional</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">mergeKLists</span>(<span class="params">self, lists: <span class="type">List</span>[<span class="type">Optional</span>[ListNode]]</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        合并K个升序链表</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        时间复杂度: O(N log k)，其中N是总节点数，k是链表数量</span></span><br><span class="line"><span class="string">        空间复杂度: O(k)，堆的大小</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        思路:</span></span><br><span class="line"><span class="string">        1. 使用最小堆维护每个链表的当前最小节点</span></span><br><span class="line"><span class="string">        2. 每次从堆中弹出最小值，连接到结果链表</span></span><br><span class="line"><span class="string">        3. 将被弹出节点的下一个节点加入堆中</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 创建虚拟头结点</span></span><br><span class="line">        dummy = ListNode(-<span class="number">1</span>)</span><br><span class="line">        p = dummy</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 初始化最小堆</span></span><br><span class="line">        pq = []</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 放入各链表头，增加i(index)是为了防止val相同时直接比较ListNode对象报错</span></span><br><span class="line">        <span class="keyword">for</span> i, head <span class="keyword">in</span> <span class="built_in">enumerate</span>(lists):</span><br><span class="line">            <span class="keyword">if</span> head:</span><br><span class="line">                <span class="comment"># (值, 索引, 节点) 三元组</span></span><br><span class="line">                <span class="comment"># 索引用于解决值相同时的比较问题</span></span><br><span class="line">                heapq.heappush(pq, (head.val, i, head))</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 不断从堆中取出最小值</span></span><br><span class="line">        <span class="keyword">while</span> pq:</span><br><span class="line">            val, i, node = heapq.heappop(pq)</span><br><span class="line">            p.<span class="built_in">next</span> = node</span><br><span class="line">            p = p.<span class="built_in">next</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 如果该节点还有下一个节点，加入堆中</span></span><br><span class="line">            <span class="keyword">if</span> node.<span class="built_in">next</span>:</span><br><span class="line">                heapq.heappush(pq, (node.<span class="built_in">next</span>.val, i, node.<span class="built_in">next</span>))</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> dummy.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="性能分析："><a href="#性能分析：" class="headerlink" title="性能分析："></a>性能分析：</h4><ul>
+<li><strong>时间复杂度</strong>：$O(N \log k)$<ul>
+<li>每个节点进出堆一次：$O(N)$</li>
+<li>堆操作：$O(\log k)$</li>
+<li>总计：$O(N \log k)$</li>
+</ul>
+</li>
+<li><strong>空间复杂度</strong>：$O(k)$<ul>
+<li>堆中最多存储k个节点</li>
+</ul>
+</li>
+</ul>
+<h4 id="对比其他方法："><a href="#对比其他方法：" class="headerlink" title="对比其他方法："></a>对比其他方法：</h4><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>时间复杂度</th>
+<th>空间复杂度</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>逐一两两合并</td>
+<td>$O(kN)$</td>
+<td>$O(1)$</td>
+<td>k较小</td>
+</tr>
+<tr>
+<td>堆合并</td>
+<td>$O(N \log k)$</td>
+<td>$O(k)$</td>
+<td>通用最优</td>
+</tr>
+<tr>
+<td>分治合并</td>
+<td>$O(N \log k)$</td>
+<td>$O(\log k)$</td>
+<td>递归栈空间</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📝-链表Checklist：提交前自查"><a href="#📝-链表Checklist：提交前自查" class="headerlink" title="📝 链表Checklist：提交前自查"></a>📝 链表Checklist：提交前自查</h2><p>在提交链表题目前，请按此清单检查：</p>
+<h3 id="✅-基础检查"><a href="#✅-基础检查" class="headerlink" title="✅ 基础检查"></a>✅ 基础检查</h3><ol>
+<li><strong>空链表处理</strong>：<code>if not head: return None</code></li>
+<li><strong>单个节点处理</strong>：特殊逻辑是否正确</li>
+<li><strong>返回值</strong>：是否正确返回头结点</li>
+</ol>
+<h3 id="✅-指针操作检查"><a href="#✅-指针操作检查" class="headerlink" title="✅ 指针操作检查"></a>✅ 指针操作检查</h3><ol start="4">
+<li><strong>虚拟头结点</strong>：是否需要使用<code>dummy</code>？</li>
+<li><strong>指针移动</strong>：<code>curr = curr.next</code>是否在正确时机？</li>
+<li><strong>边界条件</strong>：<code>while</code>循环条件是否正确？<ul>
+<li><code>while curr:</code> vs <code>while curr.next:</code></li>
+<li><code>while fast and fast.next:</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="✅-内存与连接检查"><a href="#✅-内存与连接检查" class="headerlink" title="✅ 内存与连接检查"></a>✅ 内存与连接检查</h3><ol start="7">
+<li><strong>节点断开</strong>：移动节点时是否断开原连接？</li>
+<li><strong>环检测</strong>：是否会意外创建环？</li>
+<li><strong>尾节点</strong>：尾节点的<code>next</code>是否为<code>None</code>？</li>
+</ol>
+<h3 id="✅-特殊场景检查"><a href="#✅-特殊场景检查" class="headerlink" title="✅ 特殊场景检查"></a>✅ 特殊场景检查</h3><ol start="10">
+<li><strong>删除头结点</strong>：是否能正确处理？</li>
+<li><strong>全链表删除</strong>：是否会返回<code>None</code>？</li>
+<li><strong>负数&#x2F;越界</strong>：输入参数是否合法？</li>
+</ol>
+<h3 id="✅-性能检查"><a href="#✅-性能检查" class="headerlink" title="✅ 性能检查"></a>✅ 性能检查</h3><ol start="13">
+<li><strong>时间复杂度</strong>：是否最优？</li>
+<li><strong>空间复杂度</strong>：是否使用额外空间？</li>
+<li><strong>递归深度</strong>：是否会栈溢出？</li>
+</ol>
+<hr>
+<h2 id="🎓-专题总结"><a href="#🎓-专题总结" class="headerlink" title="🎓 专题总结"></a>🎓 专题总结</h2><h3 id="掌握的核心技能："><a href="#掌握的核心技能：" class="headerlink" title="掌握的核心技能："></a>掌握的核心技能：</h3><ol>
+<li><strong>Python链表本质</strong>：理解引用、内存、GC机制</li>
+<li><strong>双指针三板斧</strong>：<ul>
+<li>虚拟头结点：统一边界处理</li>
+<li>快慢指针：探测链表结构</li>
+<li>同步指针：消除长度差异</li>
+</ul>
+</li>
+<li><strong>工业级优化</strong>：堆合并、分治策略</li>
+<li><strong>防御式编程</strong>：避免常见陷阱</li>
+</ol>
+<h3 id="学习路径建议："><a href="#学习路径建议：" class="headerlink" title="学习路径建议："></a>学习路径建议：</h3><ol>
+<li><strong>初级阶段</strong>：21、876、141、160（掌握基础）</li>
+<li><strong>中级阶段</strong>：19、86、142（理解复杂操作）</li>
+<li><strong>高级阶段</strong>：23、LCR 140（掌握优化技巧）</li>
+</ol>
+<h3 id="扩展学习："><a href="#扩展学习：" class="headerlink" title="扩展学习："></a>扩展学习：</h3><ol>
+<li><strong>双向链表</strong>：LRU缓存实现</li>
+<li><strong>跳表</strong>：Redis中的有序集合</li>
+<li><strong>并查集</strong>：图算法中的链表应用</li>
+<li><strong>内存池</strong>：操作系统中的链表管理</li>
+</ol>
+<hr>
+<h2 id="📚-相关资源"><a href="#📚-相关资源" class="headerlink" title="📚 相关资源"></a>📚 相关资源</h2><h3 id="在线练习："><a href="#在线练习：" class="headerlink" title="在线练习："></a>在线练习：</h3><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://leetcode.com/tag/linked-list/" >LeetCode链表专题<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://visualgo.net/en/list" >Visualgo链表可视化<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="http://pythontutor.com/" >Python Tutor代码执行可视化<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+<h3 id="推荐阅读："><a href="#推荐阅读：" class="headerlink" title="推荐阅读："></a>推荐阅读：</h3><ul>
+<li>《算法导论》第10章：基本数据结构</li>
+<li>《编程珠玑》第2章：算法设计技巧</li>
+<li>《Python Cookbook》第2章：字符串和文本</li>
+</ul>
+<h3 id="工具推荐："><a href="#工具推荐：" class="headerlink" title="工具推荐："></a>工具推荐：</h3><ul>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/leetcode-tools/leetcode-cli" >LeetCode插件<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/psf/black" >代码格式化<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/python/mypy" >类型检查<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+<hr>
+<p>*本文基于2026年3月29日的LeetCode刷题实践总结，通过7道经典链表题的系统分析，建立了完整的双指针解题框架和错误防范体系。链表是算法学习的基础，掌握这些技巧将为后续的树、图等复杂数据结构学习打下坚实基础。</p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Python/">Python</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/LeetCode/">LeetCode</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E9%93%BE%E8%A1%A8/">链表</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E8%99%9A%E6%8B%9F%E5%A4%B4%E7%BB%93%E7%82%B9/">虚拟头结点</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/">快慢指针</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2026/03/29/02-LeetCode/Linked-List-Special/LCR140-%E8%AE%AD%E7%BB%83%E8%AE%A1%E5%88%92II/"
+                                   title="LCR 140. 训练计划II - 找到倒数第k个节点的双指针技巧"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">LCR 140. 训练计划II - 找到倒数第k个节点的双指针技巧</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/03/28/01-Courses/COMP9044-all/COMP9044-%E5%88%B7%E9%A2%98-02-Python%E7%89%88%E5%AD%A6%E7%94%9F%E9%80%89%E8%AF%BE%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/"
+                                   title="COMP9044 刷题02 - Python版学生选课数据处理：从Shell到Python的思维转换"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">COMP9044 刷题02 - Python版学生选课数据处理：从Shell到Python的思维转换</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E5%8F%8C%E6%8C%87%E9%92%88%E4%B8%83%E5%A4%A7%E7%BB%8F%E5%85%B8%E9%A2%98%EF%BC%9APython%E5%AE%9E%E6%88%98%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90%E4%B8%8E%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">链表双指针七大经典题：Python实战深度解析与避坑指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8B-%E4%B8%93%E9%A2%98%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">📋 专题概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%B8%85%E5%8D%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">题目清单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.2.</span> <span class="nav-text">学习目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A0-%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%EF%BC%9APython%E9%93%BE%E8%A1%A8%E7%9A%84%E5%BA%95%E5%B1%82%E7%9C%9F%E7%9B%B8"><span class="nav-number">1.2.</span> <span class="nav-text">🧠 核心知识：Python链表的底层真相</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%9E%E8%BF%9E%E7%BB%AD%E5%86%85%E5%AD%98"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 非连续内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%BC%95%E7%94%A8%E5%8D%B3%E6%8C%87%E9%92%88"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 引用即指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6-GC"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 垃圾回收机制(GC)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E5%8F%8C%E6%8C%87%E9%92%88%E6%8A%80%E5%B7%A7%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.</span> <span class="nav-text">🎯 双指针技巧分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%9D%BF%E6%96%A7%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%A4%B4%E7%BB%93%E7%82%B9-Dummy-Node-%E2%80%94%E2%80%94-%E8%BE%B9%E7%95%8C%E6%B6%88%E7%81%AD%E5%99%A8"><span class="nav-number">1.3.1.</span> <span class="nav-text">第一板斧：虚拟头结点(Dummy Node) —— 边界消灭器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E9%A2%98%E7%9B%AE%EF%BC%9A"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">适用题目：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%9A"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">核心逻辑：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE%EF%BC%9A"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">示意图：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%9D%BF%E6%96%A7%EF%BC%9A%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88-Fast-Slow-%E2%80%94%E2%80%94-%E7%BB%93%E6%9E%84%E6%8E%A2%E6%B5%8B%E5%99%A8"><span class="nav-number">1.3.2.</span> <span class="nav-text">第二板斧：快慢指针(Fast &amp; Slow) —— 结构探测器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E9%A2%98%E7%9B%AE%EF%BC%9A-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">适用题目：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%9A-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">核心逻辑：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E5%8F%98%E4%BD%93%EF%BC%9A"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">三种变体：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%9D%BF%E6%96%A7%EF%BC%9A%E5%90%8C%E6%AD%A5-%E6%AD%A5%E9%95%BF%E5%B7%AE%E6%8C%87%E9%92%88-%E2%80%94%E2%80%94-%E9%95%BF%E5%BA%A6%E5%AF%B9%E9%BD%90%E5%99%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">第三板斧：同步&#x2F;步长差指针 —— 长度对齐器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E9%A2%98%E7%9B%AE%EF%BC%9A-2"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">适用题目：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%9A-2"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">核心逻辑：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9A%A0%EF%B8%8F-%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%EF%BC%9A%E5%AE%9E%E6%88%98%E9%94%99%E8%AF%AF%E5%A4%8D%E7%9B%98"><span class="nav-number">1.4.</span> <span class="nav-text">⚠️ 避坑指南：实战错误复盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%9A%A8-%E9%94%99%E8%AF%AF1%EF%BC%9A%E5%BF%98%E8%AE%B0%E6%96%AD%E5%BC%80%E5%8E%9F%E9%93%BE%E8%A1%A8%E7%9A%84next%E6%8C%87%E9%92%88-LeetCode-86"><span class="nav-number">1.4.1.</span> <span class="nav-text">🚨 错误1：忘记断开原链表的next指针 (LeetCode 86)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">错误代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">问题分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E6%9E%9C%EF%BC%9A"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">后果：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E5%81%9A%E6%B3%95%EF%BC%9A"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">正确做法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%99%E8%AE%AD%EF%BC%9A"><span class="nav-number">1.4.1.5.</span> <span class="nav-text">教训：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%9A%A8-%E9%94%99%E8%AF%AF2%EF%BC%9A%E5%BF%AB%E6%8C%87%E9%92%88%E6%AD%A5%E8%BF%9B%E6%97%B6%E7%9A%84AttributeError-LeetCode-876-141"><span class="nav-number">1.4.2.</span> <span class="nav-text">🚨 错误2：快指针步进时的AttributeError (LeetCode 876&#x2F;141)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%EF%BC%9A-1"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">错误代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%EF%BC%9A-1"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">问题分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E5%81%9A%E6%B3%95%EF%BC%9A-1"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">正确做法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%99%E8%AE%AD%EF%BC%9A-1"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">教训：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%9A%A8-%E9%94%99%E8%AF%AF3%EF%BC%9A%E5%88%A0%E9%99%A4%E5%80%92%E6%95%B0%E7%AC%ACN%E4%B8%AA%E6%97%B6%E7%9A%84%E2%80%9D%E8%B6%8A%E7%95%8C%E2%80%9D-LeetCode-19"><span class="nav-number">1.4.3.</span> <span class="nav-text">🚨 错误3：删除倒数第N个时的”越界” (LeetCode 19)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%EF%BC%9A-2"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">错误代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%EF%BC%9A-2"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">问题分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E5%81%9A%E6%B3%95%EF%BC%9A-2"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">正确做法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%99%E8%AE%AD%EF%BC%9A-2"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">教训：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8F%AD-%E5%B7%A5%E4%B8%9A%E7%BA%A7Python%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">🏭 工业级Python实现示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E5%B9%B6K%E4%B8%AA%E5%8D%87%E5%BA%8F%E9%93%BE%E8%A1%A8-LeetCode-23"><span class="nav-number">1.5.1.</span> <span class="nav-text">合并K个升序链表 (LeetCode 23)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">性能分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">对比其他方法：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E9%93%BE%E8%A1%A8Checklist%EF%BC%9A%E6%8F%90%E4%BA%A4%E5%89%8D%E8%87%AA%E6%9F%A5"><span class="nav-number">1.6.</span> <span class="nav-text">📝 链表Checklist：提交前自查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E5%9F%BA%E7%A1%80%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.1.</span> <span class="nav-text">✅ 基础检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E6%8C%87%E9%92%88%E6%93%8D%E4%BD%9C%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.2.</span> <span class="nav-text">✅ 指针操作检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E5%86%85%E5%AD%98%E4%B8%8E%E8%BF%9E%E6%8E%A5%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.3.</span> <span class="nav-text">✅ 内存与连接检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E7%89%B9%E6%AE%8A%E5%9C%BA%E6%99%AF%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.4.</span> <span class="nav-text">✅ 特殊场景检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E6%80%A7%E8%83%BD%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.5.</span> <span class="nav-text">✅ 性能检查</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%93-%E4%B8%93%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-number">1.7.</span> <span class="nav-text">🎓 专题总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%8C%E6%8F%A1%E7%9A%84%E6%A0%B8%E5%BF%83%E6%8A%80%E8%83%BD%EF%BC%9A"><span class="nav-number">1.7.1.</span> <span class="nav-text">掌握的核心技能：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84%E5%BB%BA%E8%AE%AE%EF%BC%9A"><span class="nav-number">1.7.2.</span> <span class="nav-text">学习路径建议：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%AD%A6%E4%B9%A0%EF%BC%9A"><span class="nav-number">1.7.3.</span> <span class="nav-text">扩展学习：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9A-%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90"><span class="nav-number">1.8.</span> <span class="nav-text">📚 相关资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E7%BB%83%E4%B9%A0%EF%BC%9A"><span class="nav-number">1.8.1.</span> <span class="nav-text">在线练习：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%EF%BC%9A"><span class="nav-number">1.8.2.</span> <span class="nav-text">推荐阅读：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90%EF%BC%9A"><span class="nav-number">1.8.3.</span> <span class="nav-text">工具推荐：</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2024</span>&nbsp;-&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">John Doe</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E5%8F%8C%E6%8C%87%E9%92%88%E4%B8%83%E5%A4%A7%E7%BB%8F%E5%85%B8%E9%A2%98%EF%BC%9APython%E5%AE%9E%E6%88%98%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90%E4%B8%8E%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">链表双指针七大经典题：Python实战深度解析与避坑指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8B-%E4%B8%93%E9%A2%98%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">📋 专题概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%B8%85%E5%8D%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">题目清单</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.2.</span> <span class="nav-text">学习目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A7%A0-%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%EF%BC%9APython%E9%93%BE%E8%A1%A8%E7%9A%84%E5%BA%95%E5%B1%82%E7%9C%9F%E7%9B%B8"><span class="nav-number">1.2.</span> <span class="nav-text">🧠 核心知识：Python链表的底层真相</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9D%9E%E8%BF%9E%E7%BB%AD%E5%86%85%E5%AD%98"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 非连续内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%BC%95%E7%94%A8%E5%8D%B3%E6%8C%87%E9%92%88"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 引用即指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6-GC"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 垃圾回收机制(GC)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%AF-%E5%8F%8C%E6%8C%87%E9%92%88%E6%8A%80%E5%B7%A7%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.</span> <span class="nav-text">🎯 双指针技巧分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%9D%BF%E6%96%A7%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%A4%B4%E7%BB%93%E7%82%B9-Dummy-Node-%E2%80%94%E2%80%94-%E8%BE%B9%E7%95%8C%E6%B6%88%E7%81%AD%E5%99%A8"><span class="nav-number">1.3.1.</span> <span class="nav-text">第一板斧：虚拟头结点(Dummy Node) —— 边界消灭器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E9%A2%98%E7%9B%AE%EF%BC%9A"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">适用题目：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%9A"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">核心逻辑：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E6%84%8F%E5%9B%BE%EF%BC%9A"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">示意图：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%9D%BF%E6%96%A7%EF%BC%9A%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88-Fast-Slow-%E2%80%94%E2%80%94-%E7%BB%93%E6%9E%84%E6%8E%A2%E6%B5%8B%E5%99%A8"><span class="nav-number">1.3.2.</span> <span class="nav-text">第二板斧：快慢指针(Fast &amp; Slow) —— 结构探测器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E9%A2%98%E7%9B%AE%EF%BC%9A-1"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">适用题目：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%9A-1"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">核心逻辑：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E5%8F%98%E4%BD%93%EF%BC%9A"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">三种变体：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%9D%BF%E6%96%A7%EF%BC%9A%E5%90%8C%E6%AD%A5-%E6%AD%A5%E9%95%BF%E5%B7%AE%E6%8C%87%E9%92%88-%E2%80%94%E2%80%94-%E9%95%BF%E5%BA%A6%E5%AF%B9%E9%BD%90%E5%99%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">第三板斧：同步&#x2F;步长差指针 —— 长度对齐器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E9%A2%98%E7%9B%AE%EF%BC%9A-2"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">适用题目：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E9%80%BB%E8%BE%91%EF%BC%9A-2"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">核心逻辑：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9A%A0%EF%B8%8F-%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97%EF%BC%9A%E5%AE%9E%E6%88%98%E9%94%99%E8%AF%AF%E5%A4%8D%E7%9B%98"><span class="nav-number">1.4.</span> <span class="nav-text">⚠️ 避坑指南：实战错误复盘</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%9A%A8-%E9%94%99%E8%AF%AF1%EF%BC%9A%E5%BF%98%E8%AE%B0%E6%96%AD%E5%BC%80%E5%8E%9F%E9%93%BE%E8%A1%A8%E7%9A%84next%E6%8C%87%E9%92%88-LeetCode-86"><span class="nav-number">1.4.1.</span> <span class="nav-text">🚨 错误1：忘记断开原链表的next指针 (LeetCode 86)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">错误代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">问题分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E6%9E%9C%EF%BC%9A"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">后果：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E5%81%9A%E6%B3%95%EF%BC%9A"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">正确做法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%99%E8%AE%AD%EF%BC%9A"><span class="nav-number">1.4.1.5.</span> <span class="nav-text">教训：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%9A%A8-%E9%94%99%E8%AF%AF2%EF%BC%9A%E5%BF%AB%E6%8C%87%E9%92%88%E6%AD%A5%E8%BF%9B%E6%97%B6%E7%9A%84AttributeError-LeetCode-876-141"><span class="nav-number">1.4.2.</span> <span class="nav-text">🚨 错误2：快指针步进时的AttributeError (LeetCode 876&#x2F;141)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%EF%BC%9A-1"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">错误代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%EF%BC%9A-1"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">问题分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E5%81%9A%E6%B3%95%EF%BC%9A-1"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">正确做法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%99%E8%AE%AD%EF%BC%9A-1"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">教训：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%9A%A8-%E9%94%99%E8%AF%AF3%EF%BC%9A%E5%88%A0%E9%99%A4%E5%80%92%E6%95%B0%E7%AC%ACN%E4%B8%AA%E6%97%B6%E7%9A%84%E2%80%9D%E8%B6%8A%E7%95%8C%E2%80%9D-LeetCode-19"><span class="nav-number">1.4.3.</span> <span class="nav-text">🚨 错误3：删除倒数第N个时的”越界” (LeetCode 19)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%EF%BC%9A-2"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">错误代码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90%EF%BC%9A-2"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">问题分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E5%81%9A%E6%B3%95%EF%BC%9A-2"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">正确做法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%99%E8%AE%AD%EF%BC%9A-2"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">教训：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8F%AD-%E5%B7%A5%E4%B8%9A%E7%BA%A7Python%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">🏭 工业级Python实现示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E5%B9%B6K%E4%B8%AA%E5%8D%87%E5%BA%8F%E9%93%BE%E8%A1%A8-LeetCode-23"><span class="nav-number">1.5.1.</span> <span class="nav-text">合并K个升序链表 (LeetCode 23)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">性能分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94%E5%85%B6%E4%BB%96%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">对比其他方法：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9D-%E9%93%BE%E8%A1%A8Checklist%EF%BC%9A%E6%8F%90%E4%BA%A4%E5%89%8D%E8%87%AA%E6%9F%A5"><span class="nav-number">1.6.</span> <span class="nav-text">📝 链表Checklist：提交前自查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E5%9F%BA%E7%A1%80%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.1.</span> <span class="nav-text">✅ 基础检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E6%8C%87%E9%92%88%E6%93%8D%E4%BD%9C%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.2.</span> <span class="nav-text">✅ 指针操作检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E5%86%85%E5%AD%98%E4%B8%8E%E8%BF%9E%E6%8E%A5%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.3.</span> <span class="nav-text">✅ 内存与连接检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E7%89%B9%E6%AE%8A%E5%9C%BA%E6%99%AF%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.4.</span> <span class="nav-text">✅ 特殊场景检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E6%80%A7%E8%83%BD%E6%A3%80%E6%9F%A5"><span class="nav-number">1.6.5.</span> <span class="nav-text">✅ 性能检查</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%93-%E4%B8%93%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-number">1.7.</span> <span class="nav-text">🎓 专题总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%8C%E6%8F%A1%E7%9A%84%E6%A0%B8%E5%BF%83%E6%8A%80%E8%83%BD%EF%BC%9A"><span class="nav-number">1.7.1.</span> <span class="nav-text">掌握的核心技能：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84%E5%BB%BA%E8%AE%AE%EF%BC%9A"><span class="nav-number">1.7.2.</span> <span class="nav-text">学习路径建议：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%AD%A6%E4%B9%A0%EF%BC%9A"><span class="nav-number">1.7.3.</span> <span class="nav-text">扩展学习：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%9A-%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90"><span class="nav-number">1.8.</span> <span class="nav-text">📚 相关资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%BA%BF%E7%BB%83%E4%B9%A0%EF%BC%9A"><span class="nav-number">1.8.1.</span> <span class="nav-text">在线练习：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%EF%BC%9A"><span class="nav-number">1.8.2.</span> <span class="nav-text">推荐阅读：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90%EF%BC%9A"><span class="nav-number">1.8.3.</span> <span class="nav-text">工具推荐：</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>

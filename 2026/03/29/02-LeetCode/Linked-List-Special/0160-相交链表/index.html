@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="John Doe">
+    
+    <title>
+        
+            0160. 相交链表 - 双指针消除长度差技巧详解 |
+        
+        Syz&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Syz's Blog","author":"","avatar":"https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg","logo":"https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg","favicon":""},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg2.svg","description":"生命如红蜡，火焰向上，泪流向下","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/zsyayo112","weixin":"img | /images/qrcode.png","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"1162671732@qq.com"}},"scroll":{"progress_bar":true,"percent":false,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":true,"custom_badge":["One","Two","Three","笔记"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":"","text":"","icon":""}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"giscus","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2024,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":""},"record":{"enable":false,"list":[{"code":"","link":""}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Syz&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        0160. 相交链表 - 双指针消除长度差技巧详解
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">John Doe</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-03-29</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Tue Mar 31 2026 03:16:57 GMT+0000">2026-03-31</span>
+                </span>
+            
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/02-LeetCode-Linked-List-Special/">02-LeetCode/Linked-List-Special</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Python/">Python</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/LeetCode/">LeetCode</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E9%93%BE%E8%A1%A8/">链表</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/">相交链表</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E9%95%BF%E5%BA%A6%E5%AF%B9%E9%BD%90/">长度对齐</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7/">算法技巧</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h1 id="0160-相交链表-双指针消除长度差技巧详解"><a href="#0160-相交链表-双指针消除长度差技巧详解" class="headerlink" title="0160. 相交链表 - 双指针消除长度差技巧详解"></a>0160. 相交链表 - 双指针消除长度差技巧详解</h1><blockquote>
+<p>本文深入分析LeetCode第160题”相交链表”，重点讲解如何通过双指针技巧消除链表长度差异，在不计算长度的情况下找到交点。</p>
+</blockquote>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="英文题目"><a href="#英文题目" class="headerlink" title="英文题目"></a>英文题目</h3><p>Intersection of Two Linked Lists</p>
+<h3 id="中文题目"><a href="#中文题目" class="headerlink" title="中文题目"></a>中文题目</h3><p>给你两个单链表的头节点 <code>headA</code> 和 <code>headB</code> ，请你找出并返回两个单链表相交的起始节点。如果两个链表没有交点，返回 <code>null</code> 。</p>
+<p>图示两个链表在节点 <code>c1</code> 开始相交：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A:          a1 → a2</span><br><span class="line">                    ↘</span><br><span class="line">                      c1 → c2 → c3</span><br><span class="line">                    ↗            </span><br><span class="line">B:    b1 → b2 → b3</span><br></pre></td></tr></table></figure>
+
+<p>题目数据 <strong>保证</strong> 整个链式结构中不存在环。</p>
+<p>注意，函数返回结果后，链表必须 <strong>保持其原始结构</strong> 。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3</span><br><span class="line">输出：Intersected at &#x27;8&#x27;</span><br><span class="line">解释：相交节点的值为 8（注意，如果两个链表相交则不能为 0）。</span><br><span class="line">从各自的表头开始算起，链表 A 为 [4,1,8,4,5]，链表 B 为 [5,6,1,8,4,5]。</span><br><span class="line">在 A 中，相交节点前有 2 个节点；在 B 中，相交节点前有 3 个节点。</span><br><span class="line"></span><br><span class="line">输入：intersectVal = 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1</span><br><span class="line">输出：Intersected at &#x27;2&#x27;</span><br><span class="line"></span><br><span class="line">输入：intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2</span><br><span class="line">输出：null</span><br><span class="line">解释：从各自的表头开始算起，链表 A 为 [2,6,4]，链表 B 为 [1,5]。</span><br><span class="line">由于这两个链表不相交，所以 intersectVal 必须为 0，而 skipA 和 skipB 可以是任意值。</span><br><span class="line">这两个链表不相交，因此返回 null。</span><br></pre></td></tr></table></figure>
+
+<h3 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h3><p>你能否设计一个时间复杂度 O(n) 、仅用 O(1) 内存的解决方案？</p>
+<h3 id="约束条件"><a href="#约束条件" class="headerlink" title="约束条件"></a>约束条件</h3><ul>
+<li><code>listA</code> 中节点数目为 <code>m</code></li>
+<li><code>listB</code> 中节点数目为 <code>n</code></li>
+<li><code>0 &lt;= m, n &lt;= 3 * 10^4</code></li>
+<li><code>1 &lt;= Node.val &lt;= 10^5</code></li>
+<li><code>0 &lt;= skipA &lt;= m</code></li>
+<li><code>0 &lt;= skipB &lt;= n</code></li>
+<li>如果 <code>listA</code> 和 <code>listB</code> 没有交点，<code>intersectVal</code> 为 <code>0</code></li>
+<li>如果 <code>listA</code> 和 <code>listB</code> 有交点，<code>intersectVal == listA[skipA] == listB[skipB]</code></li>
+</ul>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h3><p>使用<strong>双指针技巧</strong>消除两个链表的长度差异：</p>
+<ul>
+<li>指针 <code>pA</code> 从链表A开始，走完A后转到B</li>
+<li>指针 <code>pB</code> 从链表B开始，走完B后转到A</li>
+<li>如果两个链表相交，指针会在交点相遇</li>
+<li>如果两个链表不相交，指针会同时到达末尾（None）</li>
+</ul>
+<h3 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h3><p>设：</p>
+<ul>
+<li>链表A独有部分长度为 <code>a</code></li>
+<li>链表B独有部分长度为 <code>b</code></li>
+<li>公共部分长度为 <code>c</code></li>
+</ul>
+<p>指针 <code>pA</code> 的路径：<code>a + c + b</code><br>指针 <code>pB</code> 的路径：<code>b + c + a</code></p>
+<p>两个指针走过的总长度相同，如果相交会在交点相遇，如果不相交会同时到达None。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="标准解法（双指针）"><a href="#标准解法（双指针）" class="headerlink" title="标准解法（双指针）"></a>标准解法（双指针）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.next = None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getIntersectionNode</span>(<span class="params">self, headA: ListNode, headB: ListNode</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        找到两个链表的交点 - 双指针消除长度差</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        时间复杂度: O(m + n)</span></span><br><span class="line"><span class="string">        空间复杂度: O(1)</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        算法原理:</span></span><br><span class="line"><span class="string">        1. 指针pA从A开始，走完A后转到B</span></span><br><span class="line"><span class="string">        2. 指针pB从B开始，走完B后转到A</span></span><br><span class="line"><span class="string">        3. 如果相交，会在交点相遇；如果不相交，会同时到达None</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> headA <span class="keyword">or</span> <span class="keyword">not</span> headB:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        </span><br><span class="line">        pA, pB = headA, headB</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 关键：当pA和pB不相同时继续循环</span></span><br><span class="line">        <span class="comment"># 两种情况结束循环：</span></span><br><span class="line">        <span class="comment"># 1. pA == pB != None (找到交点)</span></span><br><span class="line">        <span class="comment"># 2. pA == pB == None (没有交点)</span></span><br><span class="line">        <span class="keyword">while</span> pA != pB:</span><br><span class="line">            <span class="comment"># pA走到末尾后转到headB</span></span><br><span class="line">            pA = pA.<span class="built_in">next</span> <span class="keyword">if</span> pA <span class="keyword">else</span> headB</span><br><span class="line">            <span class="comment"># pB走到末尾后转到headA</span></span><br><span class="line">            pB = pB.<span class="built_in">next</span> <span class="keyword">if</span> pB <span class="keyword">else</span> headA</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># pA可能是交点或None</span></span><br><span class="line">        <span class="keyword">return</span> pA</span><br></pre></td></tr></table></figure>
+
+<h3 id="哈希表方法（对比）"><a href="#哈希表方法（对比）" class="headerlink" title="哈希表方法（对比）"></a>哈希表方法（对比）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getIntersectionNode_hash</span>(<span class="params">self, headA: ListNode, headB: ListNode</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        哈希表方法 - 记录访问过的节点</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        时间复杂度: O(m + n)</span></span><br><span class="line"><span class="string">        空间复杂度: O(m) 或 O(n)</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        优点: 逻辑简单直观</span></span><br><span class="line"><span class="string">        缺点: 需要额外空间</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        visited = <span class="built_in">set</span>()</span><br><span class="line">        curr = headA</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 遍历链表A，记录所有节点</span></span><br><span class="line">        <span class="keyword">while</span> curr:</span><br><span class="line">            visited.add(curr)</span><br><span class="line">            curr = curr.<span class="built_in">next</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 遍历链表B，检查是否已访问</span></span><br><span class="line">        curr = headB</span><br><span class="line">        <span class="keyword">while</span> curr:</span><br><span class="line">            <span class="keyword">if</span> curr <span class="keyword">in</span> visited:</span><br><span class="line">                <span class="keyword">return</span> curr</span><br><span class="line">            curr = curr.<span class="built_in">next</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="计算长度方法（对比）"><a href="#计算长度方法（对比）" class="headerlink" title="计算长度方法（对比）"></a>计算长度方法（对比）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getIntersectionNode_length</span>(<span class="params">self, headA: ListNode, headB: ListNode</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        计算长度方法</span></span><br><span class="line"><span class="string">        1. 分别计算两个链表的长度</span></span><br><span class="line"><span class="string">        2. 让长链表的指针先走长度差步</span></span><br><span class="line"><span class="string">        3. 然后两个指针同步前进，比较节点</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        时间复杂度: O(m + n)</span></span><br><span class="line"><span class="string">        空间复杂度: O(1)</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">get_length</span>(<span class="params">head</span>):</span><br><span class="line">            length = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> head:</span><br><span class="line">                length += <span class="number">1</span></span><br><span class="line">                head = head.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">return</span> length</span><br><span class="line">        </span><br><span class="line">        lenA = get_length(headA)</span><br><span class="line">        lenB = get_length(headB)</span><br><span class="line">        </span><br><span class="line">        pA, pB = headA, headB</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 让长链表的指针先走长度差步</span></span><br><span class="line">        <span class="keyword">if</span> lenA &gt; lenB:</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(lenA - lenB):</span><br><span class="line">                pA = pA.<span class="built_in">next</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(lenB - lenA):</span><br><span class="line">                pB = pB.<span class="built_in">next</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 同步前进，比较节点</span></span><br><span class="line">        <span class="keyword">while</span> pA <span class="keyword">and</span> pB:</span><br><span class="line">            <span class="keyword">if</span> pA == pB:</span><br><span class="line">                <span class="keyword">return</span> pA</span><br><span class="line">            pA = pA.<span class="built_in">next</span></span><br><span class="line">            pB = pB.<span class="built_in">next</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="详细分析"><a href="#详细分析" class="headerlink" title="详细分析"></a>详细分析</h2><h3 id="双指针算法原理证明"><a href="#双指针算法原理证明" class="headerlink" title="双指针算法原理证明"></a>双指针算法原理证明</h3><h4 id="情况1：两个链表相交"><a href="#情况1：两个链表相交" class="headerlink" title="情况1：两个链表相交"></a>情况1：两个链表相交</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">链表A: A1 → A2 → C1 → C2 → C3 → None</span><br><span class="line">链表B: B1 → B2 → B3 → C1 → C2 → C3 → None</span><br><span class="line">交点: C1</span><br><span class="line"></span><br><span class="line">设:</span><br><span class="line">a = 2 (A1,A2)</span><br><span class="line">b = 3 (B1,B2,B3)</span><br><span class="line">c = 3 (C1,C2,C3)</span><br><span class="line"></span><br><span class="line">指针路径:</span><br><span class="line">pA: A1→A2→C1→C2→C3→B1→B2→B3→C1 (总长: a+c+b)</span><br><span class="line">pB: B1→B2→B3→C1→C2→C3→A1→A2→C1 (总长: b+c+a)</span><br><span class="line"></span><br><span class="line">在C1相遇！</span><br></pre></td></tr></table></figure>
+
+<h4 id="情况2：两个链表不相交"><a href="#情况2：两个链表不相交" class="headerlink" title="情况2：两个链表不相交"></a>情况2：两个链表不相交</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">链表A: A1 → A2 → A3 → None</span><br><span class="line">链表B: B1 → B2 → None</span><br><span class="line"></span><br><span class="line">指针路径:</span><br><span class="line">pA: A1→A2→A3→B1→B2→None (总长: 3+2=5)</span><br><span class="line">pB: B1→B2→A1→A2→A3→None (总长: 2+3=5)</span><br><span class="line"></span><br><span class="line">在None处&quot;相遇&quot;！</span><br></pre></td></tr></table></figure>
+
+<h4 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h4><p>设链表A长度为 <code>m</code>，链表B长度为 <code>n</code>，公共部分长度为 <code>c</code>（如果不相交则 <code>c=0</code>）：</p>
+<ul>
+<li><code>pA</code> 总路径：<code>(m - c) + c + (n - c) = m + n - c</code></li>
+<li><code>pB</code> 总路径：<code>(n - c) + c + (m - c) = m + n - c</code></li>
+</ul>
+<p>两个指针走过相同长度后：</p>
+<ul>
+<li>如果 <code>c &gt; 0</code>：在交点相遇</li>
+<li>如果 <code>c = 0</code>：在None处”相遇”</li>
+</ul>
+<h3 id="边界条件处理"><a href="#边界条件处理" class="headerlink" title="边界条件处理"></a>边界条件处理</h3><h4 id="1-空链表"><a href="#1-空链表" class="headerlink" title="1. 空链表"></a>1. 空链表</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> headA <span class="keyword">or</span> <span class="keyword">not</span> headB:</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-一个链表是另一个的前缀"><a href="#2-一个链表是另一个的前缀" class="headerlink" title="2. 一个链表是另一个的前缀"></a>2. 一个链表是另一个的前缀</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 链表A: 1→2→3</span></span><br><span class="line"><span class="comment"># 链表B: 4→5→1→2→3</span></span><br><span class="line"><span class="comment"># 交点: 1</span></span><br><span class="line"><span class="comment"># 算法正常工作</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-两个链表完全相同"><a href="#3-两个链表完全相同" class="headerlink" title="3. 两个链表完全相同"></a>3. 两个链表完全相同</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 链表A: 1→2→3</span></span><br><span class="line"><span class="comment"># 链表B: 1→2→3</span></span><br><span class="line"><span class="comment"># 交点: 1</span></span><br><span class="line"><span class="comment"># pA和pB会一直同步，在第一个节点就相等</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-交点就是头结点"><a href="#4-交点就是头结点" class="headerlink" title="4. 交点就是头结点"></a>4. 交点就是头结点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 链表A: 1→2→3</span></span><br><span class="line"><span class="comment"># 链表B: 1→4→5</span></span><br><span class="line"><span class="comment"># 交点: 1</span></span><br><span class="line"><span class="comment"># 算法正常工作</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="循环终止条件"><a href="#循环终止条件" class="headerlink" title="循环终止条件"></a>循环终止条件</h3><h4 id="为什么是-while-pA-pB？"><a href="#为什么是-while-pA-pB？" class="headerlink" title="为什么是 while pA != pB？"></a>为什么是 <code>while pA != pB</code>？</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关键：循环直到pA和pB相等</span></span><br><span class="line"><span class="comment"># 两种情况会相等：</span></span><br><span class="line"><span class="comment"># 1. 指向同一个节点（交点）</span></span><br><span class="line"><span class="comment"># 2. 都指向None（没有交点）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> pA != pB:</span><br><span class="line">    pA = pA.<span class="built_in">next</span> <span class="keyword">if</span> pA <span class="keyword">else</span> headB</span><br><span class="line">    pB = pB.<span class="built_in">next</span> <span class="keyword">if</span> pB <span class="keyword">else</span> headA</span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环结束时，pA == pB</span></span><br><span class="line"><span class="comment"># 可能是交点节点，也可能是None</span></span><br><span class="line"><span class="keyword">return</span> pA</span><br></pre></td></tr></table></figure>
+
+<h4 id="不会无限循环的证明"><a href="#不会无限循环的证明" class="headerlink" title="不会无限循环的证明"></a>不会无限循环的证明</h4><p>每个指针最多走 <code>m + n</code> 步：</p>
+<ul>
+<li>走完自己的链表：<code>m</code> 或 <code>n</code> 步</li>
+<li>走完另一个链表：<code>n</code> 或 <code>m</code> 步</li>
+<li>总计：<code>m + n</code> 步</li>
+</ul>
+<p>由于每次循环都移动指针，最多 <code>m + n</code> 次循环后一定会结束。</p>
+<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><h3 id="时间复杂度对比"><a href="#时间复杂度对比" class="headerlink" title="时间复杂度对比"></a>时间复杂度对比</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>时间复杂度</th>
+<th>扫描次数</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>双指针</td>
+<td>O(m + n)</td>
+<td>1趟（每个指针）</td>
+<td>空间最优，巧妙</td>
+<td>需要理解原理</td>
+</tr>
+<tr>
+<td>哈希表</td>
+<td>O(m + n)</td>
+<td>2趟</td>
+<td>逻辑简单</td>
+<td>空间O(min(m,n))</td>
+</tr>
+<tr>
+<td>计算长度</td>
+<td>O(m + n)</td>
+<td>3趟</td>
+<td>容易理解</td>
+<td>需要计算长度</td>
+</tr>
+</tbody></table>
+<h3 id="空间复杂度对比"><a href="#空间复杂度对比" class="headerlink" title="空间复杂度对比"></a>空间复杂度对比</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>空间复杂度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>双指针</td>
+<td>O(1)</td>
+<td>只使用常数额外空间</td>
+</tr>
+<tr>
+<td>哈希表</td>
+<td>O(min(m,n))</td>
+<td>需要存储一个链表的节点</td>
+</tr>
+<tr>
+<td>计算长度</td>
+<td>O(1)</td>
+<td>只使用常数额外空间</td>
+</tr>
+</tbody></table>
+<h3 id="实际性能考虑"><a href="#实际性能考虑" class="headerlink" title="实际性能考虑"></a>实际性能考虑</h3><ul>
+<li><strong>链表长度差异大</strong>：双指针方法最优</li>
+<li><strong>需要简单实现</strong>：哈希表方法最直观</li>
+<li><strong>内存限制严格</strong>：必须使用双指针或计算长度方法</li>
+<li><strong>频繁调用</strong>：计算长度方法可能稍快（减少条件判断）</li>
+</ul>
+<h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><h3 id="错误1：指针移动逻辑错误"><a href="#错误1：指针移动逻辑错误" class="headerlink" title="错误1：指针移动逻辑错误"></a>错误1：指针移动逻辑错误</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：没有正确处理末尾转换</span></span><br><span class="line"><span class="keyword">while</span> pA != pB:</span><br><span class="line">    pA = pA.<span class="built_in">next</span>  <span class="comment"># 如果pA为None，这里报错</span></span><br><span class="line">    pB = pB.<span class="built_in">next</span>  <span class="comment"># 如果pB为None，这里报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 正确：使用三元表达式</span></span><br><span class="line"><span class="keyword">while</span> pA != pB:</span><br><span class="line">    pA = pA.<span class="built_in">next</span> <span class="keyword">if</span> pA <span class="keyword">else</span> headB</span><br><span class="line">    pB = pB.<span class="built_in">next</span> <span class="keyword">if</span> pB <span class="keyword">else</span> headA</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误2：循环条件错误"><a href="#错误2：循环条件错误" class="headerlink" title="错误2：循环条件错误"></a>错误2：循环条件错误</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：使用and而不是!=</span></span><br><span class="line"><span class="keyword">while</span> pA <span class="keyword">and</span> pB:  <span class="comment"># 如果链表长度不同，可能提前结束</span></span><br><span class="line">    <span class="keyword">if</span> pA == pB:</span><br><span class="line">        <span class="keyword">return</span> pA</span><br><span class="line">    pA = pA.<span class="built_in">next</span> <span class="keyword">if</span> pA <span class="keyword">else</span> headB</span><br><span class="line">    pB = pB.<span class="built_in">next</span> <span class="keyword">if</span> pB <span class="keyword">else</span> headA</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 正确：使用!=</span></span><br><span class="line"><span class="keyword">while</span> pA != pB:</span><br><span class="line">    pA = pA.<span class="built_in">next</span> <span class="keyword">if</span> pA <span class="keyword">else</span> headB</span><br><span class="line">    pB = pB.<span class="built_in">next</span> <span class="keyword">if</span> pB <span class="keyword">else</span> headA</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误3：忘记处理空链表"><a href="#错误3：忘记处理空链表" class="headerlink" title="错误3：忘记处理空链表"></a>错误3：忘记处理空链表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：直接开始循环</span></span><br><span class="line">pA, pB = headA, headB</span><br><span class="line"><span class="keyword">while</span> pA != pB:</span><br><span class="line">    <span class="comment"># 如果headA或headB为None，pA.next或pB.next可能报错</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 正确：先检查空链表</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> headA <span class="keyword">or</span> <span class="keyword">not</span> headB:</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="错误4：修改了原链表"><a href="#错误4：修改了原链表" class="headerlink" title="错误4：修改了原链表"></a>错误4：修改了原链表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：修改了链表结构</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getIntersectionNode_wrong</span>(<span class="params">headA, headB</span>):</span><br><span class="line">    <span class="comment"># 连接两个链表，但修改了原结构</span></span><br><span class="line">    curr = headA</span><br><span class="line">    <span class="keyword">while</span> curr.<span class="built_in">next</span>:</span><br><span class="line">        curr = curr.<span class="built_in">next</span></span><br><span class="line">    curr.<span class="built_in">next</span> = headB  <span class="comment"># 修改了链表A！</span></span><br><span class="line">    <span class="comment"># ... 其他逻辑</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># 题目要求：不能修改链表结构</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="测试用例"><a href="#测试用例" class="headerlink" title="测试用例"></a>测试用例</h2><h3 id="基础测试"><a href="#基础测试" class="headerlink" title="基础测试"></a>基础测试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_getIntersectionNode</span>():</span><br><span class="line">    solution = Solution()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 测试用例1：正常相交</span></span><br><span class="line">    <span class="comment"># 创建链表: 4→1→8→4→5 和 5→6→1→8→4→5，在8处相交</span></span><br><span class="line">    common = ListNode(<span class="number">8</span>, ListNode(<span class="number">4</span>, ListNode(<span class="number">5</span>)))</span><br><span class="line">    headA = ListNode(<span class="number">4</span>, ListNode(<span class="number">1</span>, common))</span><br><span class="line">    headB = ListNode(<span class="number">5</span>, ListNode(<span class="number">6</span>, ListNode(<span class="number">1</span>, common)))</span><br><span class="line">    result = solution.getIntersectionNode(headA, headB)</span><br><span class="line">    <span class="keyword">assert</span> result == common</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 测试用例2：不相交</span></span><br><span class="line">    headA = ListNode(<span class="number">2</span>, ListNode(<span class="number">6</span>, ListNode(<span class="number">4</span>)))</span><br><span class="line">    headB = ListNode(<span class="number">1</span>, ListNode(<span class="number">5</span>))</span><br><span class="line">    result = solution.getIntersectionNode(headA, headB)</span><br><span class="line">    <span class="keyword">assert</span> result == <span class="literal">None</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 测试用例3：一个链表是空</span></span><br><span class="line">    headA = ListNode(<span class="number">1</span>, ListNode(<span class="number">2</span>, ListNode(<span class="number">3</span>)))</span><br><span class="line">    headB = <span class="literal">None</span></span><br><span class="line">    result = solution.getIntersectionNode(headA, headB)</span><br><span class="line">    <span class="keyword">assert</span> result == <span class="literal">None</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 测试用例4：交点在头结点</span></span><br><span class="line">    common = ListNode(<span class="number">1</span>, ListNode(<span class="number">2</span>, ListNode(<span class="number">3</span>)))</span><br><span class="line">    headA = common</span><br><span class="line">    headB = ListNode(<span class="number">4</span>, common)</span><br><span class="line">    result = solution.getIntersectionNode(headA, headB)</span><br><span class="line">    <span class="keyword">assert</span> result == common</span><br></pre></td></tr></table></figure>
+
+<h3 id="边界测试"><a href="#边界测试" class="headerlink" title="边界测试"></a>边界测试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试长链表相交</span></span><br><span class="line">common = ListNode(<span class="number">100</span>, ListNode(<span class="number">101</span>))</span><br><span class="line">headA = ListNode(<span class="number">0</span>)</span><br><span class="line">curr = headA</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">100</span>):</span><br><span class="line">    curr.<span class="built_in">next</span> = ListNode(i)</span><br><span class="line">    curr = curr.<span class="built_in">next</span></span><br><span class="line">curr.<span class="built_in">next</span> = common</span><br><span class="line"></span><br><span class="line">headB = ListNode(<span class="number">0</span>)</span><br><span class="line">curr = headB</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">50</span>):</span><br><span class="line">    curr.<span class="built_in">next</span> = ListNode(i)</span><br><span class="line">    curr = curr.<span class="built_in">next</span></span><br><span class="line">curr.<span class="built_in">next</span> = common</span><br><span class="line"></span><br><span class="line">result = solution.getIntersectionNode(headA, headB)</span><br><span class="line"><span class="keyword">assert</span> result == common</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试完全相同链表</span></span><br><span class="line">head = ListNode(<span class="number">1</span>, ListNode(<span class="number">2</span>, ListNode(<span class="number">3</span>)))</span><br><span class="line">result = solution.getIntersectionNode(head, head)</span><br><span class="line"><span class="keyword">assert</span> result == head</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试一个链表是另一个的前缀</span></span><br><span class="line">headA = ListNode(<span class="number">1</span>, ListNode(<span class="number">2</span>, ListNode(<span class="number">3</span>)))</span><br><span class="line">headB = ListNode(<span class="number">4</span>, ListNode(<span class="number">5</span>, headA))</span><br><span class="line">result = solution.getIntersectionNode(headA, headB)</span><br><span class="line"><span class="keyword">assert</span> result == headA</span><br></pre></td></tr></table></figure>
+
+<h2 id="扩展应用"><a href="#扩展应用" class="headerlink" title="扩展应用"></a>扩展应用</h2><h3 id="1-判断两个链表是否相交（有环版本）"><a href="#1-判断两个链表是否相交（有环版本）" class="headerlink" title="1. 判断两个链表是否相交（有环版本）"></a>1. 判断两个链表是否相交（有环版本）</h3><p>先判断两个链表是否有环，然后根据情况处理。</p>
+<h3 id="2-找到多个链表的公共交点"><a href="#2-找到多个链表的公共交点" class="headerlink" title="2. 找到多个链表的公共交点"></a>2. 找到多个链表的公共交点</h3><p>扩展为多个链表找公共交点。</p>
+<h3 id="3-链表形状判断"><a href="#3-链表形状判断" class="headerlink" title="3. 链表形状判断"></a>3. 链表形状判断</h3><p>判断两个链表是否具有相同”形状”（拓扑结构）。</p>
+<h3 id="4-内存地址比较应用"><a href="#4-内存地址比较应用" class="headerlink" title="4. 内存地址比较应用"></a>4. 内存地址比较应用</h3><p>在实际系统中判断两个对象是否共享同一内存区域。</p>
+<h2 id="算法变体"><a href="#算法变体" class="headerlink" title="算法变体"></a>算法变体</h2><h3 id="变体1：记录访问次数"><a href="#变体1：记录访问次数" class="headerlink" title="变体1：记录访问次数"></a>变体1：记录访问次数</h3><pre><code class="language-python">def getIntersectionNode_count(self, headA, headB):
+    &quot;&quot;&quot;
+    记录访问次数的版本
+    每个节点最多被访问2次
+    &quot;&quot;&quot;
+    pA, pB = headA, headB
+    countA = countB = 0
+    
+    # 每个指针最多访问两个链表各一次
+    while countA &lt; 2 and countB &lt; 2:
+        if pA == pB:
+            return pA
+        
+        pA = pA.next
+        if not p
+</code></pre>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Python/">Python</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/LeetCode/">LeetCode</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E9%93%BE%E8%A1%A8/">链表</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/">相交链表</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E9%95%BF%E5%BA%A6%E5%AF%B9%E9%BD%90/">长度对齐</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95%E6%8A%80%E5%B7%A7/">算法技巧</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2026/03/29/02-LeetCode/Linked-List-Special/0142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II/"
+                                   title="0142. 环形链表II - 找到环起点的数学证明与算法实现"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">0142. 环形链表II - 找到环起点的数学证明与算法实现</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/03/29/02-LeetCode/Linked-List-Special/0876-%E9%93%BE%E8%A1%A8%E7%9A%84%E4%B8%AD%E7%82%B9/"
+                                   title="0876. 链表的中点 - 快慢指针技巧与边界条件详解"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">0876. 链表的中点 - 快慢指针技巧与边界条件详解</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0160-%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B6%88%E9%99%A4%E9%95%BF%E5%BA%A6%E5%B7%AE%E6%8A%80%E5%B7%A7%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">0160. 相交链表 - 双指针消除长度差技巧详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%B1%E6%96%87%E9%A2%98%E7%9B%AE"><span class="nav-number">1.1.1.</span> <span class="nav-text">英文题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E9%A2%98%E7%9B%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">中文题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.1.3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">进阶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.1.5.</span> <span class="nav-text">约束条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-number">1.2.1.</span> <span class="nav-text">核心思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.2.</span> <span class="nav-text">算法原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E8%A7%A3%E6%B3%95%EF%BC%88%E5%8F%8C%E6%8C%87%E9%92%88%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">标准解法（双指针）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E6%96%B9%E6%B3%95%EF%BC%88%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">哈希表方法（对比）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E9%95%BF%E5%BA%A6%E6%96%B9%E6%B3%95%EF%BC%88%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">计算长度方法（对比）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">详细分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E8%AF%81%E6%98%8E"><span class="nav-number">1.4.1.</span> <span class="nav-text">双指针算法原理证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%83%85%E5%86%B51%EF%BC%9A%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">情况1：两个链表相交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%83%85%E5%86%B52%EF%BC%9A%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E4%B8%8D%E7%9B%B8%E4%BA%A4"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">情况2：两个链表不相交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">数学公式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">1.4.2.</span> <span class="nav-text">边界条件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%A9%BA%E9%93%BE%E8%A1%A8"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">1. 空链表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%8F%A6%E4%B8%80%E4%B8%AA%E7%9A%84%E5%89%8D%E7%BC%80"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">2. 一个链表是另一个的前缀</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E5%AE%8C%E5%85%A8%E7%9B%B8%E5%90%8C"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">3. 两个链表完全相同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BA%A4%E7%82%B9%E5%B0%B1%E6%98%AF%E5%A4%B4%E7%BB%93%E7%82%B9"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">4. 交点就是头结点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%BB%88%E6%AD%A2%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.4.3.</span> <span class="nav-text">循环终止条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-while-pA-pB%EF%BC%9F"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">为什么是 while pA !&#x3D; pB？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E4%BC%9A%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E7%9A%84%E8%AF%81%E6%98%8E"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">不会无限循环的证明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.1.</span> <span class="nav-text">时间复杂度对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.2.</span> <span class="nav-text">空间复杂度对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%80%A7%E8%83%BD%E8%80%83%E8%99%91"><span class="nav-number">1.5.3.</span> <span class="nav-text">实际性能考虑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.</span> <span class="nav-text">常见错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF1%EF%BC%9A%E6%8C%87%E9%92%88%E7%A7%BB%E5%8A%A8%E9%80%BB%E8%BE%91%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.1.</span> <span class="nav-text">错误1：指针移动逻辑错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF2%EF%BC%9A%E5%BE%AA%E7%8E%AF%E6%9D%A1%E4%BB%B6%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.2.</span> <span class="nav-text">错误2：循环条件错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF3%EF%BC%9A%E5%BF%98%E8%AE%B0%E5%A4%84%E7%90%86%E7%A9%BA%E9%93%BE%E8%A1%A8"><span class="nav-number">1.6.3.</span> <span class="nav-text">错误3：忘记处理空链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF4%EF%BC%9A%E4%BF%AE%E6%94%B9%E4%BA%86%E5%8E%9F%E9%93%BE%E8%A1%A8"><span class="nav-number">1.6.4.</span> <span class="nav-text">错误4：修改了原链表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-number">1.7.</span> <span class="nav-text">测试用例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.1.</span> <span class="nav-text">基础测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.2.</span> <span class="nav-text">边界测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%BA%94%E7%94%A8"><span class="nav-number">1.8.</span> <span class="nav-text">扩展应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E7%9B%B8%E4%BA%A4%EF%BC%88%E6%9C%89%E7%8E%AF%E7%89%88%E6%9C%AC%EF%BC%89"><span class="nav-number">1.8.1.</span> <span class="nav-text">1. 判断两个链表是否相交（有环版本）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%89%BE%E5%88%B0%E5%A4%9A%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E5%85%AC%E5%85%B1%E4%BA%A4%E7%82%B9"><span class="nav-number">1.8.2.</span> <span class="nav-text">2. 找到多个链表的公共交点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%93%BE%E8%A1%A8%E5%BD%A2%E7%8A%B6%E5%88%A4%E6%96%AD"><span class="nav-number">1.8.3.</span> <span class="nav-text">3. 链表形状判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E6%AF%94%E8%BE%83%E5%BA%94%E7%94%A8"><span class="nav-number">1.8.4.</span> <span class="nav-text">4. 内存地址比较应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8F%98%E4%BD%93"><span class="nav-number">1.9.</span> <span class="nav-text">算法变体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E4%BD%931%EF%BC%9A%E8%AE%B0%E5%BD%95%E8%AE%BF%E9%97%AE%E6%AC%A1%E6%95%B0"><span class="nav-number">1.9.1.</span> <span class="nav-text">变体1：记录访问次数</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2024</span>&nbsp;-&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">John Doe</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0160-%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8-%E5%8F%8C%E6%8C%87%E9%92%88%E6%B6%88%E9%99%A4%E9%95%BF%E5%BA%A6%E5%B7%AE%E6%8A%80%E5%B7%A7%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">0160. 相交链表 - 双指针消除长度差技巧详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%B1%E6%96%87%E9%A2%98%E7%9B%AE"><span class="nav-number">1.1.1.</span> <span class="nav-text">英文题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E9%A2%98%E7%9B%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">中文题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.1.3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">进阶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.1.5.</span> <span class="nav-text">约束条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-number">1.2.1.</span> <span class="nav-text">核心思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.2.</span> <span class="nav-text">算法原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E8%A7%A3%E6%B3%95%EF%BC%88%E5%8F%8C%E6%8C%87%E9%92%88%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">标准解法（双指针）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E6%96%B9%E6%B3%95%EF%BC%88%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">哈希表方法（对比）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E9%95%BF%E5%BA%A6%E6%96%B9%E6%B3%95%EF%BC%88%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">计算长度方法（对比）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">详细分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E8%AF%81%E6%98%8E"><span class="nav-number">1.4.1.</span> <span class="nav-text">双指针算法原理证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%83%85%E5%86%B51%EF%BC%9A%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">情况1：两个链表相交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%83%85%E5%86%B52%EF%BC%9A%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E4%B8%8D%E7%9B%B8%E4%BA%A4"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">情况2：两个链表不相交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">数学公式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">1.4.2.</span> <span class="nav-text">边界条件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%A9%BA%E9%93%BE%E8%A1%A8"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">1. 空链表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%8F%A6%E4%B8%80%E4%B8%AA%E7%9A%84%E5%89%8D%E7%BC%80"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">2. 一个链表是另一个的前缀</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E5%AE%8C%E5%85%A8%E7%9B%B8%E5%90%8C"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">3. 两个链表完全相同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BA%A4%E7%82%B9%E5%B0%B1%E6%98%AF%E5%A4%B4%E7%BB%93%E7%82%B9"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">4. 交点就是头结点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%BB%88%E6%AD%A2%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.4.3.</span> <span class="nav-text">循环终止条件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF-while-pA-pB%EF%BC%9F"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">为什么是 while pA !&#x3D; pB？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E4%BC%9A%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E7%9A%84%E8%AF%81%E6%98%8E"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">不会无限循环的证明</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.1.</span> <span class="nav-text">时间复杂度对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.2.</span> <span class="nav-text">空间复杂度对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%80%A7%E8%83%BD%E8%80%83%E8%99%91"><span class="nav-number">1.5.3.</span> <span class="nav-text">实际性能考虑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.</span> <span class="nav-text">常见错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF1%EF%BC%9A%E6%8C%87%E9%92%88%E7%A7%BB%E5%8A%A8%E9%80%BB%E8%BE%91%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.1.</span> <span class="nav-text">错误1：指针移动逻辑错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF2%EF%BC%9A%E5%BE%AA%E7%8E%AF%E6%9D%A1%E4%BB%B6%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.2.</span> <span class="nav-text">错误2：循环条件错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF3%EF%BC%9A%E5%BF%98%E8%AE%B0%E5%A4%84%E7%90%86%E7%A9%BA%E9%93%BE%E8%A1%A8"><span class="nav-number">1.6.3.</span> <span class="nav-text">错误3：忘记处理空链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF4%EF%BC%9A%E4%BF%AE%E6%94%B9%E4%BA%86%E5%8E%9F%E9%93%BE%E8%A1%A8"><span class="nav-number">1.6.4.</span> <span class="nav-text">错误4：修改了原链表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-number">1.7.</span> <span class="nav-text">测试用例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.1.</span> <span class="nav-text">基础测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.2.</span> <span class="nav-text">边界测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%BA%94%E7%94%A8"><span class="nav-number">1.8.</span> <span class="nav-text">扩展应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E7%9B%B8%E4%BA%A4%EF%BC%88%E6%9C%89%E7%8E%AF%E7%89%88%E6%9C%AC%EF%BC%89"><span class="nav-number">1.8.1.</span> <span class="nav-text">1. 判断两个链表是否相交（有环版本）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%89%BE%E5%88%B0%E5%A4%9A%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E5%85%AC%E5%85%B1%E4%BA%A4%E7%82%B9"><span class="nav-number">1.8.2.</span> <span class="nav-text">2. 找到多个链表的公共交点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%93%BE%E8%A1%A8%E5%BD%A2%E7%8A%B6%E5%88%A4%E6%96%AD"><span class="nav-number">1.8.3.</span> <span class="nav-text">3. 链表形状判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E6%AF%94%E8%BE%83%E5%BA%94%E7%94%A8"><span class="nav-number">1.8.4.</span> <span class="nav-text">4. 内存地址比较应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8F%98%E4%BD%93"><span class="nav-number">1.9.</span> <span class="nav-text">算法变体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E4%BD%931%EF%BC%9A%E8%AE%B0%E5%BD%95%E8%AE%BF%E9%97%AE%E6%AC%A1%E6%95%B0"><span class="nav-number">1.9.1.</span> <span class="nav-text">变体1：记录访问次数</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>

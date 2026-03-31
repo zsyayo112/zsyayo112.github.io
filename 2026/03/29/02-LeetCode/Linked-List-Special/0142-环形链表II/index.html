@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="John Doe">
+    
+    <title>
+        
+            0142. 环形链表II - 找到环起点的数学证明与算法实现 |
+        
+        Syz&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Syz's Blog","author":"","avatar":"https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg","logo":"https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg","favicon":""},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg2.svg","description":"生命如红蜡，火焰向上，泪流向下","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/zsyayo112","weixin":"img | /images/qrcode.png","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"1162671732@qq.com"}},"scroll":{"progress_bar":true,"percent":false,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":true,"custom_badge":["One","Two","Three","笔记"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":"","text":"","icon":""}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"giscus","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2024,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":""},"record":{"enable":false,"list":[{"code":"","link":""}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Syz&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        0142. 环形链表II - 找到环起点的数学证明与算法实现
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">John Doe</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-03-29</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Tue Mar 31 2026 03:16:57 GMT+0000">2026-03-31</span>
+                </span>
+            
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/02-LeetCode-Linked-List-Special/">02-LeetCode/Linked-List-Special</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Python/">Python</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/LeetCode/">LeetCode</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E9%93%BE%E8%A1%A8/">链表</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/">环形链表</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/">快慢指针</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Floyd%E7%AE%97%E6%B3%95/">Floyd算法</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/">数学证明</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h1 id="0142-环形链表II-找到环起点的数学证明与算法实现"><a href="#0142-环形链表II-找到环起点的数学证明与算法实现" class="headerlink" title="0142. 环形链表II - 找到环起点的数学证明与算法实现"></a>0142. 环形链表II - 找到环起点的数学证明与算法实现</h1><blockquote>
+<p>本文深入分析LeetCode第142题”环形链表II”，这是141题的进阶版本，不仅需要检测环，还要找到环的起点。包含完整的数学证明和多种解法。</p>
+</blockquote>
+<h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><h3 id="英文题目"><a href="#英文题目" class="headerlink" title="英文题目"></a>英文题目</h3><p>Linked List Cycle II</p>
+<h3 id="中文题目"><a href="#中文题目" class="headerlink" title="中文题目"></a>中文题目</h3><p>给定一个链表的头节点 <code>head</code> ，返回链表开始入环的第一个节点。如果链表无环，则返回 <code>null</code>。</p>
+<p>如果链表中有某个节点，可以通过连续跟踪 <code>next</code> 指针再次到达，则链表中存在环。为了表示给定链表中的环，评测系统内部使用整数 <code>pos</code> 来表示链表尾连接到链表中的位置（索引从 0 开始）。如果 <code>pos</code> 是 <code>-1</code>，则在该链表中没有环。</p>
+<p>注意：<code>pos</code> 不作为参数进行传递，仅仅是为了标识链表的实际情况。</p>
+<p>不允许修改链表。</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：head = [3,2,0,-4], pos = 1</span><br><span class="line">输出：返回索引为1的节点</span><br><span class="line">解释：链表中有一个环，其尾部连接到第二个节点。</span><br><span class="line"></span><br><span class="line">输入：head = [1,2], pos = 0</span><br><span class="line">输出：返回索引为0的节点</span><br><span class="line">解释：链表中有一个环，其尾部连接到第一个节点。</span><br><span class="line"></span><br><span class="line">输入：head = [1], pos = -1</span><br><span class="line">输出：返回null</span><br><span class="line">解释：链表中没有环。</span><br></pre></td></tr></table></figure>
+
+<h3 id="进阶"><a href="#进阶" class="headerlink" title="进阶"></a>进阶</h3><p>你是否可以使用 O(1) 空间解决此题？</p>
+<h3 id="约束条件"><a href="#约束条件" class="headerlink" title="约束条件"></a>约束条件</h3><ul>
+<li>链表中节点的数目范围在范围 <code>[0, 10^4]</code> 内</li>
+<li><code>-10^5 &lt;= Node.val &lt;= 10^5</code></li>
+<li><code>pos</code> 的值为 <code>-1</code> 或者链表中的一个有效索引</li>
+</ul>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="核心思想（Floyd算法扩展）"><a href="#核心思想（Floyd算法扩展）" class="headerlink" title="核心思想（Floyd算法扩展）"></a>核心思想（Floyd算法扩展）</h3><ol>
+<li><strong>第一阶段</strong>：使用快慢指针判断是否有环（同141题）</li>
+<li><strong>第二阶段</strong>：如果快慢指针相遇，将一个指针移回head，两个指针以相同速度前进，再次相遇点即为环起点</li>
+</ol>
+<h3 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h3><ol>
+<li>初始化 <code>slow = fast = head</code></li>
+<li>使用快慢指针判断是否有环：<ul>
+<li><code>slow</code> 每次走1步，<code>fast</code> 每次走2步</li>
+<li>如果 <code>fast</code> 或 <code>fast.next</code> 为 <code>None</code>，说明无环，返回 <code>None</code></li>
+<li>如果 <code>slow == fast</code>，说明有环，进入第3步</li>
+</ul>
+</li>
+<li>将一个指针移回head：<ul>
+<li><code>slow = head</code>（或 <code>fast = head</code>）</li>
+<li>两个指针都以每次1步的速度前进</li>
+</ul>
+</li>
+<li>当两个指针再次相遇时，所在节点即为环的起点</li>
+</ol>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="标准解法（Floyd算法）"><a href="#标准解法（Floyd算法）" class="headerlink" title="标准解法（Floyd算法）"></a>标准解法（Floyd算法）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.next = None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">detectCycle</span>(<span class="params">self, head: <span class="type">Optional</span>[ListNode]</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        找到环的起点 - Floyd算法扩展</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        时间复杂度: O(n)</span></span><br><span class="line"><span class="string">        空间复杂度: O(1)</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        算法步骤:</span></span><br><span class="line"><span class="string">        1. 快慢指针判断是否有环</span></span><br><span class="line"><span class="string">        2. 如果有环，将一个指针移回head</span></span><br><span class="line"><span class="string">        3. 两个指针同步前进，相遇点即为环起点</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> head <span class="keyword">or</span> <span class="keyword">not</span> head.<span class="built_in">next</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 第一阶段：判断是否有环</span></span><br><span class="line">        slow = fast = head</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> fast <span class="keyword">and</span> fast.<span class="built_in">next</span>:</span><br><span class="line">            slow = slow.<span class="built_in">next</span>          <span class="comment"># 慢指针走1步</span></span><br><span class="line">            fast = fast.<span class="built_in">next</span>.<span class="built_in">next</span>     <span class="comment"># 快指针走2步</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> slow == fast:          <span class="comment"># 相遇，有环</span></span><br><span class="line">                <span class="comment"># 第二阶段：找到环起点</span></span><br><span class="line">                slow = head           <span class="comment"># 一个指针移回head</span></span><br><span class="line">                </span><br><span class="line">                <span class="keyword">while</span> slow != fast:   <span class="comment"># 同步前进直到相遇</span></span><br><span class="line">                    slow = slow.<span class="built_in">next</span></span><br><span class="line">                    fast = fast.<span class="built_in">next</span></span><br><span class="line">                </span><br><span class="line">                <span class="keyword">return</span> slow           <span class="comment"># 相遇点即为环起点</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>  <span class="comment"># 无环</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="哈希表方法（对比）"><a href="#哈希表方法（对比）" class="headerlink" title="哈希表方法（对比）"></a>哈希表方法（对比）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">detectCycle_hash</span>(<span class="params">self, head: <span class="type">Optional</span>[ListNode]</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        哈希表方法 - 记录访问过的节点</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        时间复杂度: O(n)</span></span><br><span class="line"><span class="string">        空间复杂度: O(n)</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        优点: 逻辑简单直观</span></span><br><span class="line"><span class="string">        缺点: 需要额外空间</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        visited = <span class="built_in">set</span>()</span><br><span class="line">        curr = head</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> curr:</span><br><span class="line">            <span class="keyword">if</span> curr <span class="keyword">in</span> visited:  <span class="comment"># 如果节点已访问过，说明是环起点</span></span><br><span class="line">                <span class="keyword">return</span> curr</span><br><span class="line">            visited.add(curr)    <span class="comment"># 记录访问过的节点</span></span><br><span class="line">            curr = curr.<span class="built_in">next</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>  <span class="comment"># 无环</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="修改节点值方法（不推荐）"><a href="#修改节点值方法（不推荐）" class="headerlink" title="修改节点值方法（不推荐）"></a>修改节点值方法（不推荐）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">detectCycle_modify</span>(<span class="params">self, head: <span class="type">Optional</span>[ListNode]</span>) -&gt; <span class="type">Optional</span>[ListNode]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        修改节点值方法 - 遍历时修改节点值为特殊值</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        注意: 这种方法会破坏原链表，不符合题目要求</span></span><br><span class="line"><span class="string">        仅作为算法思路的展示</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        curr = head</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> curr:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">hasattr</span>(curr, <span class="string">&#x27;visited&#x27;</span>) <span class="keyword">and</span> curr.visited:</span><br><span class="line">                <span class="keyword">return</span> curr</span><br><span class="line">            curr.visited = <span class="literal">True</span>  <span class="comment"># 添加访问标记</span></span><br><span class="line">            curr = curr.<span class="built_in">next</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="详细分析"><a href="#详细分析" class="headerlink" title="详细分析"></a>详细分析</h2><h3 id="Floyd算法数学证明"><a href="#Floyd算法数学证明" class="headerlink" title="Floyd算法数学证明"></a>Floyd算法数学证明</h3><h4 id="符号定义"><a href="#符号定义" class="headerlink" title="符号定义"></a>符号定义</h4><ul>
+<li><code>L</code>: 从head到环起点的距离（环外部分长度）</li>
+<li><code>C</code>: 环的周长</li>
+<li><code>k</code>: 快慢指针第一次相遇时，慢指针在环中走过的距离</li>
+<li><code>m</code>: 快慢指针第一次相遇点距离环起点的距离</li>
+</ul>
+<h4 id="第一阶段：快慢指针相遇"><a href="#第一阶段：快慢指针相遇" class="headerlink" title="第一阶段：快慢指针相遇"></a>第一阶段：快慢指针相遇</h4><p>设相遇时：</p>
+<ul>
+<li>慢指针走了 <code>L + k</code> 步</li>
+<li>快指针走了 <code>L + k + mC</code> 步（多绕了m圈）</li>
+</ul>
+<p>由于快指针速度是慢指针的2倍：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2(L + k) = L + k + mC</span><br><span class="line">L + k = mC</span><br><span class="line">L = mC - k</span><br></pre></td></tr></table></figure>
+
+<h4 id="第二阶段：找到环起点"><a href="#第二阶段：找到环起点" class="headerlink" title="第二阶段：找到环起点"></a>第二阶段：找到环起点</h4><p>从相遇点开始：</p>
+<ul>
+<li>指针1从head开始走</li>
+<li>指针2从相遇点开始走</li>
+<li>两个指针都每次走1步</li>
+</ul>
+<p>当指针1走到环起点时（走了L步）：</p>
+<ul>
+<li>指针2从相遇点走了L步</li>
+<li>由于 <code>L = mC - k</code>，指针2走了 <code>mC - k</code> 步</li>
+<li>从相遇点（距离环起点k）走 <code>mC - k</code> 步后，位置为：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">起始位置: 距离环起点k</span><br><span class="line">走了: mC - k</span><br><span class="line">总距离: k + (mC - k) = mC</span><br></pre></td></tr></table></figure></li>
+<li>由于环的周长是C，走mC步相当于绕环m圈，回到环起点</li>
+</ul>
+<p>因此两个指针在环起点相遇。</p>
+<h3 id="示例分析"><a href="#示例分析" class="headerlink" title="示例分析"></a>示例分析</h3><h4 id="示例1：head-3-2-0-4-pos-1"><a href="#示例1：head-3-2-0-4-pos-1" class="headerlink" title="示例1：head &#x3D; [3,2,0,-4], pos &#x3D; 1"></a>示例1：head &#x3D; [3,2,0,-4], pos &#x3D; 1</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">链表结构：</span><br><span class="line">3 → 2 → 0 → -4</span><br><span class="line">    ↑_______|</span><br><span class="line">    </span><br><span class="line">L = 1 (从3到2)</span><br><span class="line">C = 3 (环：2→0→-4→2)</span><br><span class="line"></span><br><span class="line">第一阶段：</span><br><span class="line">slow: 3→2→0→-4</span><br><span class="line">fast: 3→0→2→-4</span><br><span class="line">在-4处相遇，k=2（从环起点2到相遇点-4的距离）</span><br><span class="line"></span><br><span class="line">验证公式：L = mC - k</span><br><span class="line">1 = m×3 - 2 ⇒ m=1</span><br><span class="line"></span><br><span class="line">第二阶段：</span><br><span class="line">slow回head(3)，fast在相遇点(-4)</span><br><span class="line">同步走：</span><br><span class="line">slow: 3→2</span><br><span class="line">fast: -4→2</span><br><span class="line">在2处相遇，即环起点</span><br></pre></td></tr></table></figure>
+
+<h4 id="示例2：head-1-2-pos-0"><a href="#示例2：head-1-2-pos-0" class="headerlink" title="示例2：head &#x3D; [1,2], pos &#x3D; 0"></a>示例2：head &#x3D; [1,2], pos &#x3D; 0</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">链表结构：</span><br><span class="line">1 → 2</span><br><span class="line">↑___|</span><br><span class="line">    </span><br><span class="line">L = 0 (head就是环起点)</span><br><span class="line">C = 2 (环：1→2→1)</span><br><span class="line"></span><br><span class="line">第一阶段：</span><br><span class="line">slow: 1→2</span><br><span class="line">fast: 1→2→1→2</span><br><span class="line">在2处相遇，k=1</span><br><span class="line"></span><br><span class="line">验证：L = mC - k</span><br><span class="line">0 = m×2 - 1 ⇒ m=0.5（实际上m可以是任意整数，这里取最小）</span><br><span class="line"></span><br><span class="line">第二阶段：</span><br><span class="line">slow回head(1)，fast在相遇点(2)</span><br><span class="line">同步走：</span><br><span class="line">slow: 1</span><br><span class="line">fast: 2→1</span><br><span class="line">在1处相遇，即环起点</span><br></pre></td></tr></table></figure>
+
+<h3 id="边界条件处理"><a href="#边界条件处理" class="headerlink" title="边界条件处理"></a>边界条件处理</h3><h4 id="1-空链表或单节点无环"><a href="#1-空链表或单节点无环" class="headerlink" title="1. 空链表或单节点无环"></a>1. 空链表或单节点无环</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> head <span class="keyword">or</span> <span class="keyword">not</span> head.<span class="built_in">next</span>:</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-整个链表都是环"><a href="#2-整个链表都是环" class="headerlink" title="2. 整个链表都是环"></a>2. 整个链表都是环</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># head = [1,2,3], pos = 0</span></span><br><span class="line"><span class="comment"># 结构：1 → 2 → 3 → 1 → ...</span></span><br><span class="line"><span class="comment"># L=0，快慢指针在环中某点相遇，然后一个回head，同步走找到环起点</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-环很大或很小"><a href="#3-环很大或很小" class="headerlink" title="3. 环很大或很小"></a>3. 环很大或很小</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 算法都适用，时间复杂度O(L+C)</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-无环链表"><a href="#4-无环链表" class="headerlink" title="4. 无环链表"></a>4. 无环链表</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 快指针会先到达末尾，返回None</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h2><h3 id="时间复杂度对比"><a href="#时间复杂度对比" class="headerlink" title="时间复杂度对比"></a>时间复杂度对比</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>时间复杂度</th>
+<th>最坏情况</th>
+<th>平均情况</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Floyd算法</td>
+<td>O(n)</td>
+<td>O(L+C)</td>
+<td>O(L+C&#x2F;2)</td>
+<td>空间最优</td>
+<td>需要理解证明</td>
+</tr>
+<tr>
+<td>哈希表</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>逻辑简单</td>
+<td>空间O(n)</td>
+</tr>
+<tr>
+<td>修改节点值</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>空间O(1)</td>
+<td>破坏原数据</td>
+</tr>
+</tbody></table>
+<h3 id="空间复杂度对比"><a href="#空间复杂度对比" class="headerlink" title="空间复杂度对比"></a>空间复杂度对比</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>空间复杂度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Floyd算法</td>
+<td>O(1)</td>
+<td>只使用常数额外空间</td>
+</tr>
+<tr>
+<td>哈希表</td>
+<td>O(n)</td>
+<td>需要存储所有节点</td>
+</tr>
+<tr>
+<td>修改节点值</td>
+<td>O(1)</td>
+<td>只使用常数额外空间</td>
+</tr>
+</tbody></table>
+<h3 id="实际性能考虑"><a href="#实际性能考虑" class="headerlink" title="实际性能考虑"></a>实际性能考虑</h3><ul>
+<li><strong>链表长度小</strong>：所有方法性能差异不大</li>
+<li><strong>链表长度大且有环</strong>：Floyd算法最优</li>
+<li><strong>需要不修改链表</strong>：必须使用Floyd算法或哈希表</li>
+<li><strong>内存限制严格</strong>：必须使用Floyd算法</li>
+</ul>
+<h2 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h2><h3 id="错误1：忘记检查空链表"><a href="#错误1：忘记检查空链表" class="headerlink" title="错误1：忘记检查空链表"></a>错误1：忘记检查空链表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：直接开始循环</span></span><br><span class="line">slow = fast = head</span><br><span class="line"><span class="keyword">while</span> fast <span class="keyword">and</span> fast.<span class="built_in">next</span>:</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line"><span class="comment"># 对于空链表，fast为None，循环不执行，返回None</span></span><br><span class="line"><span class="comment"># 正确但应该显式检查</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 更好：显式检查</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> head:</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="错误2：指针移动顺序错误"><a href="#错误2：指针移动顺序错误" class="headerlink" title="错误2：指针移动顺序错误"></a>错误2：指针移动顺序错误</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：先判断相等再移动</span></span><br><span class="line"><span class="keyword">while</span> fast <span class="keyword">and</span> fast.<span class="built_in">next</span>:</span><br><span class="line">    <span class="keyword">if</span> slow == fast:  <span class="comment"># 初始时slow==fast，错误进入第二阶段</span></span><br><span class="line">        <span class="comment"># ...</span></span><br><span class="line">    slow = slow.<span class="built_in">next</span></span><br><span class="line">    fast = fast.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 正确：先移动再判断</span></span><br><span class="line"><span class="keyword">while</span> fast <span class="keyword">and</span> fast.<span class="built_in">next</span>:</span><br><span class="line">    slow = slow.<span class="built_in">next</span></span><br><span class="line">    fast = fast.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">    <span class="keyword">if</span> slow == fast:</span><br><span class="line">        <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="错误3：第二阶段指针选择错误"><a href="#错误3：第二阶段指针选择错误" class="headerlink" title="错误3：第二阶段指针选择错误"></a>错误3：第二阶段指针选择错误</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：两个指针都移动</span></span><br><span class="line"><span class="keyword">if</span> slow == fast:</span><br><span class="line">    slow = head</span><br><span class="line">    fast = head  <span class="comment"># 错误！应该保持fast在相遇点</span></span><br><span class="line">    </span><br><span class="line"><span class="comment"># ✅ 正确：只移动一个指针</span></span><br><span class="line"><span class="keyword">if</span> slow == fast:</span><br><span class="line">    slow = head  <span class="comment"># 或 fast = head，但只能移动一个</span></span><br><span class="line">    <span class="keyword">while</span> slow != fast:</span><br><span class="line">        slow = slow.<span class="built_in">next</span></span><br><span class="line">        fast = fast.<span class="built_in">next</span></span><br><span class="line">    <span class="keyword">return</span> slow</span><br></pre></td></tr></table></figure>
+
+<h3 id="错误4：循环条件不完整"><a href="#错误4：循环条件不完整" class="headerlink" title="错误4：循环条件不完整"></a>错误4：循环条件不完整</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：可能访问None的next属性</span></span><br><span class="line"><span class="keyword">while</span> fast.<span class="built_in">next</span>:</span><br><span class="line">    slow = slow.<span class="built_in">next</span></span><br><span class="line">    fast = fast.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 正确：双重检查</span></span><br><span class="line"><span class="keyword">while</span> fast <span class="keyword">and</span> fast.<span class="built_in">next</span>:</span><br><span class="line">    slow = slow.<span class="built_in">next</span></span><br><span class="line">    fast = fast.<span class="built_in">next</span>.<span class="built_in">next</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="测试用例"><a href="#测试用例" class="headerlink" title="测试用例"></a>测试用例</h2><h3 id="基础测试"><a href="#基础测试" class="headerlink" title="基础测试"></a>基础测试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test_detectCycle</span>():</span><br><span class="line">    solution = Solution()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 测试用例1：有环，环起点在中间</span></span><br><span class="line">    <span class="comment"># 创建链表: 3→2→0→-4→2(环)</span></span><br><span class="line">    node1 = ListNode(<span class="number">3</span>)</span><br><span class="line">    node2 = ListNode(<span class="number">2</span>)</span><br><span class="line">    node3 = ListNode(<span class="number">0</span>)</span><br><span class="line">    node4 = ListNode(-<span class="number">4</span>)</span><br><span class="line">    node1.<span class="built_in">next</span> = node2</span><br><span class="line">    node2.<span class="built_in">next</span> = node3</span><br><span class="line">    node3.<span class="built_in">next</span> = node4</span><br><span class="line">    node4.<span class="built_in">next</span> = node2</span><br><span class="line">    <span class="keyword">assert</span> solution.detectCycle(node1) == node2</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 测试用例2：无环</span></span><br><span class="line">    head = ListNode(<span class="number">1</span>, ListNode(<span class="number">2</span>, ListNode(<span class="number">3</span>)))</span><br><span class="line">    <span class="keyword">assert</span> solution.detectCycle(head) == <span class="literal">None</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 测试用例3：单节点有环</span></span><br><span class="line">    node = ListNode(<span class="number">1</span>)</span><br><span class="line">    node.<span class="built_in">next</span> = node</span><br><span class="line">    <span class="keyword">assert</span> solution.detectCycle(node) == node</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 测试用例4：整个链表是环</span></span><br><span class="line">    node1 = ListNode(<span class="number">1</span>)</span><br><span class="line">    node2 = ListNode(<span class="number">2</span>)</span><br><span class="line">    node3 = ListNode(<span class="number">3</span>)</span><br><span class="line">    node1.<span class="built_in">next</span> = node2</span><br><span class="line">    node2.<span class="built_in">next</span> = node3</span><br><span class="line">    node3.<span class="built_in">next</span> = node1</span><br><span class="line">    <span class="keyword">assert</span> solution.detectCycle(node1) == node1</span><br></pre></td></tr></table></figure>
+
+<h3 id="边界测试"><a href="#边界测试" class="headerlink" title="边界测试"></a>边界测试</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试大环</span></span><br><span class="line">nodes = [ListNode(i) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">9999</span>):</span><br><span class="line">    nodes[i].<span class="built_in">next</span> = nodes[i + <span class="number">1</span>]</span><br><span class="line">nodes[<span class="number">9999</span>].<span class="built_in">next</span> = nodes[<span class="number">5000</span>]  <span class="comment"># 环起点在中间</span></span><br><span class="line"><span class="keyword">assert</span> solution.detectCycle(nodes[<span class="number">0</span>]) == nodes[<span class="number">5000</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试环起点就是head</span></span><br><span class="line">node1 = ListNode(<span class="number">1</span>)</span><br><span class="line">node2 = ListNode(<span class="number">2</span>)</span><br><span class="line">node3 = ListNode(<span class="number">3</span>)</span><br><span class="line">node1.<span class="built_in">next</span> = node2</span><br><span class="line">node2.<span class="built_in">next</span> = node3</span><br><span class="line">node3.<span class="built_in">next</span> = node1</span><br><span class="line"><span class="keyword">assert</span> solution.detectCycle(node1) == node1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试长链后的小环</span></span><br><span class="line">head = ListNode(<span class="number">0</span>)</span><br><span class="line">curr = head</span><br><span class="line">nodes = [head]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">1000</span>):</span><br><span class="line">    curr.<span class="built_in">next</span> = ListNode(i)</span><br><span class="line">    curr = curr.<span class="built_in">next</span></span><br><span class="line">    nodes.append(curr)</span><br><span class="line">curr.<span class="built_in">next</span> = nodes[<span class="number">100</span>]  <span class="comment"># 指向第101个节点形成环</span></span><br><span class="line"><span class="keyword">assert</span> solution.detectCycle(head) == nodes[<span class="number">100</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="扩展应用"><a href="#扩展应用" class="headerlink" title="扩展应用"></a>扩展应用</h2><h3 id="1-计算环的长度"><a href="#1-计算环的长度" class="headerlink" title="1. 计算环的长度"></a>1. 计算环的长度</h3><p>找到环起点后，固定一个指针，另一个指针继续走直到再次相遇。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">cycleLength</span>(<span class="params">self, head</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    计算环的长度</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    meeting_point = <span class="variable language_">self</span>.detectCycle(head)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> meeting_point:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    length = <span class="number">1</span></span><br><span class="line">    curr = meeting_point.<span class="built_in">next</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> curr != meeting_point:</span><br><span class="line">        length += <span class="number">1</span></span><br><span class="line">        curr = curr.<span class="built_in">next</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> length</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-判断两个链表是否相交"><a href="#2-判断两个链表是否相交" class="headerlink" title="2. 判断两个链表是否相交"></a>2. 判断两个链表是否相交</h3><p>将两个链表连接，判断是否有环。</p>
+<h3 id="3-找到链表的交点"><a href="#3-找到链表的交点" class="headerlink" title="3. 找到链表的交点"></a>3. 找到链表的交点</h3><p>先找到两个链表的环起点（如果有环），然后使用160题的方法。</p>
+<h3 id="4-检测并修复循环引用"><a href="#4-检测并修复循环引用" class="headerlink" title="4. 检测并修复循环引用"></a>4. 检测并修复循环引用</h3><p>在内存管理或垃圾收集中应用。</p>
+<h2 id="算法变体"><a href="#算法变体" class="headerlink" title="算法变体"></a>算法变体</h2><h3 id="变体1：使用三个指针"><a href="#变体1：使用三个指针" class="headerlink" title="变体1：使用三个指针"></a>变体1：使用三个指针</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">detectCycle_three_pointers</span>(<span class="params">self, head</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    使用三个指针的版本，增加可靠性</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> head <span class="keyword">or</span> <span class="keyword">not</span> head.<span class="built_in">next</span> <span class="keyword">or</span> <span class="keyword">not</span> head.<span class="built_in">next</span>.<span class="built_in">next</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    </span><br><span class="line">    p1 = head</span><br><span class="line">    p2 = head.<span class="built_in">next</span></span><br><span class="line">    p3 = head.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 第一阶段：检测环</span></span><br><span class="line">    <span class="keyword">while</span> p3 <span class="keyword">and</span> p3.<span class="built_in">next</span> <span class="keyword">and</span> p3.<span class="built_in">next</span>.<span class="built_in">next</span>:</span><br><span class="line">        <span class="keyword">if</span> p1 == p2 <span class="keyword">or</span> p1 == p3 <span class="keyword">or</span> p2 == p3:</span><br><span class="line">            <span class="comment"># 找到相遇点</span></span><br><span class="line">            meeting = p1 <span class="keyword">if</span> p1 == p2 <span class="keyword">else</span> (p1 <span class="keyword">if</span> p1 == p3 <span class="keyword">else</span> p2)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 第二阶段：找环起点</span></span><br><span class="line">            p1 = head</span><br><span class="line">            <span class="keyword">while</span> p1 != meeting:</span><br><span class="line">                p1 = p1.<span class="built_in">next</span></span><br><span class="line">                meeting = meeting.<span class="built_in">next</span></span><br><span class="line">            <span class="keyword">return</span> p1</span><br><span class="line">        </span><br><span class="line">        p1 = p1.<span class="built_in">next</span></span><br><span class="line">        p2 = p2.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">        p3 = p3.<span class="built_in">next</span>.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="变体2：记录步数"><a href="#变体2：记录步数" class="headerlink" title="变体2：记录步数"></a>变体2：记录步数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">detectCycle_with_steps</span>(<span class="params">self, head</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    记录步数的版本，用于调试和理解</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> head:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    </span><br><span class="line">    slow = fast = head</span><br><span class="line">    steps = <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 第一阶段</span></span><br><span class="line">    <span class="keyword">while</span> fast <span class="keyword">and</span> fast.<span class="built_in">next</span>:</span><br><span class="line">        slow = slow.<span class="built_in">next</span></span><br><span class="line">        fast = fast.<span class="built_in">next</span>.<span class="built_in">next</span></span><br><span class="line">        steps += <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> slow == fast:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;相遇在 <span class="subst">&#123;slow.val&#125;</span>，步数: <span class="subst">&#123;steps&#125;</span>&quot;</span>)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 第二阶段</span></span><br><span class="line">            slow = head</span><br><span class="line">            steps2 = <span class="number">0</span></span><br><span class="line">            <span class="keyword">while</span> slow != fast:</span><br><span class="line">                slow = slow.<span class="built_in">next</span></span><br><span class="line">                fast = fast.<span class="built_in">next</span></span><br><span class="line">                steps2 += <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;环起点在 <span class="subst">&#123;slow.val&#125;</span>，第二阶段步数: <span class="subst">&#123;steps2&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> slow</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="优化技巧"><a href="#优化技巧" class="headerlink" title="优化技巧"></a>优化技巧</h2><h3 id="1-提前检查"><a href="#1-提前检查" class="headerlink" title="1. 提前检查"></a>1. 提前检查</h3><pre><code class="language-python">def detectCycle_optimized(self, head):
+    &quot;&quot;&quot;
+    优化版本：提前检查常见情况
+    &quot;&quot;&quot;
+    # 空链表或单节点无环
+    if not head or not head.next:
+        return None
+    
+    # 双节点互相指向
+    if head.next == head:
+        return head
+    
+    # 三节点特殊情况
+    if head.next.next == head:
+        return head
+    if head.next.next == head.next:
+        return head.next
+    
+    slow = fast = head
+    
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        
+        if slow == fast:
+            slow = head
+            while slow != fast:
+                slow = slow.next
+                fast = fast.next
+</code></pre>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Python/">Python</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/LeetCode/">LeetCode</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E9%93%BE%E8%A1%A8/">链表</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/">环形链表</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/">快慢指针</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Floyd%E7%AE%97%E6%B3%95/">Floyd算法</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E/">数学证明</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2026/03/29/02-LeetCode/Linked-List-Special/0141-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/"
+                                   title="0141. 环形链表 - 快慢指针检测环与Floyd判圈算法详解"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">0141. 环形链表 - 快慢指针检测环与Floyd判圈算法详解</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/03/29/02-LeetCode/Linked-List-Special/0160-%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/"
+                                   title="0160. 相交链表 - 双指针消除长度差技巧详解"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">0160. 相交链表 - 双指针消除长度差技巧详解</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II-%E6%89%BE%E5%88%B0%E7%8E%AF%E8%B5%B7%E7%82%B9%E7%9A%84%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E%E4%B8%8E%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">0142. 环形链表II - 找到环起点的数学证明与算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%B1%E6%96%87%E9%A2%98%E7%9B%AE"><span class="nav-number">1.1.1.</span> <span class="nav-text">英文题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E9%A2%98%E7%9B%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">中文题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.1.3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">进阶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.1.5.</span> <span class="nav-text">约束条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%EF%BC%88Floyd%E7%AE%97%E6%B3%95%E6%89%A9%E5%B1%95%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">核心思想（Floyd算法扩展）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.2.2.</span> <span class="nav-text">算法步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E8%A7%A3%E6%B3%95%EF%BC%88Floyd%E7%AE%97%E6%B3%95%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">标准解法（Floyd算法）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E6%96%B9%E6%B3%95%EF%BC%88%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">哈希表方法（对比）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%8A%82%E7%82%B9%E5%80%BC%E6%96%B9%E6%B3%95%EF%BC%88%E4%B8%8D%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">修改节点值方法（不推荐）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">详细分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Floyd%E7%AE%97%E6%B3%95%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E"><span class="nav-number">1.4.1.</span> <span class="nav-text">Floyd算法数学证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E5%AE%9A%E4%B9%89"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">符号定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88%E7%9B%B8%E9%81%87"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">第一阶段：快慢指针相遇</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%89%BE%E5%88%B0%E7%8E%AF%E8%B5%B7%E7%82%B9"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">第二阶段：找到环起点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">1.4.2.</span> <span class="nav-text">示例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B1%EF%BC%9Ahead-3-2-0-4-pos-1"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">示例1：head &#x3D; [3,2,0,-4], pos &#x3D; 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B2%EF%BC%9Ahead-1-2-pos-0"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">示例2：head &#x3D; [1,2], pos &#x3D; 0</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">1.4.3.</span> <span class="nav-text">边界条件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%A9%BA%E9%93%BE%E8%A1%A8%E6%88%96%E5%8D%95%E8%8A%82%E7%82%B9%E6%97%A0%E7%8E%AF"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">1. 空链表或单节点无环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B4%E4%B8%AA%E9%93%BE%E8%A1%A8%E9%83%BD%E6%98%AF%E7%8E%AF"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">2. 整个链表都是环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%8E%AF%E5%BE%88%E5%A4%A7%E6%88%96%E5%BE%88%E5%B0%8F"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">3. 环很大或很小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%97%A0%E7%8E%AF%E9%93%BE%E8%A1%A8"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">4. 无环链表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.1.</span> <span class="nav-text">时间复杂度对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.2.</span> <span class="nav-text">空间复杂度对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%80%A7%E8%83%BD%E8%80%83%E8%99%91"><span class="nav-number">1.5.3.</span> <span class="nav-text">实际性能考虑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.</span> <span class="nav-text">常见错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF1%EF%BC%9A%E5%BF%98%E8%AE%B0%E6%A3%80%E6%9F%A5%E7%A9%BA%E9%93%BE%E8%A1%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">错误1：忘记检查空链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF2%EF%BC%9A%E6%8C%87%E9%92%88%E7%A7%BB%E5%8A%A8%E9%A1%BA%E5%BA%8F%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.2.</span> <span class="nav-text">错误2：指针移动顺序错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF3%EF%BC%9A%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8C%87%E9%92%88%E9%80%89%E6%8B%A9%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.3.</span> <span class="nav-text">错误3：第二阶段指针选择错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF4%EF%BC%9A%E5%BE%AA%E7%8E%AF%E6%9D%A1%E4%BB%B6%E4%B8%8D%E5%AE%8C%E6%95%B4"><span class="nav-number">1.6.4.</span> <span class="nav-text">错误4：循环条件不完整</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-number">1.7.</span> <span class="nav-text">测试用例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.1.</span> <span class="nav-text">基础测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.2.</span> <span class="nav-text">边界测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%BA%94%E7%94%A8"><span class="nav-number">1.8.</span> <span class="nav-text">扩展应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E7%8E%AF%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="nav-number">1.8.1.</span> <span class="nav-text">1. 计算环的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E7%9B%B8%E4%BA%A4"><span class="nav-number">1.8.2.</span> <span class="nav-text">2. 判断两个链表是否相交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%89%BE%E5%88%B0%E9%93%BE%E8%A1%A8%E7%9A%84%E4%BA%A4%E7%82%B9"><span class="nav-number">1.8.3.</span> <span class="nav-text">3. 找到链表的交点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%A3%80%E6%B5%8B%E5%B9%B6%E4%BF%AE%E5%A4%8D%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8"><span class="nav-number">1.8.4.</span> <span class="nav-text">4. 检测并修复循环引用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8F%98%E4%BD%93"><span class="nav-number">1.9.</span> <span class="nav-text">算法变体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E4%BD%931%EF%BC%9A%E4%BD%BF%E7%94%A8%E4%B8%89%E4%B8%AA%E6%8C%87%E9%92%88"><span class="nav-number">1.9.1.</span> <span class="nav-text">变体1：使用三个指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E4%BD%932%EF%BC%9A%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%95%B0"><span class="nav-number">1.9.2.</span> <span class="nav-text">变体2：记录步数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7"><span class="nav-number">1.10.</span> <span class="nav-text">优化技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%8F%90%E5%89%8D%E6%A3%80%E6%9F%A5"><span class="nav-number">1.10.1.</span> <span class="nav-text">1. 提前检查</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2024</span>&nbsp;-&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">John Doe</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0142-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II-%E6%89%BE%E5%88%B0%E7%8E%AF%E8%B5%B7%E7%82%B9%E7%9A%84%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E%E4%B8%8E%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">0142. 环形链表II - 找到环起点的数学证明与算法实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%B1%E6%96%87%E9%A2%98%E7%9B%AE"><span class="nav-number">1.1.1.</span> <span class="nav-text">英文题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%87%E9%A2%98%E7%9B%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">中文题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.1.3.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6"><span class="nav-number">1.1.4.</span> <span class="nav-text">进阶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.1.5.</span> <span class="nav-text">约束条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">1.2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%EF%BC%88Floyd%E7%AE%97%E6%B3%95%E6%89%A9%E5%B1%95%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">核心思想（Floyd算法扩展）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.2.2.</span> <span class="nav-text">算法步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E8%A7%A3%E6%B3%95%EF%BC%88Floyd%E7%AE%97%E6%B3%95%EF%BC%89"><span class="nav-number">1.3.1.</span> <span class="nav-text">标准解法（Floyd算法）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8%E6%96%B9%E6%B3%95%EF%BC%88%E5%AF%B9%E6%AF%94%EF%BC%89"><span class="nav-number">1.3.2.</span> <span class="nav-text">哈希表方法（对比）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%8A%82%E7%82%B9%E5%80%BC%E6%96%B9%E6%B3%95%EF%BC%88%E4%B8%8D%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">1.3.3.</span> <span class="nav-text">修改节点值方法（不推荐）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">详细分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Floyd%E7%AE%97%E6%B3%95%E6%95%B0%E5%AD%A6%E8%AF%81%E6%98%8E"><span class="nav-number">1.4.1.</span> <span class="nav-text">Floyd算法数学证明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E5%AE%9A%E4%B9%89"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">符号定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88%E7%9B%B8%E9%81%87"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">第一阶段：快慢指针相遇</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%89%BE%E5%88%B0%E7%8E%AF%E8%B5%B7%E7%82%B9"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">第二阶段：找到环起点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E5%88%86%E6%9E%90"><span class="nav-number">1.4.2.</span> <span class="nav-text">示例分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B1%EF%BC%9Ahead-3-2-0-4-pos-1"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">示例1：head &#x3D; [3,2,0,-4], pos &#x3D; 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B2%EF%BC%9Ahead-1-2-pos-0"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">示例2：head &#x3D; [1,2], pos &#x3D; 0</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E5%A4%84%E7%90%86"><span class="nav-number">1.4.3.</span> <span class="nav-text">边界条件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%A9%BA%E9%93%BE%E8%A1%A8%E6%88%96%E5%8D%95%E8%8A%82%E7%82%B9%E6%97%A0%E7%8E%AF"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">1. 空链表或单节点无环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B4%E4%B8%AA%E9%93%BE%E8%A1%A8%E9%83%BD%E6%98%AF%E7%8E%AF"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">2. 整个链表都是环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%8E%AF%E5%BE%88%E5%A4%A7%E6%88%96%E5%BE%88%E5%B0%8F"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">3. 环很大或很小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%97%A0%E7%8E%AF%E9%93%BE%E8%A1%A8"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">4. 无环链表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">性能分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.1.</span> <span class="nav-text">时间复杂度对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.2.</span> <span class="nav-text">空间复杂度对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E6%80%A7%E8%83%BD%E8%80%83%E8%99%91"><span class="nav-number">1.5.3.</span> <span class="nav-text">实际性能考虑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.</span> <span class="nav-text">常见错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF1%EF%BC%9A%E5%BF%98%E8%AE%B0%E6%A3%80%E6%9F%A5%E7%A9%BA%E9%93%BE%E8%A1%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">错误1：忘记检查空链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF2%EF%BC%9A%E6%8C%87%E9%92%88%E7%A7%BB%E5%8A%A8%E9%A1%BA%E5%BA%8F%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.2.</span> <span class="nav-text">错误2：指针移动顺序错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF3%EF%BC%9A%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8C%87%E9%92%88%E9%80%89%E6%8B%A9%E9%94%99%E8%AF%AF"><span class="nav-number">1.6.3.</span> <span class="nav-text">错误3：第二阶段指针选择错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF4%EF%BC%9A%E5%BE%AA%E7%8E%AF%E6%9D%A1%E4%BB%B6%E4%B8%8D%E5%AE%8C%E6%95%B4"><span class="nav-number">1.6.4.</span> <span class="nav-text">错误4：循环条件不完整</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-number">1.7.</span> <span class="nav-text">测试用例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.1.</span> <span class="nav-text">基础测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E7%95%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.7.2.</span> <span class="nav-text">边界测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%BA%94%E7%94%A8"><span class="nav-number">1.8.</span> <span class="nav-text">扩展应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%A1%E7%AE%97%E7%8E%AF%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="nav-number">1.8.1.</span> <span class="nav-text">1. 计算环的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E7%9B%B8%E4%BA%A4"><span class="nav-number">1.8.2.</span> <span class="nav-text">2. 判断两个链表是否相交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%89%BE%E5%88%B0%E9%93%BE%E8%A1%A8%E7%9A%84%E4%BA%A4%E7%82%B9"><span class="nav-number">1.8.3.</span> <span class="nav-text">3. 找到链表的交点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%A3%80%E6%B5%8B%E5%B9%B6%E4%BF%AE%E5%A4%8D%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8"><span class="nav-number">1.8.4.</span> <span class="nav-text">4. 检测并修复循环引用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8F%98%E4%BD%93"><span class="nav-number">1.9.</span> <span class="nav-text">算法变体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E4%BD%931%EF%BC%9A%E4%BD%BF%E7%94%A8%E4%B8%89%E4%B8%AA%E6%8C%87%E9%92%88"><span class="nav-number">1.9.1.</span> <span class="nav-text">变体1：使用三个指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E4%BD%932%EF%BC%9A%E8%AE%B0%E5%BD%95%E6%AD%A5%E6%95%B0"><span class="nav-number">1.9.2.</span> <span class="nav-text">变体2：记录步数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7"><span class="nav-number">1.10.</span> <span class="nav-text">优化技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%8F%90%E5%89%8D%E6%A3%80%E6%9F%A5"><span class="nav-number">1.10.1.</span> <span class="nav-text">1. 提前检查</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
