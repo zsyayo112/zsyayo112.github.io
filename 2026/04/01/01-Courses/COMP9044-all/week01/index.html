@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="John Doe">
+    
+    <title>
+        
+            COMP2041 Week 01,02 — Unix Filters 完整笔记 |
+        
+        Syz&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Syz's Blog","author":"","avatar":"https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg","logo":"https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg","favicon":""},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg2.svg","description":"生命如红蜡，火焰向上，泪流向下","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/zsyayo112","weixin":"img | /images/qrcode.png","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"1162671732@qq.com"}},"scroll":{"progress_bar":true,"percent":false,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":true,"custom_badge":["One","Two","Three","笔记"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":"","text":"","icon":""}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"giscus","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2024,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":""},"record":{"enable":false,"list":[{"code":"","link":""}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Syz&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        COMP2041 Week 01,02 — Unix Filters 完整笔记
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">John Doe</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-04-01</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Wed Apr 01 2026 02:48:55 GMT+0000">2026-04-01</span>
+                </span>
+            
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/COMP9044/">COMP9044</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Shell/">Shell</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Linux/">Linux</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/COMP2041/">COMP2041</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/UNSW/">UNSW</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h1 id="COMP2041-Week-01-02-—-Unix-Filters"><a href="#COMP2041-Week-01-02-—-Unix-Filters" class="headerlink" title="COMP2041 Week 01-02 — Unix Filters"></a>COMP2041 Week 01-02 — Unix Filters</h1><h2 id="什么是-Filter？"><a href="#什么是-Filter？" class="headerlink" title="什么是 Filter？"></a>什么是 Filter？</h2><p>Filter 是一种<strong>读取输入、变换数据、写入输出</strong>的程序。Unix 的核心哲学之一就是把多个小 filter 用管道 <code>|</code> 串联起来，解决复杂问题。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filter1 | filter2 | filter3</span><br></pre></td></tr></table></figure>
+
+<p>每个 filter 从 stdin 读取，写到 stdout，不需要知道前后是什么。</p>
+<hr>
+<h2 id="Filter-分类总览"><a href="#Filter-分类总览" class="headerlink" title="Filter 分类总览"></a>Filter 分类总览</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>横向切片（选行）</td>
+<td><code>cat</code> <code>head</code> <code>tail</code> <code>grep</code> <code>sed</code> <code>uniq</code></td>
+<td>选出满足条件的行</td>
+</tr>
+<tr>
+<td>纵向切片（选列）</td>
+<td><code>cut</code> <code>sed</code></td>
+<td>选出特定字段&#x2F;字符</td>
+</tr>
+<tr>
+<td>替换</td>
+<td><code>tr</code> <code>sed</code></td>
+<td>字符&#x2F;字符串替换</td>
+</tr>
+<tr>
+<td>统计</td>
+<td><code>wc</code> <code>uniq -c</code></td>
+<td>统计行数&#x2F;词频</td>
+</tr>
+<tr>
+<td>组合</td>
+<td><code>paste</code> <code>join</code></td>
+<td>合并多个文件</td>
+</tr>
+<tr>
+<td>排序</td>
+<td><code>sort</code></td>
+<td>重新排列行</td>
+</tr>
+<tr>
+<td>文件搜索</td>
+<td><code>find</code></td>
+<td>搜索文件系统</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="核心命令详解"><a href="#核心命令详解" class="headerlink" title="核心命令详解"></a>核心命令详解</h2><h3 id="grep-—-按正则筛选行"><a href="#grep-—-按正则筛选行" class="headerlink" title="grep — 按正则筛选行"></a>grep — 按正则筛选行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&#x27;pattern&#x27;</span> file          <span class="comment"># 基本匹配</span></span><br><span class="line">grep -E <span class="string">&#x27;pattern&#x27;</span> file       <span class="comment"># 扩展正则（推荐）</span></span><br><span class="line">grep -i <span class="string">&#x27;pattern&#x27;</span> file       <span class="comment"># 忽略大小写</span></span><br><span class="line">grep -v <span class="string">&#x27;pattern&#x27;</span> file       <span class="comment"># 反转：只输出不匹配的行</span></span><br><span class="line">grep -c <span class="string">&#x27;pattern&#x27;</span> file       <span class="comment"># 只输出匹配行数</span></span><br><span class="line">grep -w <span class="string">&#x27;pattern&#x27;</span> file       <span class="comment"># 只匹配完整单词</span></span><br><span class="line">grep -x <span class="string">&#x27;pattern&#x27;</span> file       <span class="comment"># 只匹配整行</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>grep 家族：</strong></p>
+<ul>
+<li><code>grep -F</code>：纯字符串匹配，不用正则，速度更快</li>
+<li><code>grep -G</code>：基础正则（默认），不支持 <code>+</code> <code>?</code> <code>|</code> <code>()</code></li>
+<li><code>grep -E</code>：扩展正则，日常推荐用这个</li>
+<li><code>grep -P</code>：Perl 扩展正则，需要更复杂功能时用</li>
+</ul>
+<p><strong>踩坑记录：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：| 是 shell 的管道，不是正则的或</span></span><br><span class="line">grep &lt;p&gt;|&lt;br&gt; file</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 正确：加引号，转义 &lt;</span></span><br><span class="line">grep -E <span class="string">&#x27;&lt;p&gt;|&lt;br&gt;&#x27;</span> file</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="正则表达式基础"><a href="#正则表达式基础" class="headerlink" title="正则表达式基础"></a>正则表达式基础</h3><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.</code></td>
+<td>任意单个字符</td>
+<td><code>a.c</code> 匹配 <code>abc</code>、<code>aXc</code></td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>零个或多个</td>
+<td><code>ab*c</code> 匹配 <code>ac</code>、<code>abc</code>、<code>abbc</code></td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>一个或多个</td>
+<td><code>[0-9]+</code> 匹配任意整数</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>零个或一个</td>
+<td><code>colou?r</code> 匹配 <code>color</code>、<code>colour</code></td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>行首</td>
+<td><code>^hello</code> 匹配以 hello 开头的行</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>行尾</td>
+<td><code>bash$</code> 匹配以 bash 结尾的行</td>
+</tr>
+<tr>
+<td><code>[abc]</code></td>
+<td>字符集</td>
+<td><code>[aeiou]</code> 匹配任一元音</td>
+</tr>
+<tr>
+<td><code>[^abc]</code></td>
+<td>排除字符集</td>
+<td><code>[^:]</code> 匹配非冒号字符</td>
+</tr>
+<tr>
+<td><code>{n}</code></td>
+<td>恰好 n 次</td>
+<td><code>[0-9]{4}</code> 匹配4位数字</td>
+</tr>
+<tr>
+<td><code>{n,m}</code></td>
+<td>n 到 m 次</td>
+<td><code>[0-9]{2,4}</code> 匹配2到4位数字</td>
+</tr>
+<tr>
+<td><code>|</code></td>
+<td>或（需 <code>-E</code>）</td>
+<td><code>cat|dog</code> 匹配 cat 或 dog</td>
+</tr>
+<tr>
+<td><code>()</code></td>
+<td>分组（需 <code>-E</code>）</td>
+<td><code>(ab)+</code> 匹配 ab、abab</td>
+</tr>
+</tbody></table>
+<p><strong>重要：<code>^</code> 有两种含义！</strong></p>
+<ul>
+<li><code>^[abc]</code>：行首是 a、b 或 c</li>
+<li><code>[^abc]</code>：不是 a、b、c 的任意字符</li>
+</ul>
+<p><strong>常用模式：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[^:]*        <span class="comment"># 匹配到下一个冒号为止的所有内容（处理冒号分隔文件常用）</span></span><br><span class="line">[0-9]&#123;4&#125;     <span class="comment"># 恰好4位数字（匹配学号、年份等）</span></span><br><span class="line">[ \t]+$      <span class="comment"># 行尾空白（检测 trailing whitespace）</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="tr-—-字符替换"><a href="#tr-—-字符替换" class="headerlink" title="tr — 字符替换"></a>tr — 字符替换</h3><p><code>tr</code> 逐字符替换，<strong>只从 stdin 读取</strong>，不接受文件名参数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tr</span> <span class="string">&#x27;A-Z&#x27;</span> <span class="string">&#x27;a-z&#x27;</span> &lt; file          <span class="comment"># 大写转小写</span></span><br><span class="line"><span class="built_in">tr</span> <span class="string">&#x27;a-z&#x27;</span> <span class="string">&#x27;A-Z&#x27;</span> &lt; file          <span class="comment"># 小写转大写</span></span><br><span class="line"><span class="built_in">tr</span> -d <span class="string">&#x27;0-9&#x27;</span> &lt; file              <span class="comment"># 删除所有数字</span></span><br><span class="line"><span class="built_in">tr</span> -s <span class="string">&#x27; &#x27;</span> &lt; file                <span class="comment"># 压缩连续空格为一个</span></span><br><span class="line"><span class="built_in">tr</span> -cs <span class="string">&#x27;a-zA-Z0-9&#x27;</span> <span class="string">&#x27;\n&#x27;</span> &lt; file  <span class="comment"># 分词：非字母数字替换为换行</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>-c</code> 和 <code>-s</code> 的含义：</strong></p>
+<ul>
+<li><code>-c</code>：complement，取补集（匹配不在集合里的字符）</li>
+<li><code>-s</code>：squeeze，压缩连续重复字符，只保留一个</li>
+<li><code>-d</code>：delete，删除匹配的字符</li>
+</ul>
+<p><strong>经典三步词频统计：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tr</span> <span class="string">&#x27;A-Z&#x27;</span> <span class="string">&#x27;a-z&#x27;</span> &lt; file | <span class="built_in">tr</span> -cs <span class="string">&#x27;a-zA-Z0-9&#x27;</span> <span class="string">&#x27;\n&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="cut-—-纵向切片"><a href="#cut-—-纵向切片" class="headerlink" title="cut — 纵向切片"></a>cut — 纵向切片</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cut</span> -d: -f1 file          <span class="comment"># 取冒号分隔的第1列</span></span><br><span class="line"><span class="built_in">cut</span> -d: -f1,3 file        <span class="comment"># 取第1和第3列</span></span><br><span class="line"><span class="built_in">cut</span> -d: -f2- file         <span class="comment"># 取第2列到最后</span></span><br><span class="line"><span class="built_in">cut</span> -c1-5 file            <span class="comment"># 取每行第1到第5个字符</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：<code>-d</code> 必须和 <code>-f</code> 一起用，单独用 <code>-d</code> 会报错。</strong></p>
+<p><code>cut</code> 的局限：</p>
+<ul>
+<li>无法引用”最后一列”（不像 awk 的 <code>$NF</code>）</li>
+<li>无法重新排列列的顺序</li>
+</ul>
+<hr>
+<h3 id="sort-—-排序"><a href="#sort-—-排序" class="headerlink" title="sort — 排序"></a>sort — 排序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sort</span> file                   <span class="comment"># 默认字典序排序</span></span><br><span class="line"><span class="built_in">sort</span> -r file                <span class="comment"># 倒序</span></span><br><span class="line"><span class="built_in">sort</span> -n file                <span class="comment"># 数字排序（不加 -n 的话 10 &lt; 2）</span></span><br><span class="line"><span class="built_in">sort</span> -rn file               <span class="comment"># 数字倒序</span></span><br><span class="line"><span class="built_in">sort</span> -t: -k2 file           <span class="comment"># 按冒号分隔的第2列排序</span></span><br><span class="line"><span class="built_in">sort</span> -t: -k2,2 file         <span class="comment"># 只用第2列排序（不延伸到后面的列）</span></span><br><span class="line"><span class="built_in">sort</span> -t<span class="string">&#x27;|&#x27;</span> -k2,2 -rn file   <span class="comment"># 按第2列数字倒序</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>-k2</code> vs <code>-k2,2</code> 的区别：</strong></p>
+<ul>
+<li><code>-k2</code>：从第2列排到行尾</li>
+<li><code>-k2,2</code>：只用第2列排序，更精确</li>
+</ul>
+<p><strong>口诀：先 <code>sort</code> 再 <code>uniq</code>，先 <code>sort</code> 再 <code>join</code></strong></p>
+<hr>
+<h3 id="uniq-—-去重-统计"><a href="#uniq-—-去重-统计" class="headerlink" title="uniq — 去重&#x2F;统计"></a>uniq — 去重&#x2F;统计</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">uniq</span> file           <span class="comment"># 删除相邻重复行</span></span><br><span class="line"><span class="built_in">uniq</span> -c file        <span class="comment"># 统计每行出现次数</span></span><br><span class="line"><span class="built_in">uniq</span> -d file        <span class="comment"># 只输出重复的行</span></span><br><span class="line"><span class="built_in">uniq</span> -u file        <span class="comment"># 只输出不重复的行</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>关键：<code>uniq</code> 只处理相邻重复行，所以几乎总是先 <code>sort</code>！</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sort</span> file | <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn    <span class="comment"># 词频统计标准写法</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="sed-—-流编辑器"><a href="#sed-—-流编辑器" class="headerlink" title="sed — 流编辑器"></a>sed — 流编辑器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sed <span class="string">&#x27;s/old/new/&#x27;</span> file       <span class="comment"># 替换每行第一个匹配</span></span><br><span class="line">sed <span class="string">&#x27;s/old/new/g&#x27;</span> file      <span class="comment"># 替换每行所有匹配</span></span><br><span class="line">sed -n <span class="string">&#x27;/pattern/p&#x27;</span> file    <span class="comment"># 只打印匹配行（等价于 grep）</span></span><br><span class="line">sed <span class="string">&#x27;/pattern/d&#x27;</span> file       <span class="comment"># 删除匹配行</span></span><br><span class="line">sed -n <span class="string">&#x27;1,10p&#x27;</span> file         <span class="comment"># 打印第1到10行</span></span><br><span class="line">sed -n <span class="string">&#x27;81,100p&#x27;</span> file       <span class="comment"># 打印第81到100行</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>-n</code> 和 <code>p</code> 的配合：</strong></p>
+<ul>
+<li><code>sed</code> 默认打印每一行</li>
+<li><code>-n</code> 抑制默认输出</li>
+<li><code>p</code> 命令显式打印</li>
+<li>两者配合 &#x3D; 只打印匹配的行</li>
+</ul>
+<p><strong>处理含 <code>/</code> 的 pattern（比如路径）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 冲突：/ 和 sed 分隔符冲突</span></span><br><span class="line">sed -n <span class="string">&#x27;/bin/bash/p&#x27;</span> file</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 方法1：转义</span></span><br><span class="line">sed -n <span class="string">&#x27;/\/bin\/bash/p&#x27;</span> file</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 方法2：换分隔符（更清晰）</span></span><br><span class="line">sed -n <span class="string">&#x27;\|/bin/bash|p&#x27;</span> file</span><br></pre></td></tr></table></figure>
+
+<p><strong>捕获组（<code>-E</code> 才能用）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对调前两列</span></span><br><span class="line">sed -E <span class="string">&#x27;s/([^:]*):([^:]*)/\2:\1/&#x27;</span> file</span><br></pre></td></tr></table></figure>
+
+<p>要点：</p>
+<ol>
+<li>用 <code>()</code> 括起来才能捕获</li>
+<li><code>\1</code> 对应第一个括号，<code>\2</code> 对应第二个</li>
+<li>pattern 要用 <code>[^:]*</code> 而不是 <code>[a-zA-Z]*</code>，否则会漏掉特殊字符</li>
+</ol>
+<hr>
+<h3 id="join-—-按-key-合并文件"><a href="#join-—-按-key-合并文件" class="headerlink" title="join — 按 key 合并文件"></a>join — 按 key 合并文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">join</span> file1 file2                    <span class="comment"># 按第1列 join（默认空格分隔）</span></span><br><span class="line"><span class="built_in">join</span> -t<span class="string">&#x27;|&#x27;</span> file1 file2              <span class="comment"># 指定分隔符</span></span><br><span class="line"><span class="built_in">join</span> -t<span class="string">&#x27;|&#x27;</span> -a1 -a2 file1 file2     <span class="comment"># 显示所有行（含不匹配的）</span></span><br><span class="line"><span class="built_in">join</span> -t<span class="string">&#x27;|&#x27;</span> -a1 -a2 -e <span class="string">&#x27;--&#x27;</span> -o 0,1.2,2.2 file1 file2  <span class="comment"># 缺失字段用 -- 填充</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>-o</code> 输出格式：</strong></p>
+<ul>
+<li><code>0</code>：key 字段</li>
+<li><code>1.2</code>：第1个文件的第2列</li>
+<li><code>2.2</code>：第2个文件的第2列</li>
+</ul>
+<p><strong>口诀：永远先 <code>sort</code> 再 <code>join</code></strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sort</span> file1 &gt; sorted1.txt</span><br><span class="line"><span class="built_in">sort</span> file2 &gt; sorted2.txt</span><br><span class="line"><span class="built_in">join</span> -t<span class="string">&#x27;|&#x27;</span> sorted1.txt sorted2.txt</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="管道使用注意事项"><a href="#管道使用注意事项" class="headerlink" title="管道使用注意事项"></a>管道使用注意事项</h2><h3 id="重定向位置很关键"><a href="#重定向位置很关键" class="headerlink" title="重定向位置很关键"></a>重定向位置很关键</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 错误：&lt; 作用在 cut 上，grep 没有输入</span></span><br><span class="line">grep pattern | <span class="built_in">cut</span> -d: -f1 &lt; file</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 正确：文件给第一个命令</span></span><br><span class="line">grep pattern file | <span class="built_in">cut</span> -d: -f1</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 也正确：&lt; 放在最前面</span></span><br><span class="line">grep pattern &lt; file | <span class="built_in">cut</span> -d: -f1</span><br></pre></td></tr></table></figure>
+
+<p><strong>规则：<code>&lt;</code> 只作用于它紧跟的那个命令，不影响整条管道。</strong></p>
+<h3 id="不要同时读写同一个文件"><a href="#不要同时读写同一个文件" class="headerlink" title="不要同时读写同一个文件"></a>不要同时读写同一个文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ❌ 危险：shell 先截断 story.txt，sed 读到空文件</span></span><br><span class="line">sed <span class="string">&#x27;s/[aeiou]//g&#x27;</span> story.txt &gt; story.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 正确：先写临时文件再覆盖</span></span><br><span class="line">sed <span class="string">&#x27;s/[aeiou]//g&#x27;</span> story.txt &gt; story.txt.new &amp;&amp; <span class="built_in">mv</span> story.txt.new story.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 或用 -i（部分 sed 支持）</span></span><br><span class="line">sed -i <span class="string">&#x27;s/[aeiou]//g&#x27;</span> story.txt</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="实战练习总结"><a href="#实战练习总结" class="headerlink" title="实战练习总结"></a>实战练习总结</h2><h3 id="经典管道组合"><a href="#经典管道组合" class="headerlink" title="经典管道组合"></a>经典管道组合</h3><p><strong>统计词频（不区分大小写）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tr</span> <span class="string">&#x27;A-Z&#x27;</span> <span class="string">&#x27;a-z&#x27;</span> &lt; file | <span class="built_in">tr</span> -cs <span class="string">&#x27;a-zA-Z0-9&#x27;</span> <span class="string">&#x27;\n&#x27;</span> | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn</span><br></pre></td></tr></table></figure>
+
+<p><strong>统计每种 shell 的用户数：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cut</span> -d: -f7 passwd | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn</span><br></pre></td></tr></table></figure>
+
+<p><strong>找出高于平均分的学生（成绩 ≥ 70）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep -E <span class="string">&#x27;\|[7-9][0-9]$&#x27;</span> marks.txt | <span class="built_in">sort</span> -t<span class="string">&#x27;|&#x27;</span> -k2,2 -rn</span><br></pre></td></tr></table></figure>
+
+<p><strong>找出两门课都选了的学生：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sort</span> marks1.txt &gt; s1.txt &amp;&amp; <span class="built_in">sort</span> marks2.txt &gt; s2.txt</span><br><span class="line"><span class="built_in">join</span> -t<span class="string">&#x27;|&#x27;</span> s1.txt s2.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>显示所有学生，缺课用 <code>--</code> 填充：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">join</span> -t<span class="string">&#x27;|&#x27;</span> -a1 -a2 -e <span class="string">&#x27;--&#x27;</span> -o 0,1.2,2.2 s1.txt s2.txt</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="踩坑总结"><a href="#踩坑总结" class="headerlink" title="踩坑总结"></a>踩坑总结</h2><table>
+<thead>
+<tr>
+<th>坑</th>
+<th>原因</th>
+<th>解法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>grep -E &quot;[a-zA-Z]{2}[0-9]{4}&quot;</code> 匹配到不该匹配的行</td>
+<td>没有用 <code>^</code> 锚定行首</td>
+<td>加 <code>^</code>：<code>grep -E &quot;^(cs|se)[0-9]{4}:&quot;</code></td>
+</tr>
+<tr>
+<td><code>cut -d&#39;:&#39;</code> 报错</td>
+<td><code>-d</code> 必须配合 <code>-f</code> 使用</td>
+<td><code>cut -d: -f1</code></td>
+</tr>
+<tr>
+<td><code>sort</code> 后数字顺序不对（10 在 2 前面）</td>
+<td>默认字典序，不是数字序</td>
+<td>加 <code>-n</code>：<code>sort -n</code></td>
+</tr>
+<tr>
+<td><code>uniq</code> 没有去掉所有重复</td>
+<td><code>uniq</code> 只处理相邻重复行</td>
+<td>先 <code>sort</code> 再 <code>uniq</code></td>
+</tr>
+<tr>
+<td><code>join</code> 报 not sorted 错误</td>
+<td><code>join</code> 要求输入已排序</td>
+<td>先 <code>sort</code> 再 <code>join</code></td>
+</tr>
+<tr>
+<td><code>sed &#39;/bin/bash/p&#39;</code> 报错</td>
+<td><code>/</code> 和 sed 分隔符冲突</td>
+<td>用 &#96;|&#x2F;bin&#x2F;bash</td>
+</tr>
+<tr>
+<td>捕获组 <code>\2</code> 报 invalid reference</td>
+<td>pattern 里没有用 <code>()</code></td>
+<td>加括号：<code>([^:]*)</code></td>
+</tr>
+<tr>
+<td>重定向位置错 <code>cmd1 | cmd2 &lt; file</code></td>
+<td><code>&lt;</code> 作用在 cmd2 而非 cmd1</td>
+<td><code>cmd1 file | cmd2</code> 或 <code>cmd1 &lt; file | cmd2</code></td>
+</tr>
+</tbody></table>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Shell/">Shell</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Linux/">Linux</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/COMP2041/">COMP2041</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/UNSW/">UNSW</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2026/04/01/hello-world/"
+                                   title="Hello World"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Hello World</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/03/30/02-LeetCode/Binary-Tree-Special/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-%E9%81%8D%E5%8E%86%E4%B8%8EDFS-BFS/"
+                                   title="二叉树基础学习：遍历、DFS与BFS深度解析"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">二叉树基础学习：遍历、DFS与BFS深度解析</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#COMP2041-Week-01-02-%E2%80%94-Unix-Filters"><span class="nav-number">1.</span> <span class="nav-text">COMP2041 Week 01-02 — Unix Filters</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Filter%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是 Filter？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter-%E5%88%86%E7%B1%BB%E6%80%BB%E8%A7%88"><span class="nav-number">1.2.</span> <span class="nav-text">Filter 分类总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.3.</span> <span class="nav-text">核心命令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#grep-%E2%80%94-%E6%8C%89%E6%AD%A3%E5%88%99%E7%AD%9B%E9%80%89%E8%A1%8C"><span class="nav-number">1.3.1.</span> <span class="nav-text">grep — 按正则筛选行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%9F%BA%E7%A1%80"><span class="nav-number">1.3.2.</span> <span class="nav-text">正则表达式基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tr-%E2%80%94-%E5%AD%97%E7%AC%A6%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.3.3.</span> <span class="nav-text">tr — 字符替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cut-%E2%80%94-%E7%BA%B5%E5%90%91%E5%88%87%E7%89%87"><span class="nav-number">1.3.4.</span> <span class="nav-text">cut — 纵向切片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-%E2%80%94-%E6%8E%92%E5%BA%8F"><span class="nav-number">1.3.5.</span> <span class="nav-text">sort — 排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uniq-%E2%80%94-%E5%8E%BB%E9%87%8D-%E7%BB%9F%E8%AE%A1"><span class="nav-number">1.3.6.</span> <span class="nav-text">uniq — 去重&#x2F;统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sed-%E2%80%94-%E6%B5%81%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-number">1.3.7.</span> <span class="nav-text">sed — 流编辑器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#join-%E2%80%94-%E6%8C%89-key-%E5%90%88%E5%B9%B6%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.8.</span> <span class="nav-text">join — 按 key 合并文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.4.</span> <span class="nav-text">管道使用注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E4%BD%8D%E7%BD%AE%E5%BE%88%E5%85%B3%E9%94%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">重定向位置很关键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E5%90%8C%E6%97%B6%E8%AF%BB%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.2.</span> <span class="nav-text">不要同时读写同一个文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E7%BB%83%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text">实战练习总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E7%AE%A1%E9%81%93%E7%BB%84%E5%90%88"><span class="nav-number">1.5.1.</span> <span class="nav-text">经典管道组合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">踩坑总结</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2024</span>&nbsp;-&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">John Doe</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#COMP2041-Week-01-02-%E2%80%94-Unix-Filters"><span class="nav-number">1.</span> <span class="nav-text">COMP2041 Week 01-02 — Unix Filters</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Filter%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是 Filter？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter-%E5%88%86%E7%B1%BB%E6%80%BB%E8%A7%88"><span class="nav-number">1.2.</span> <span class="nav-text">Filter 分类总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.3.</span> <span class="nav-text">核心命令详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#grep-%E2%80%94-%E6%8C%89%E6%AD%A3%E5%88%99%E7%AD%9B%E9%80%89%E8%A1%8C"><span class="nav-number">1.3.1.</span> <span class="nav-text">grep — 按正则筛选行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%9F%BA%E7%A1%80"><span class="nav-number">1.3.2.</span> <span class="nav-text">正则表达式基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tr-%E2%80%94-%E5%AD%97%E7%AC%A6%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.3.3.</span> <span class="nav-text">tr — 字符替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cut-%E2%80%94-%E7%BA%B5%E5%90%91%E5%88%87%E7%89%87"><span class="nav-number">1.3.4.</span> <span class="nav-text">cut — 纵向切片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sort-%E2%80%94-%E6%8E%92%E5%BA%8F"><span class="nav-number">1.3.5.</span> <span class="nav-text">sort — 排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uniq-%E2%80%94-%E5%8E%BB%E9%87%8D-%E7%BB%9F%E8%AE%A1"><span class="nav-number">1.3.6.</span> <span class="nav-text">uniq — 去重&#x2F;统计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sed-%E2%80%94-%E6%B5%81%E7%BC%96%E8%BE%91%E5%99%A8"><span class="nav-number">1.3.7.</span> <span class="nav-text">sed — 流编辑器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#join-%E2%80%94-%E6%8C%89-key-%E5%90%88%E5%B9%B6%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.8.</span> <span class="nav-text">join — 按 key 合并文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%A1%E9%81%93%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.4.</span> <span class="nav-text">管道使用注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E4%BD%8D%E7%BD%AE%E5%BE%88%E5%85%B3%E9%94%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">重定向位置很关键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E5%90%8C%E6%97%B6%E8%AF%BB%E5%86%99%E5%90%8C%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.2.</span> <span class="nav-text">不要同时读写同一个文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E7%BB%83%E4%B9%A0%E6%80%BB%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text">实战练习总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E7%AE%A1%E9%81%93%E7%BB%84%E5%90%88"><span class="nav-number">1.5.1.</span> <span class="nav-text">经典管道组合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E6%80%BB%E7%BB%93"><span class="nav-number">1.6.</span> <span class="nav-text">踩坑总结</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
