@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="John Doe">
+    
+    <title>
+        
+            Week 01 - Commit 01: 初始化Monorepo与pnpm workspace |
+        
+        Syz&#39;s Blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Syz's Blog","author":"","avatar":"https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg","logo":"https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg","favicon":""},"menu":{"home":"/","archives":"/archives","tags":"/tags","categories":"/categories"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg2.svg","description":"生命如红蜡，火焰向上，泪流向下","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/zsyayo112","weixin":"img | /images/qrcode.png","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"1162671732@qq.com"}},"scroll":{"progress_bar":true,"percent":false,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":true,"custom_badge":["One","Two","Three","笔记"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":"","text":"","icon":""}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"giscus","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2024,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":""},"record":{"enable":false,"list":[{"code":"","link":""}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="https://img.aigexing.com/uploads/2/1253/685776180/91394060070/553617212.jpg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Syz&#39;s Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                TAGS
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                CATEGORIES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                            TAGS
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                            CATEGORIES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        Week 01 - Commit 01: 初始化Monorepo与pnpm workspace
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="https://p3.itc.cn/images01/20220104/295a6e9fbdda49ce897b7216850bf45b.jpeg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">John Doe</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-04-15</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Wed Apr 15 2026 07:56:09 GMT+0000">2026-04-15</span>
+                </span>
+            
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/03-Projects-Campsite-OS-Week-01/">03-Projects/Campsite-OS/Week-01</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Monorepo/">Monorepo</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/pnpm/">pnpm</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/workspace/">workspace</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84/">项目架构</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/">依赖管理</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h1 id="Week-01-Commit-01-初始化Monorepo与pnpm-workspace"><a href="#Week-01-Commit-01-初始化Monorepo与pnpm-workspace" class="headerlink" title="Week 01 - Commit 01: 初始化Monorepo与pnpm workspace"></a>Week 01 - Commit 01: 初始化Monorepo与pnpm workspace</h1><blockquote>
+<p>本文记录 Campsite OS 项目 Week 1 的第一个 Commit：初始化 Monorepo 与 pnpm workspace。这是项目工程化地基的第一步。</p>
+</blockquote>
+<h2 id="Commit-信息"><a href="#Commit-信息" class="headerlink" title="Commit 信息"></a>Commit 信息</h2><ul>
+<li><strong>Commit Hash</strong>: <code>[待补充]</code></li>
+<li><strong>提交信息</strong>: <code>chore: initialize monorepo with pnpm workspace</code></li>
+<li><strong>时间</strong>: 2026年4月15日</li>
+<li><strong>相关文件</strong>: <code>package.json</code>, <code>pnpm-workspace.yaml</code>, <code>tsconfig.json</code>, <code>.gitignore</code></li>
+</ul>
+<h2 id="核心知识点整理"><a href="#核心知识点整理" class="headerlink" title="核心知识点整理"></a>核心知识点整理</h2><h3 id="1-Monorepo-是什么？"><a href="#1-Monorepo-是什么？" class="headerlink" title="1. Monorepo 是什么？"></a>1. Monorepo 是什么？</h3><p><strong>Monorepo（单体仓库）</strong> 类似于一个<strong>超级仓库</strong>。</p>
+<h4 id="传统方式-vs-Monorepo"><a href="#传统方式-vs-Monorepo" class="headerlink" title="传统方式 vs Monorepo"></a>传统方式 vs Monorepo</h4><table>
+<thead>
+<tr>
+<th>传统方式</th>
+<th>Monorepo方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前端一个文件夹，后端一个文件夹</td>
+<td>统一管理在一个仓库中</td>
+</tr>
+<tr>
+<td>每个项目独立 <code>node_modules</code></td>
+<td>共享依赖，只安装一次</td>
+</tr>
+<tr>
+<td>重复的依赖存储</td>
+<td>pnpm 把依赖存在全局一个地方</td>
+</tr>
+<tr>
+<td>项目间代码共享困难</td>
+<td>项目里只是个”快捷方式”</td>
+</tr>
+</tbody></table>
+<h4 id="关键理解"><a href="#关键理解" class="headerlink" title="关键理解"></a>关键理解</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 传统：每个项目独立安装</span></span><br><span class="line">project1/node_modules/  <span class="comment"># 500MB</span></span><br><span class="line">project2/node_modules/  <span class="comment"># 500MB（重复内容）</span></span><br><span class="line"><span class="comment"># 总计：1GB</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># pnpm workspace：依赖共享</span></span><br><span class="line">.pnpm-store/            <span class="comment"># 500MB（全局存储）</span></span><br><span class="line">project1/node_modules/  <span class="comment"># 快捷方式</span></span><br><span class="line">project2/node_modules/  <span class="comment"># 快捷方式</span></span><br><span class="line"><span class="comment"># 总计：500MB（节省50%空间）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-“幽灵依赖”杀手"><a href="#2-“幽灵依赖”杀手" class="headerlink" title="2. “幽灵依赖”杀手"></a>2. “幽灵依赖”杀手</h3><p><strong>幽灵依赖（Phantom Dependencies）</strong>：项目使用了没有在 <code>package.json</code> 中声明的依赖。</p>
+<h4 id="问题示例"><a href="#问题示例" class="headerlink" title="问题示例"></a>问题示例</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 问题：lodash 没有在 package.json 中声明，但代码能运行</span></span><br><span class="line"><span class="keyword">import</span> &#123; debounce &#125; <span class="keyword">from</span> <span class="string">&#x27;lodash&#x27;</span>;  <span class="comment">// 从哪里来的？</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 原因：npm/yarn 的扁平化 node_modules 结构</span></span><br><span class="line"><span class="comment">// lodash 可能是其他依赖的依赖，被提升到了根目录</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="pnpm-解决方案"><a href="#pnpm-解决方案" class="headerlink" title="pnpm 解决方案"></a>pnpm 解决方案</h4><ul>
+<li><strong>严格模式</strong>：只能访问 <code>package.json</code> 中声明的依赖</li>
+<li><strong>符号链接</strong>：每个包只能看到自己的依赖</li>
+<li><strong>hoisting control</strong>：可控的提升策略，避免意外访问</li>
+</ul>
+<h3 id="3-Workspace-协议"><a href="#3-Workspace-协议" class="headerlink" title="3. Workspace 协议"></a>3. Workspace 协议</h3><p>在 <code>pnpm-workspace.yaml</code> 定义后，你可以用以下命令让 Web 端直接引用本地的共享包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Web端直接引用本地共享包，不需要发到 npm 官网上</span></span><br><span class="line">pnpm add @campsite-os/shared --workspace</span><br></pre></td></tr></table></figure>
+
+<h4 id="Workspace-协议的优势"><a href="#Workspace-协议的优势" class="headerlink" title="Workspace 协议的优势"></a>Workspace 协议的优势</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;@shared/utils&quot;</span><span class="punctuation">:</span> <span class="string">&quot;workspace:*&quot;</span>  <span class="comment">// 使用 workspace 协议</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>本地开发</strong>：指向本地包，即时生效</li>
+<li><strong>发布时自动替换</strong>：构建时会自动替换为实际版本号</li>
+<li><strong>简化版本管理</strong>：不需要手动协调版本号</li>
+</ul>
+<h2 id="架构设计理念"><a href="#架构设计理念" class="headerlink" title="架构设计理念"></a>架构设计理念</h2><h3 id="1-开启”地块分封制”"><a href="#1-开启”地块分封制”" class="headerlink" title="1. 开启”地块分封制”"></a>1. 开启”地块分封制”</h3><p>告诉工具，我的项目不止在根目录，<code>apps</code> 和 <code>packages</code> 文件夹里的每一个子文件夹，都是一个独立的包。</p>
+<h4 id="目录结构设计"><a href="#目录结构设计" class="headerlink" title="目录结构设计"></a>目录结构设计</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">campsite-os/</span><br><span class="line">├── apps/                    # &quot;诸侯国&quot; - 可独立运行的应用程序</span><br><span class="line">│   ├── web/                # Next.js 网页（前端王国）</span><br><span class="line">│   └── api/                # NestJS 接口（后端王国）</span><br><span class="line">├── packages/               # &quot;中央库&quot; - 共享的基础设施</span><br><span class="line">│   ├── shared/             # 公共工具函数（电力系统）</span><br><span class="line">│   ├── database/           # 数据库模型（水利系统）</span><br><span class="line">│   └── ui/                 # UI 组件库（建筑材料）</span><br><span class="line">└── 中央调度文件们</span><br></pre></td></tr></table></figure>
+
+<h4 id="pnpm-workspace-yaml-配置"><a href="#pnpm-workspace-yaml-配置" class="headerlink" title="pnpm-workspace.yaml 配置"></a>pnpm-workspace.yaml 配置</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">packages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;apps/*&quot;</span>      <span class="comment"># 所有 apps 下的子目录都是独立封地</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;packages/*&quot;</span>  <span class="comment"># 所有 packages 下的子目录都是中央资源</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 Web 里需要用到共享工具</span></span><br><span class="line"><span class="built_in">cd</span> apps/web</span><br><span class="line">pnpm add @shared/utils --workspace  <span class="comment"># pnpm 在本地自动帮你&quot;接通电线&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-建立”中央调度中心”-package-json"><a href="#2-建立”中央调度中心”-package-json" class="headerlink" title="2. 建立”中央调度中心” (package.json)"></a>2. 建立”中央调度中心” (package.json)</h3><p>根目录下的这个文件不再负责写业务代码，而是负责管理全局：</p>
+<h4 id="根-package-json-配置"><a href="#根-package-json-配置" class="headerlink" title="根 package.json 配置"></a>根 package.json 配置</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;campsite-os&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;private&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Full-stack AI-powered camp operations platform&quot;</span><span class="punctuation">,</span></span><br><span class="line">  </span><br><span class="line">  <span class="attr">&quot;engines&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=20.11.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pnpm&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=9.0.0&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  </span><br><span class="line">  <span class="attr">&quot;packageManager&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pnpm@9.12.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  </span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run build&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run dev&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run lint&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run test&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;typecheck&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run typecheck&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;clean&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run clean &amp;&amp; rm -rf node_modules&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  </span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;turbo&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^2.1.3&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;typescript&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^5.6.3&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="设计理念解析"><a href="#设计理念解析" class="headerlink" title="设计理念解析"></a>设计理念解析</h4><ol>
+<li><p><strong>依赖管理</strong>：</p>
+<ul>
+<li>定义了整个仓库共用的工具（比如 turbo 任务管理、typescript 编译器）</li>
+<li>所有子项目共享这些开发依赖</li>
+</ul>
+</li>
+<li><p><strong>脚本中转</strong>：</p>
+<ul>
+<li>你在根目录运行 <code>pnpm build</code>，它会通过 <code>turbo</code> 命令分发到各个子项目去执行构建</li>
+<li>统一入口，简化操作</li>
+</ul>
+</li>
+<li><p><strong>引擎锁定</strong>：</p>
+<ul>
+<li>代码里写了 <code>&quot;engines&quot;: { &quot;node&quot;: &quot;&gt;=20.11.0&quot; }</code></li>
+<li>这是为了防止协作时因为 Node 版本不同导致的”我电脑上能跑，你电脑上不行”的玄学问题</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-配置”全局编译器”-tsconfig-json"><a href="#3-配置”全局编译器”-tsconfig-json" class="headerlink" title="3. 配置”全局编译器” (tsconfig.json)"></a>3. 配置”全局编译器” (tsconfig.json)</h3><p>根目录的 <code>tsconfig.json</code> 设置为：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;files&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;references&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="设计理念解析-1"><a href="#设计理念解析-1" class="headerlink" title="设计理念解析"></a>设计理念解析</h4><p>这是一种 <strong>Project References（项目引用）</strong> 的高级写法。</p>
+<p>它告诉 VS Code：</p>
+<blockquote>
+<p>“根目录本身没有代码，不要尝试在这里编译，去具体的子文件夹（apps&#x2F;packages）里看它们各自的配置。”</p>
+</blockquote>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>极大提升大型项目的代码跳转和编译速度</li>
+<li>每个包有自己的 TypeScript 配置，互不影响</li>
+<li>支持增量编译，只编译变更的文件</li>
+</ul>
+<h4 id="实际工作方式"><a href="#实际工作方式" class="headerlink" title="实际工作方式"></a>实际工作方式</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;files&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span>  <span class="comment">// 根目录没有代码文件</span></span><br><span class="line">  <span class="attr">&quot;references&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span>  <span class="comment">// 项目引用，告诉IDE去子目录找配置</span></span><br><span class="line">    <span class="punctuation">&#123;</span> <span class="attr">&quot;path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;apps/web&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span> <span class="attr">&quot;path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;apps/api&quot;</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span> <span class="attr">&quot;path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;packages/shared&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-设立”垃圾回收站”-gitignore"><a href="#4-设立”垃圾回收站”-gitignore" class="headerlink" title="4. 设立”垃圾回收站” (.gitignore)"></a>4. 设立”垃圾回收站” (.gitignore)</h3><p>它定义了哪些文件不应该上传到 GitHub。</p>
+<h4 id="gitignore-配置"><a href="#gitignore-配置" class="headerlink" title=".gitignore 配置"></a>.gitignore 配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Dependencies</span><br><span class="line">node_modules/</span><br><span class="line">.pnpm-store/</span><br><span class="line"></span><br><span class="line"># Build outputs</span><br><span class="line">dist/</span><br><span class="line">build/</span><br><span class="line">.next/</span><br><span class="line">.turbo/</span><br><span class="line">*.tsbuildinfo</span><br><span class="line"></span><br><span class="line"># Env</span><br><span class="line">.env</span><br><span class="line">.env.local</span><br><span class="line">.env.*.local</span><br><span class="line">!.env.example</span><br><span class="line"></span><br><span class="line"># Logs</span><br><span class="line">*.log</span><br><span class="line">npm-debug.log*</span><br><span class="line">pnpm-debug.log*</span><br><span class="line"></span><br><span class="line"># IDE</span><br><span class="line">.vscode/</span><br><span class="line">.idea/</span><br><span class="line">*.swp</span><br><span class="line">.DS_Store</span><br><span class="line"></span><br><span class="line"># Testing</span><br><span class="line">coverage/</span><br><span class="line">.nyc_output/</span><br><span class="line"></span><br><span class="line"># Misc</span><br><span class="line">*.pem</span><br><span class="line">.cache/</span><br></pre></td></tr></table></figure>
+
+<h4 id="设计理念解析-2"><a href="#设计理念解析-2" class="headerlink" title="设计理念解析"></a>设计理念解析</h4><ol>
+<li><p><strong>依赖排除</strong>：</p>
+<ul>
+<li><code>node_modules/</code>：那是几百 MB 的依赖包，不需要传，大家自己本地安装即可</li>
+<li><code>.pnpm-store/</code>：pnpm 的全局存储，也不需要上传</li>
+</ul>
+</li>
+<li><p><strong>环境保护</strong>：</p>
+<ul>
+<li><code>.env</code>：里面存的是数据库密码、API 密钥，传上去就相当于把家里钥匙挂在门口</li>
+<li>使用 <code>.env.example</code> 作为模板，不包含真实密钥</li>
+</ul>
+</li>
+<li><p><strong>构建产物</strong>：</p>
+<ul>
+<li>所有构建输出（<code>dist/</code>, <code>build/</code>, <code>.next/</code>）都应该在本地生成，不需要版本控制</li>
+</ul>
+</li>
+</ol>
+<h2 id="为什么这一步是”精通”的起点？"><a href="#为什么这一步是”精通”的起点？" class="headerlink" title="为什么这一步是”精通”的起点？"></a>为什么这一步是”精通”的起点？</h2><h3 id="从”小作坊”到”工业化流水线”"><a href="#从”小作坊”到”工业化流水线”" class="headerlink" title="从”小作坊”到”工业化流水线”"></a>从”小作坊”到”工业化流水线”</h3><table>
+<thead>
+<tr>
+<th>小作坊方式</th>
+<th>工业化流水线</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用 <code>npm init</code> 搞个文件夹</td>
+<td>用 pnpm workspace 构建智能容器</td>
+</tr>
+<tr>
+<td>手动复制粘贴代码</td>
+<td>代码自动共享，即时生效</td>
+</tr>
+<tr>
+<td>依赖重复安装</td>
+<td>依赖全局共享，节省空间</td>
+</tr>
+<tr>
+<td>版本管理混乱</td>
+<td>统一版本，避免冲突</td>
+</tr>
+<tr>
+<td>扩展困难</td>
+<td>清晰结构，轻松扩展</td>
+</tr>
+</tbody></table>
+<h3 id="pnpm-workspace-带来的三大优势"><a href="#pnpm-workspace-带来的三大优势" class="headerlink" title="pnpm workspace 带来的三大优势"></a>pnpm workspace 带来的三大优势</h3><h4 id="1-省空间"><a href="#1-省空间" class="headerlink" title="1. 省空间"></a>1. 省空间</h4><ul>
+<li>所有子项目共用的包只会在硬盘存一份</li>
+<li>通过符号链接实现依赖共享</li>
+<li>相比传统方式节省 50%+ 磁盘空间</li>
+</ul>
+<h4 id="2-保一致"><a href="#2-保一致" class="headerlink" title="2. 保一致"></a>2. 保一致</h4><ul>
+<li>全仓库的 TypeScript 版本、代码格式规则高度统一</li>
+<li>统一的依赖版本，避免”依赖地狱”</li>
+<li>一致的开发环境和构建流程</li>
+</ul>
+<h4 id="3-防混乱"><a href="#3-防混乱" class="headerlink" title="3. 防混乱"></a>3. 防混乱</h4><ul>
+<li>清晰的目录结构让你在项目变大时（比如以后增加移动端 App、增加后台管理端），只需要在 <code>apps/</code> 下新建文件夹即可，地基完全不用动</li>
+<li>明确的职责划分：<code>apps/</code> 放应用，<code>packages/</code> 放共享代码</li>
+<li>避免幽灵依赖和版本冲突</li>
+</ul>
+<h2 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h2><p><strong>这一步是把一个”空文件夹”变成了一个”支持多项目协作的智能容器”。</strong></p>
+<h2 id="技术决策记录（ADR）"><a href="#技术决策记录（ADR）" class="headerlink" title="技术决策记录（ADR）"></a>技术决策记录（ADR）</h2><h3 id="ADR-001-选择-pnpm-作为包管理器"><a href="#ADR-001-选择-pnpm-作为包管理器" class="headerlink" title="ADR 001: 选择 pnpm 作为包管理器"></a>ADR 001: 选择 pnpm 作为包管理器</h3><p><strong>状态</strong>：已接受<br><strong>背景</strong>：需要管理多个相关包和应用，传统 npm&#x2F;yarn 在多包管理上效率低下<br><strong>决策</strong>：使用 pnpm workspace<br><strong>依据</strong>：</p>
+<ol>
+<li><strong>磁盘效率</strong>：依赖全局存储，节省 50%+ 磁盘空间</li>
+<li><strong>安装速度</strong>：比 npm&#x2F;yarn 快 2-3 倍</li>
+<li><strong>严格性</strong>：解决幽灵依赖问题</li>
+<li><strong>workspace 支持</strong>：优秀的 Monorepo 支持</li>
+</ol>
+<p><strong>后果</strong>：</p>
+<ul>
+<li>✅ 依赖安装更快，磁盘占用更少</li>
+<li>✅ 避免幽灵依赖导致的构建问题</li>
+<li>✅ 本地包引用简单直接</li>
+<li>⚠️ 需要团队统一使用 pnpm</li>
+<li>⚠️ 某些旧工具可能不完全兼容</li>
+</ul>
+<h2 id="实际代码示例"><a href="#实际代码示例" class="headerlink" title="实际代码示例"></a>实际代码示例</h2><h3 id="完整的根目录配置"><a href="#完整的根目录配置" class="headerlink" title="完整的根目录配置"></a>完整的根目录配置</h3><h4 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;campsite-os&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;private&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Full-stack AI-powered camp operations platform&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;engines&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=20.11.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pnpm&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=9.0.0&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;packageManager&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pnpm@9.12.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run build&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run dev&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run lint&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run test&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;typecheck&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run typecheck&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;clean&quot;</span><span class="punctuation">:</span> <span class="string">&quot;turbo run clean &amp;&amp; rm -rf node_modules&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;turbo&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^2.1.3&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;typescript&quot;</span><span class="punctuation">:</span> <span class="string">&quot;^5.6.3&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="pnpm-workspace-yaml"><a href="#pnpm-workspace-yaml" class="headerlink" title="pnpm-workspace.yaml"></a>pnpm-workspace.yaml</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">packages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;apps/*&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;packages/*&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="tsconfig-json"><a href="#tsconfig-json" class="headerlink" title="tsconfig.json"></a>tsconfig.json</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;files&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;references&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="下一步行动"><a href="#下一步行动" class="headerlink" title="下一步行动"></a>下一步行动</h2><h3 id="立即验证"><a href="#立即验证" class="headerlink" title="立即验证"></a>立即验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 安装依赖</span></span><br><span class="line">pnpm install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 验证 workspace 配置</span></span><br><span class="line">pnpm list -r</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 创建第一个子项目</span></span><br><span class="line"><span class="built_in">cd</span> apps</span><br><span class="line">pnpm dlx @nestjs/cli new api --package-manager pnpm</span><br></pre></td></tr></table></figure>
+
+<h3 id="后续-Commit-规划"><a href="#后续-Commit-规划" class="headerlink" title="后续 Commit 规划"></a>后续 Commit 规划</h3><ol>
+<li><strong>Commit 02</strong>: 初始化 NestJS 后端项目</li>
+<li><strong>Commit 03</strong>: 初始化 Next.js 前端项目  </li>
+<li><strong>Commit 04</strong>: 创建共享工具包</li>
+<li><strong>Commit 05</strong>: 配置 Turborepo 任务管理</li>
+</ol>
+<h2 id="学习收获"><a href="#学习收获" class="headerlink" title="学习收获"></a>学习收获</h2><p>通过这个 Commit，我们掌握了：</p>
+<ol>
+<li><strong>Monorepo 架构思想</strong>：从多个独立仓库到统一智能容器</li>
+<li><strong>pnpm workspace 核心原理</strong>：依赖共享、幽灵依赖解决、本地包引用</li>
+<li><strong>现代工程化配置</strong>：TypeScript 项目引用、Git 策略、引擎锁定</li>
+<li><strong>架构设计能力</strong>：”地块分封制”、”中央调度中心”等设计模式</li>
+</ol>
+<p><strong>这不仅是技术配置，更是工程思维的提升。</strong> 我们不再只是写代码的程序员，而是设计系统的工程师。</p>
+<hr>
+<p><em>本文记录 Campsite OS 项目 Week 1 的第一个 Commit。通过这个简单的初始化，我们为整个项目奠定了工程化基础，建立了从”小作坊”到”工业化流水线”的架构思维。</em></p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Monorepo/">Monorepo</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/pnpm/">pnpm</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/workspace/">workspace</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/">工程化</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84/">项目架构</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86/">依赖管理</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2026/04/15/hello-world/"
+                                   title="Hello World"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Hello World</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/04/15/03-Projects/Campsite-OS/2026-04-15-Campsite-OS-%E5%85%A8%E6%A0%88AI%E8%90%A5%E5%9C%B0%E8%BF%90%E8%90%A5%E5%B9%B3%E5%8F%B0%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8/"
+                                   title="Campsite OS — 全栈 AI 营地运营平台项目启动（Week 1 完成）"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Campsite OS — 全栈 AI 营地运营平台项目启动（Week 1 完成）</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Week-01-Commit-01-%E5%88%9D%E5%A7%8B%E5%8C%96Monorepo%E4%B8%8Epnpm-workspace"><span class="nav-number">1.</span> <span class="nav-text">Week 01 - Commit 01: 初始化Monorepo与pnpm workspace</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Commit-%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">Commit 信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">核心知识点整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Monorepo-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. Monorepo 是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E6%96%B9%E5%BC%8F-vs-Monorepo"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">传统方式 vs Monorepo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E7%90%86%E8%A7%A3"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">关键理解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E2%80%9C%E5%B9%BD%E7%81%B5%E4%BE%9D%E8%B5%96%E2%80%9D%E6%9D%80%E6%89%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. “幽灵依赖”杀手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">问题示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">pnpm 解决方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Workspace-%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. Workspace 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Workspace-%E5%8D%8F%E8%AE%AE%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Workspace 协议的优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5"><span class="nav-number">1.3.</span> <span class="nav-text">架构设计理念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BC%80%E5%90%AF%E2%80%9D%E5%9C%B0%E5%9D%97%E5%88%86%E5%B0%81%E5%88%B6%E2%80%9D"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 开启”地块分封制”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">目录结构设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-workspace-yaml-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">pnpm-workspace.yaml 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">工作流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%BB%BA%E7%AB%8B%E2%80%9D%E4%B8%AD%E5%A4%AE%E8%B0%83%E5%BA%A6%E4%B8%AD%E5%BF%83%E2%80%9D-package-json"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 建立”中央调度中心” (package.json)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B9-package-json-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">根 package.json 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">设计理念解析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%85%8D%E7%BD%AE%E2%80%9D%E5%85%A8%E5%B1%80%E7%BC%96%E8%AF%91%E5%99%A8%E2%80%9D-tsconfig-json"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 配置”全局编译器” (tsconfig.json)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E8%A7%A3%E6%9E%90-1"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">设计理念解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">实际工作方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%AE%BE%E7%AB%8B%E2%80%9D%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AB%99%E2%80%9D-gitignore"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 设立”垃圾回收站” (.gitignore)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gitignore-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">.gitignore 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E8%A7%A3%E6%9E%90-2"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">设计理念解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%80%E6%AD%A5%E6%98%AF%E2%80%9D%E7%B2%BE%E9%80%9A%E2%80%9D%E7%9A%84%E8%B5%B7%E7%82%B9%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">为什么这一步是”精通”的起点？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E2%80%9D%E5%B0%8F%E4%BD%9C%E5%9D%8A%E2%80%9D%E5%88%B0%E2%80%9D%E5%B7%A5%E4%B8%9A%E5%8C%96%E6%B5%81%E6%B0%B4%E7%BA%BF%E2%80%9D"><span class="nav-number">1.4.1.</span> <span class="nav-text">从”小作坊”到”工业化流水线”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-workspace-%E5%B8%A6%E6%9D%A5%E7%9A%84%E4%B8%89%E5%A4%A7%E4%BC%98%E5%8A%BF"><span class="nav-number">1.4.2.</span> <span class="nav-text">pnpm workspace 带来的三大优势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%9C%81%E7%A9%BA%E9%97%B4"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">1. 省空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BF%9D%E4%B8%80%E8%87%B4"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">2. 保一致</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%98%B2%E6%B7%B7%E4%B9%B1"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">3. 防混乱</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text">一句话总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%86%B3%E7%AD%96%E8%AE%B0%E5%BD%95%EF%BC%88ADR%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">技术决策记录（ADR）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ADR-001-%E9%80%89%E6%8B%A9-pnpm-%E4%BD%9C%E4%B8%BA%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">ADR 001: 选择 pnpm 作为包管理器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.7.</span> <span class="nav-text">实际代码示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E6%A0%B9%E7%9B%AE%E5%BD%95%E9%85%8D%E7%BD%AE"><span class="nav-number">1.7.1.</span> <span class="nav-text">完整的根目录配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#package-json"><span class="nav-number">1.7.1.1.</span> <span class="nav-text">package.json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-workspace-yaml"><span class="nav-number">1.7.1.2.</span> <span class="nav-text">pnpm-workspace.yaml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tsconfig-json"><span class="nav-number">1.7.1.3.</span> <span class="nav-text">tsconfig.json</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5%E8%A1%8C%E5%8A%A8"><span class="nav-number">1.8.</span> <span class="nav-text">下一步行动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%8B%E5%8D%B3%E9%AA%8C%E8%AF%81"><span class="nav-number">1.8.1.</span> <span class="nav-text">立即验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD-Commit-%E8%A7%84%E5%88%92"><span class="nav-number">1.8.2.</span> <span class="nav-text">后续 Commit 规划</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%94%B6%E8%8E%B7"><span class="nav-number">1.9.</span> <span class="nav-text">学习收获</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2024</span>&nbsp;-&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">John Doe</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Week-01-Commit-01-%E5%88%9D%E5%A7%8B%E5%8C%96Monorepo%E4%B8%8Epnpm-workspace"><span class="nav-number">1.</span> <span class="nav-text">Week 01 - Commit 01: 初始化Monorepo与pnpm workspace</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Commit-%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">Commit 信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E6%95%B4%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">核心知识点整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Monorepo-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. Monorepo 是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E6%96%B9%E5%BC%8F-vs-Monorepo"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">传统方式 vs Monorepo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E7%90%86%E8%A7%A3"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">关键理解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E2%80%9C%E5%B9%BD%E7%81%B5%E4%BE%9D%E8%B5%96%E2%80%9D%E6%9D%80%E6%89%8B"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. “幽灵依赖”杀手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">问题示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">pnpm 解决方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Workspace-%E5%8D%8F%E8%AE%AE"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. Workspace 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Workspace-%E5%8D%8F%E8%AE%AE%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Workspace 协议的优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5"><span class="nav-number">1.3.</span> <span class="nav-text">架构设计理念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BC%80%E5%90%AF%E2%80%9D%E5%9C%B0%E5%9D%97%E5%88%86%E5%B0%81%E5%88%B6%E2%80%9D"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 开启”地块分封制”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">目录结构设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-workspace-yaml-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">pnpm-workspace.yaml 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">工作流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%BB%BA%E7%AB%8B%E2%80%9D%E4%B8%AD%E5%A4%AE%E8%B0%83%E5%BA%A6%E4%B8%AD%E5%BF%83%E2%80%9D-package-json"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 建立”中央调度中心” (package.json)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B9-package-json-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">根 package.json 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">设计理念解析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%85%8D%E7%BD%AE%E2%80%9D%E5%85%A8%E5%B1%80%E7%BC%96%E8%AF%91%E5%99%A8%E2%80%9D-tsconfig-json"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 配置”全局编译器” (tsconfig.json)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E8%A7%A3%E6%9E%90-1"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">设计理念解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">实际工作方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%AE%BE%E7%AB%8B%E2%80%9D%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AB%99%E2%80%9D-gitignore"><span class="nav-number">1.3.4.</span> <span class="nav-text">4. 设立”垃圾回收站” (.gitignore)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gitignore-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">.gitignore 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5%E8%A7%A3%E6%9E%90-2"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">设计理念解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%80%E6%AD%A5%E6%98%AF%E2%80%9D%E7%B2%BE%E9%80%9A%E2%80%9D%E7%9A%84%E8%B5%B7%E7%82%B9%EF%BC%9F"><span class="nav-number">1.4.</span> <span class="nav-text">为什么这一步是”精通”的起点？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E2%80%9D%E5%B0%8F%E4%BD%9C%E5%9D%8A%E2%80%9D%E5%88%B0%E2%80%9D%E5%B7%A5%E4%B8%9A%E5%8C%96%E6%B5%81%E6%B0%B4%E7%BA%BF%E2%80%9D"><span class="nav-number">1.4.1.</span> <span class="nav-text">从”小作坊”到”工业化流水线”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pnpm-workspace-%E5%B8%A6%E6%9D%A5%E7%9A%84%E4%B8%89%E5%A4%A7%E4%BC%98%E5%8A%BF"><span class="nav-number">1.4.2.</span> <span class="nav-text">pnpm workspace 带来的三大优势</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%9C%81%E7%A9%BA%E9%97%B4"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">1. 省空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BF%9D%E4%B8%80%E8%87%B4"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">2. 保一致</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%98%B2%E6%B7%B7%E4%B9%B1"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">3. 防混乱</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="nav-number">1.5.</span> <span class="nav-text">一句话总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%86%B3%E7%AD%96%E8%AE%B0%E5%BD%95%EF%BC%88ADR%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">技术决策记录（ADR）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ADR-001-%E9%80%89%E6%8B%A9-pnpm-%E4%BD%9C%E4%B8%BA%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">ADR 001: 选择 pnpm 作为包管理器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.7.</span> <span class="nav-text">实际代码示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E6%A0%B9%E7%9B%AE%E5%BD%95%E9%85%8D%E7%BD%AE"><span class="nav-number">1.7.1.</span> <span class="nav-text">完整的根目录配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#package-json"><span class="nav-number">1.7.1.1.</span> <span class="nav-text">package.json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm-workspace-yaml"><span class="nav-number">1.7.1.2.</span> <span class="nav-text">pnpm-workspace.yaml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tsconfig-json"><span class="nav-number">1.7.1.3.</span> <span class="nav-text">tsconfig.json</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5%E8%A1%8C%E5%8A%A8"><span class="nav-number">1.8.</span> <span class="nav-text">下一步行动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%8B%E5%8D%B3%E9%AA%8C%E8%AF%81"><span class="nav-number">1.8.1.</span> <span class="nav-text">立即验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD-Commit-%E8%A7%84%E5%88%92"><span class="nav-number">1.8.2.</span> <span class="nav-text">后续 Commit 规划</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%94%B6%E8%8E%B7"><span class="nav-number">1.9.</span> <span class="nav-text">学习收获</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
